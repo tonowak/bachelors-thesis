@@ -8,7 +8,7 @@
 %
 % Copyright (c) 2001 by Marcin Woliński <M.Wolinski@gust.org.pl>
 % Poprawki spowodowane zmianami przepisów - Marcin Szczuka, 1.10.2004
-% Poprawki spowodowane zmianami przepisow i ujednolicenie 
+% Poprawki spowodowane zmianami przepisow i ujednolicenie
 % - Seweryn Karłowicz, 05.05.2006
 % Dodanie wielu autorów i tłumaczenia na angielski - Kuba Pochrybniak, 29.11.2016
 
@@ -32,7 +32,7 @@
 
 %\tytulang{An implementation of a difference blabalizer based on the theory of $\sigma$ -- $\rho$ phetors}
 
-%kierunek: 
+%kierunek:
 % - matematyka, informacyka, ...
 % - Mathematics, Computer Science, ...
 \kierunek{Computer Science}
@@ -55,20 +55,20 @@
 % (podać tytuł/stopień imię i nazwisko opiekuna
 % Instytut
 % ew. Wydział ew. Uczelnia (jeżeli nie MIM UW))
-\opiekun{dr hab. Filigran Fifak\\
-  Instytut Blabalii Fetorycznej\\
+\opiekun{mgr Michał Możdżonek\\
+  Institute of Computer Science\\
   }
 
 % miesiąc i~rok:
-\date{May 2017}
+\date{May 2023}
 
 %Podać dziedzinę wg klasyfikacji Socrates-Erasmus:
-\dziedzina{ 
-%11.0 Matematyka, Informatyka:\\ 
-%11.1 Matematyka\\ 
-%11.2 Statystyka\\ 
-11.3 Informatyka\\ 
-%11.4 Sztuczna inteligencja\\ 
+\dziedzina{
+%11.0 Matematyka, Informatyka:\\
+%11.1 Matematyka\\
+%11.2 Statystyka\\
+11.3 Computer Science\\
+%11.4 Sztuczna inteligencja\\
 %11.5 Nauki aktuarialne\\
 %11.9 Inne nauki matematyczne i informatyczne
 }
@@ -79,8 +79,7 @@
   D.127.6. Numerical blabalysis}
 
 % Słowa kluczowe:
-\keywords{blabaliza różnicowa, fetory $\sigma$-$\rho$, fooizm,
-  blarbarucja, blaba, fetoryka, baleronik}
+\keywords{Rust, semantic versioning, continuous integration, cargo}
 
 % Tu jest dobre miejsce na Twoje własne makra i~środowiska:
 \newtheorem{defi}{Definicja}[section]
@@ -92,33 +91,41 @@
 
 %tu idzie streszczenie na strone poczatkowa
 \begin{abstract}
-In many programming languages there exist countless nuances, 
-making developers accidentally release new versions of their packages 
-that are not backwards-compatible. 
-Such releases can directly impact projects which are using their packages, 
-causing bugs or even compilation errors when using the latest version. 
-One of the affected languages is Rust, 
+In many programming languages there exist countless nuances,
+making developers accidentally release new versions of their packages
+that are not backwards-compatible.
+Such releases can directly impact projects which are using their packages,
+causing bugs or even compilation errors when using the latest version.
+One of the affected languages is Rust,
 which also lacks (itself) a built-in mechanism for enforcing semantic versioning.
 
-The aim of this thesis is to describe the development of a tool 
-for Rust programmers to reduce the chances of publishing 
+The aim of this thesis is to describe the development of a tool
+for Rust programmers to reduce the chances of publishing
 a new version of the code that violates semantic versioning.
 
-There are already on-going plans to bundle this tool 
-into the language's standard development toolchain. 
-It would make it commonly used and therefore help users to safely get bug fixes, 
-security patches and new functionality, 
-without worrying about their app being broken by a dependency change. 
+There are already on-going plans to bundle this tool
+into the language's standard development toolchain.
+It would make it commonly used and therefore help users to safely get bug fixes,
+security patches and new functionality,
+without worrying about their app being broken by a dependency change.
 \end{abstract}
 
 \tableofcontents
 %\listoffigures
 %\listoftables
 
+
+
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
 
-Co tutaj napisać? Abstrakt już dosyć dobrze podsumowuje co robimy.
+Q: Co tutaj napisać? Abstrakt już dosyć dobrze podsumowuje co robimy.
+A: "Rozwija pojęcia wstępne", czyli to, co nieoczywiste dla szarego człowieka,
+   ale dosyć zwięźle, tak jak przykłady niżej (np. krótko czym są keywordy, więcej
+   o nich będzie w rozdziale Theory. Dopisałbym tu co to znaczy backwards-compatible,
+   tego nie ma w keywords ale jest w abstrakcie i może być nieoczywiste. Tylko ocb,
+   nie tłumaczyć co to Major Minor Patch itd.). Można też dać ten opis "Praca składa
+   się z ...".
 
 % Blabalizator różnicowy jest podstawowym narzędziem blabalii
 % fetorycznej.  Dlatego naukowcy z~całego świata prześcigają się
@@ -142,6 +149,8 @@ Co tutaj napisać? Abstrakt już dosyć dobrze podsumowuje co robimy.
 % fetorycznej.  W~dodatkach umieszczono najciekawszy fragment programu,
 % przykładowe dane i~wyniki działania programu.
 
+
+
 \chapter{Basic definitions}\label{r:definitions}
 
 \section{Rust language and cargo}
@@ -154,6 +163,7 @@ Cargo requires the packages (called crates) to follow semantic versioning (semve
 
 The place where cargo (...) is called the registry.
 Its web version is available at crates.io.
+
 
 \section{Semantic versioning (semver)}
 
@@ -174,11 +184,17 @@ By default, cargo uses (...)
 
 Cargo supports yanking releases from the registry.
 
-\chapter{How semantic versioning can go wrong (?)}\label{r:idk}
+
+
+\chapter{State of the art}\label{r:stateoftheart}
+
+\section{How semantic versioning can go wrong (?)}
+
 
 \section{The consequences}
 
 When a library maintainer breaks semver, for (...) reasons, the users' code stops compiling and (...)
+
 
 \section{Real-life examples of semver breaks}
 
@@ -193,7 +209,8 @@ are because of semver breaks and 3.7\% of all >300'000 releases are yanked>
 a script that will scan all releases for the semver breaks
 we can detect and the results are presented in chapter (...)>
 
-\chapter{Existing tools for detecting semver breaks}\label{r:idk}
+
+\section{Existing tools for detecting semver breaks}
 
 In some languages <list here examples>, it is easy to check for semver breaks.
 
@@ -206,11 +223,18 @@ In Rust there are three existing tools for (...)
 
 In other popular languages, there haven't been as much progress, because (...)
 
-\chapter{Vision}\label{r:idk}
+
+
+\chapter{Vision}\label{r:vision}
+
+\section{Project purpose}
 
 Cargo-semver-checks is designed to (...)
 
 The goal is to (...)
+
+
+\section{Project usage}
 
 The main usages of the tool are:
 \begin{itemize}
@@ -218,22 +242,30 @@ The main usages of the tool are:
 	\item running in CI (e.g. GitHub Actions) to check PRs, (...)
 \end{itemize}
 
-\section{On-going plans to merge the tool into cargo}
+<Here describe the vision on how the tool should be automatically run in CI
+and how that will benefit the Rust developers>
 
-<Here describe the existing plans to merge the project in which we're contributing
-to the official Rust toolchain and how that will benefit the Rust developers>
-
-\section{Running in CI}
+\subsection{Running in CI}
 
 <Here describe the vision on how the tool should be automatically run in CI
 and how that will benefit the Rust developers>
 
-\chapter{Project baseline}\label{r:baseline}
+\subsection{On-going plans to merge the tool into cargo}
+
+<Here describe the existing plans to merge the project in which we're contributing
+to the official Rust toolchain and how that will benefit the Rust developers>
+
+
+\section{Project baseline}
 
 Before our contributions, the project was in a (...) state
 with (...) issues.
 
-\chapter{Project structure}\label{r:structure}
+
+
+\chapter{Theory}\label{r:theory}
+
+\section{Project structure}
 
 The tool heavily uses the rustdocs, (...).
 It parses its JSON through Trustfall (...).
@@ -245,57 +277,74 @@ The project consists of three sub-projects:
 	\item trustfall-rustdoc-adapter -- implements the Trustfall interface for one specific rustdoc version, (...)
 \end{enumerate}
 
+<Possibly insert that diagram here?>
+
+
 \section{cargo-semver-checks}
 
 <Here describe the inner-workings of the CLI tool>
+
 
 \section{trustfall-rustdoc-adapter}
 
 <Here describe the inner-workings of the adapters>
 
-\chapter{Our work and improvements to the tool}
+
+
+\chapter{Implementation}\label{r:implementation}
 
 \section{New lints}
 
 <Here write a list about the new lints we've written>
 
+
 \section{Test suite}
 
 <Here write a list about the improvements in the testing suite>
+
 
 \section{CLI usage}
 
 <Here write a list about changes that made the CLI better>
 
+
 \section{Bugfixes}
 
 <Here write a list about found and fixed bugs>
+
 
 \section{CI improvements}
 
 <Here write a list about the V2 of the CI>
 
+
 \section{Script}
 
 <Here write about the script that searches all existing releases for detected semver breaks>
+
 
 \section{Healthier codebase}
 
 <Here write a list of changes that made the codebase better>
 
-\chapter{Organization of work}
+
+
+\chapter{Team}\label{r:team}
 
 \section{Used methodology}
 
 <Here describe how we've been developing the tool>
 
+
 \section{Responsibilities}
 
 <Here describe who did what>
 
-\chapter{Results}
 
-\section{Steady progess in tool's popularity}
+
+\chapter{Summary}\label{r:summary}
+
+\section{Steady progress in tool's popularity}
 
 <Here show how the number of downloads has changed>
 
@@ -311,6 +360,7 @@ he was so excited that he wrote a comment with a tip in our PR>
 
 <Here list the maintainers of big libraries that started using the tool during our development>
 
+
 \section{Script}
 
 <Here show the results of the script that searches all existing releases for detected semver breaks>
@@ -319,14 +369,17 @@ he was so excited that he wrote a comment with a tip in our PR>
 
 <Here describe how our new lints can make an impact on the community based on the found semver breaks from the script>
 
-\section{Summary}
+
+\section{Future-proofing}
 
 <Here describe other overall changes that prepares the tool to be more successful in the future>
 
+
+
 \appendix
 
-\begin{thebibliography}{99}
-\addcontentsline{toc}{chapter}{Bibliografia}
+\begin{thebibliography}{99}\label{r:bibliography}
+\addcontentsline{toc}{chapter}{Bibliography}
 
 \bibitem[Bea65]{beaman} Juliusz Beaman, \textit{Morbidity of the Jolly
     function}, Mathematica Absurdica, 117 (1965) 338--9.
@@ -369,6 +422,20 @@ he was so excited that he wrote a comment with a tip in our PR>
     w~blabalizie}, Młody Technik, nr~11, 1969.
 
 \end{thebibliography}
+
+
+
+\chapter*{Attachments}\label{r:attachments}
+\addcontentsline{toc}{chapter}{Attachments}
+
+\section*{Source code structure}
+
+<Here describe the project structure of the included CD>
+
+
+\section*{Tests}
+
+<Here describe the tests (and possibly how to run them) of the included CD>
 
 \end{document}
 
