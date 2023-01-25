@@ -28,7 +28,7 @@
 %\autorv{Autor nr Pięć}{342011}
 
 \title{Accelerating package expansion in Rust through development of a semantic versioning tool}
-\titlepl{Tytuł po polsku}
+\titlepl{Przyspieszenie rozwoju pakietów w języku Rust poprzez rozbudowę narzędzia do semantycznego wersjonowania}
 
 %\tytulang{An implementation of a difference blabalizer based on the theory of $\sigma$ -- $\rho$ phetors}
 
@@ -74,9 +74,11 @@
 }
 
 %Klasyfikacja tematyczna wedlug AMS (matematyka) lub ACM (informatyka)
-\klasyfikacja{D. Software\\
-  D.127. Blabalgorithms\\
-  D.127.6. Numerical blabalysis}
+\klasyfikacja{
+  D. Software\\
+  D.2. Software Engineering\\
+  D.2.4. Software/Program Verification
+  }
 
 % Słowa kluczowe:
 \keywords{Rust, semantic versioning, continuous integration, cargo}
@@ -89,7 +91,7 @@
 \begin{document}
 \maketitle
 
-%tu idzie streszczenie na strone poczatkowa
+% Tu jest abstrakt na stronę początkową
 \begin{abstract}
 In many programming languages there exist countless nuances,
 making developers accidentally release new versions of their packages
@@ -115,6 +117,10 @@ without worrying about their app being broken by a dependency change.
 %\listoftables
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%            Introduction             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
@@ -151,6 +157,10 @@ A: "Rozwija pojęcia wstępne", czyli to, co nieoczywiste dla szarego człowieka
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%             Definitions             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \chapter{Definitions}\label{r:definitions}
 
 \section{Rust language and cargo}
@@ -185,6 +195,10 @@ By default, cargo uses (...)
 Cargo supports yanking releases from the registry.
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%          State of the art           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{State of the art}\label{r:stateoftheart}
 
@@ -230,6 +244,10 @@ In other popular languages, there haven't been as much progress, because (...)
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               Vision                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \chapter{Vision}\label{r:vision}
 
 \section{Project purpose}
@@ -268,6 +286,10 @@ with (...) issues.
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               Theory                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \chapter{Theory}\label{r:theory}
 
 \section{Project structure}
@@ -295,6 +317,10 @@ The project consists of three sub-projects:
 <Here describe the inner-workings of the adapters>
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           Implementation            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Implementation}\label{r:implementation}
 
@@ -334,6 +360,9 @@ The project consists of three sub-projects:
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                Team                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Team}\label{r:team}
 
 \section{Used methodology}
@@ -347,6 +376,9 @@ The project consists of three sub-projects:
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%               Summary               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Summary}\label{r:summary}
 
 \section{Steady progress in tool's popularity}
@@ -381,54 +413,62 @@ he was so excited that he wrote a comment with a tip in our PR>
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%            Bibliography             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \appendix
 
 \begin{thebibliography}{99}\label{r:bibliography}
 \addcontentsline{toc}{chapter}{Bibliography}
 
-\bibitem[Bea65]{beaman} Juliusz Beaman, \textit{Morbidity of the Jolly
-    function}, Mathematica Absurdica, 117 (1965) 338--9.
+% \bibitem[Bea65]{beaman} Juliusz Beaman, \textit{Morbidity of the Jolly
+%     function}, Mathematica Absurdica, 117 (1965) 338--9.
 
-\bibitem[Blar16]{eb1} Elizjusz Blarbarucki, \textit{O pewnych
-    aspektach pewnych aspektów}, Astrolog Polski, Zeszyt 16, Warszawa
-  1916.
+% \bibitem[Blar16]{eb1} Elizjusz Blarbarucki, \textit{O pewnych
+%     aspektach pewnych aspektów}, Astrolog Polski, Zeszyt 16, Warszawa
+%   1916.
 
-\bibitem[Fif00]{ffgg} Filigran Fifak, Gizbert Gryzogrzechotalski,
-  \textit{O blabalii fetorycznej}, Materiały Konferencji Euroblabal
-  2000.
+% \bibitem[Fif00]{ffgg} Filigran Fifak, Gizbert Gryzogrzechotalski,
+%   \textit{O blabalii fetorycznej}, Materiały Konferencji Euroblabal
+%   2000.
 
-\bibitem[Fif01]{ff-sr} Filigran Fifak, \textit{O fetorach
-    $\sigma$-$\rho$}, Acta Fetorica, 2001.
+% \bibitem[Fif01]{ff-sr} Filigran Fifak, \textit{O fetorach
+%     $\sigma$-$\rho$}, Acta Fetorica, 2001.
 
-\bibitem[Głomb04]{grglo} Gryzybór Głombaski, \textit{Parazytonikacja
-    blabiczna fetorów --- nowa teoria wszystkiego}, Warszawa 1904.
+% \bibitem[Głomb04]{grglo} Gryzybór Głombaski, \textit{Parazytonikacja
+%     blabiczna fetorów --- nowa teoria wszystkiego}, Warszawa 1904.
 
-\bibitem[Hopp96]{hopp} Claude Hopper, \textit{On some $\Pi$-hedral
-    surfaces in quasi-quasi space}, Omnius University Press, 1996.
+% \bibitem[Hopp96]{hopp} Claude Hopper, \textit{On some $\Pi$-hedral
+%     surfaces in quasi-quasi space}, Omnius University Press, 1996.
 
-\bibitem[Leuk00]{leuk} Lechoslav Leukocyt, \textit{Oval mappings ab ovo},
-  Materiały Białostockiej Konferencji Hodowców Drobiu, 2000.
+% \bibitem[Leuk00]{leuk} Lechoslav Leukocyt, \textit{Oval mappings ab ovo},
+%   Materiały Białostockiej Konferencji Hodowców Drobiu, 2000.
 
-\bibitem[Rozk93]{JR} Josip A.~Rozkosza, \textit{O pewnych własnościach
-    pewnych funkcji}, Północnopomorski Dziennik Matematyczny 63491
-  (1993).
+% \bibitem[Rozk93]{JR} Josip A.~Rozkosza, \textit{O pewnych własnościach
+%     pewnych funkcji}, Północnopomorski Dziennik Matematyczny 63491
+%   (1993).
 
-\bibitem[Spy59]{spyrpt} Mrowclaw Spyrpt, \textit{A matrix is a matrix
-    is a matrix}, Mat. Zburp., 91 (1959) 28--35.
+% \bibitem[Spy59]{spyrpt} Mrowclaw Spyrpt, \textit{A matrix is a matrix
+%     is a matrix}, Mat. Zburp., 91 (1959) 28--35.
 
-\bibitem[Sri64]{srinis} Rajagopalachari Sriniswamiramanathan,
-  \textit{Some expansions on the Flausgloten Theorem on locally
-    congested lutches}, J. Math.  Soc., North Bombay, 13 (1964) 72--6.
+% \bibitem[Sri64]{srinis} Rajagopalachari Sriniswamiramanathan,
+%   \textit{Some expansions on the Flausgloten Theorem on locally
+%     congested lutches}, J. Math.  Soc., North Bombay, 13 (1964) 72--6.
 
-\bibitem[Whi25]{russell} Alfred N. Whitehead, Bertrand Russell,
-  \textit{Principia Mathematica}, Cambridge University Press, 1925.
+% \bibitem[Whi25]{russell} Alfred N. Whitehead, Bertrand Russell,
+%   \textit{Principia Mathematica}, Cambridge University Press, 1925.
 
-\bibitem[Zen69]{heu} Zenon Zenon, \textit{Użyteczne heurystyki
-    w~blabalizie}, Młody Technik, nr~11, 1969.
+% \bibitem[Zen69]{heu} Zenon Zenon, \textit{Użyteczne heurystyki
+%     w~blabalizie}, Młody Technik, nr~11, 1969.
 
 \end{thebibliography}
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%             Attachments             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter*{Attachments}\label{r:attachments}
 \addcontentsline{toc}{chapter}{Attachments}
