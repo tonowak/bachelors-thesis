@@ -119,35 +119,38 @@ without worrying about their app being broken by a dependency change.
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
 
-Q: Co tutaj napisać? Abstrakt już dosyć dobrze podsumowuje co robimy.
-A: "Rozwija pojęcia wstępne", czyli to, co nieoczywiste dla szarego człowieka,
-   ale dosyć zwięźle, tak jak przykłady niżej (np. krótko czym są keywordy, więcej
-   o nich będzie w rozdziale Theory. Dopisałbym tu co to znaczy backwards-compatible,
-   tego nie ma w keywords ale jest w abstrakcie i może być nieoczywiste. Tylko ocb,
-   nie tłumaczyć co to Major Minor Patch itd.). Można też dać ten opis "Praca składa
-   się z ...".
+Rust is a relatively new language that has lately been gaining on popularity.
+Amongst its standard development toolchain is a software called cargo 
+-- Rust's build system and package manager,
+which handles building a crate -- a package with Rust code.
+Amongst cargo's responsibilities is searching for the newest versions,
+downloading and building dependencies
+(that is, other libraries / crates that the code uses).
 
-% Blabalizator różnicowy jest podstawowym narzędziem blabalii
-% fetorycznej.  Dlatego naukowcy z~całego świata prześcigają się
-% w~próbach efektywnej implementacji.  Opracowana przez prof. Fifaka
-% teoria fetorów $\sigma$-$\rho$ otwiera w~tej dziedzinie nowe
-% możliwości.  Wykorzystujemy je w~niniejszej pracy.
+Cargo assumes that all crates follow semantic versioning
+-- a set of rules that decide when it is safe to use the new version of a library
+without any problems (the codes that depend on this library must still compile).
+Thanks to that, developers of libraries can release patches and bugfixes
+and cargo by default will automatically use those newest releases.
+The exact definition of semantic versioning is explained in chapter \ref{r:definitions}.
 
-% Przystępne wprowadzenie do blabalii fetorycznej można znaleźć w~pracy
-% Fifaka i~Gryzogrzechotalskiego \cite{ffgg}.  Dlatego w~niniejszym
-% tekście ograniczymy się do przypomnienia pojęć podstawowych.
+It turns out that it's not obvious which changes are backwards-compatible
+and which changes are not. There are a lot of examples (listed in \ref{r:semverisdifficult})
+where experienced Rust developers made a mistake 
+(due to insufficient knowledge about the language or by overlooking something)
+that changed the public API of a library in such a way that users' code stopped compiling.
 
-% Praca składa się z~pięciu rozdziałów i~dodatków.
-% W~rozdziale~\ref{r:pojecia} przypomniano podstawowe pojęcia blabalii
-% fetorycznej.  Dotychczasowe próby implementacji blablizatora
-% różnicowego zestawiono w~rozdziale~\ref{r:losers}.
-% Rozdział~\ref{r:fifak} przedstawia teorię Fifaka i~wyjaśnia sposób jej
-% wykorzystania w~implementacji blabalizatora.  W~rozdziale \ref{r:impl}
-% przedstawiono algorytm blabalizy i~realizujący go program komputerowy.
-% Ostatni rozdział zawiera przemyślenia dotyczące możliwego wpływu
-% dostępności efektywnej blabalizy numerycznej na rozwój blabalii
-% fetorycznej.  W~dodatkach umieszczono najciekawszy fragment programu,
-% przykładowe dane i~wyniki działania programu.
+In this thesis we're presenting our work on a tool to detect and notify about
+a subset of problems that make Rust libraries' public API non-backwards compatible,
+with the goal of making problems with semantic versioning less frequent in the Rust community.
+The exact goals of this project are described in chapter \ref{r:vision}.
+
+The project is open-source -- all our work is visible in public repositories
+(listed in \ref{r:projectstructure}). The project existed before our contributions,
+thus chapter \ref{r:implementation} mainly describes how we've 
+been extending the project's functionalities and fixing its issues.
+Chapter \ref{r:summary} is a summary of our results and the project's impact 
+on the Rust community.
 
 
 
@@ -188,7 +191,7 @@ Cargo supports yanking releases from the registry.
 
 \chapter{State of the art}\label{r:stateoftheart}
 
-\section{The difficulty of correctly using semver in Rust}
+\section{The difficulty of correctly using semver in Rust}\label{r:semverisdifficult}
 
 <Above we explained what semver is, now explain in general what are the common difficulties and problems>
 
@@ -270,7 +273,7 @@ with (...) issues.
 
 \chapter{Theory}\label{r:theory}
 
-\section{Project structure}
+\section{Project structure}\label{r:projectstructure}
 
 The tool heavily uses the rustdocs, (...).
 It parses its JSON through Trustfall (...).
