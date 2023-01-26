@@ -56,7 +56,7 @@
 % Instytut
 % ew. Wydział ew. Uczelnia (jeżeli nie MIM UW))
 \opiekun{mgr Michał Możdżonek\\
-  Institute of Computer Science\\
+  Institute of Informatics\\
   }
 
 % miesiąc i~rok:
@@ -81,7 +81,7 @@
   }
 
 % Słowa kluczowe:
-\keywords{Rust, semantic versioning, continuous integration, cargo}
+\keywords{Rust, semantic versioning, continuous integration, package manager}
 
 % Tu jest dobre miejsce na Twoje własne makra i~środowiska:
 \newtheorem{defi}{Definicja}[section]
@@ -126,11 +126,11 @@ without worrying about their app being broken by a dependency change.
 \addcontentsline{toc}{chapter}{Introduction}
 
 Rust is a relatively new language that has lately been gaining on popularity.
-Amongst its standard development toolchain there is a software called cargo 
+Amongst its standard development toolchain there is a software called cargo
 -- Rust's build system and package manager,
 which handles building a crate -- a package with Rust code.
-One of cargo's responsibilities is searching for the newest crate versions,
-downloading them and building dependencies
+One of cargo's responsibilities is to search for the newest crate versions,
+download them and build dependencies
 (that is, other libraries / crates that the code uses).
 
 Cargo assumes that all crates follow semantic versioning
@@ -138,24 +138,24 @@ Cargo assumes that all crates follow semantic versioning
 without any problems (the projects that depend on this library must still compile).
 Thanks to that, developers of libraries can release patches and bugfixes
 and cargo by default will automatically use those newest releases.
-The exact definition of semantic versioning is explained in chapter \ref{r:definitions}.
+The exact definition of semantic versioning is explained in chapter \ref{r:chapter_definitions}.
 
 It turns out that it is not obvious which changes are backwards-compatible
-and which are not. There are numerous examples (listed in \ref{r:semverisdifficult})
-where experienced Rust developers made a mistake 
+and which are not. There are numerous examples (listed in \ref{r:section_usageofsemver})
+where experienced Rust developers made a mistake
 (due to insufficient knowledge about the language or by overlooking something)
 that changed the public API of a library in such a way that users' code stopped compiling.
 
-In this thesis we are presenting our work on a tool to detect and notify about
+The authors of this thesis present their work on a tool that detects and notifies about
 a subset of problems that make Rust libraries' public API non-backwards compatible,
-with the goal of making problems with semantic versioning less frequent in the Rust community.
-The exact goals of this project are described in chapter \ref{r:vision}.
+with the goal to make problems with semantic versioning less frequent in the Rust community.
+The exact goals of this project are described in chapter \ref{r:chapter_vision}.
 
-The project is open-source -- all of our work is visible in public repositories
-(listed in \ref{r:projectstructure}). The project existed before our contributions,
-thus chapter \ref{r:implementation} mainly describes how we have 
-been extending the project's functionalities and fixing its issues.
-Chapter \ref{r:summary} is a summary of our results and the project's impact 
+The project is open-source -- all of the authors' work is visible in public repositories
+(listed in \ref{r:section_projectstructure}). The project existed before their contributions,
+thus chapter \ref{r:chapter_implementation} mainly describes how they have
+extended the project's functionalities and fixed its issues.
+Chapter \ref{r:chapter_summary} is a summary of their results and the project's impact
 on the Rust community.
 
 
@@ -164,11 +164,14 @@ on the Rust community.
 %             Definitions             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Definitions}\label{r:definitions}
+\chapter{Definitions}\label{r:chapter_definitions}
 
-\section{Rust language and cargo}
+\section{Rust language}
 
 Rust is a language (...)
+
+
+\section{cargo}
 
 Cargo is the Rust package manager, which (...)
 
@@ -183,11 +186,11 @@ Its web version is available at crates.io.
 Semver is (...)
 
 There are three types of release:
-\begin{enumerate}
+\begin{itemize}
 	\item patch -- (...)
 	\item minor -- (...)
 	\item major -- (...)
-\end{enumerate}
+\end{itemize}
 
 Each release is marked with a number (...)
 
@@ -203,9 +206,9 @@ Cargo supports yanking releases from the registry.
 %          State of the art           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{State of the art}\label{r:stateoftheart}
+\chapter{State of the art}\label{r:chapter_stateoftheart}
 
-\section{The difficulty of correctly using semver in Rust}\label{r:semverisdifficult}
+\section{Usage of semver in Rust}\label{r:section_usageofsemver}
 
 <Above we explained what semver is, now explain in general what are the common difficulties and problems>
 
@@ -251,7 +254,7 @@ In other popular languages, there haven't been as much progress, because (...)
 %               Vision                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Vision}\label{r:vision}
+\chapter{Vision}\label{r:chapter_vision}
 
 \section{Project purpose}
 
@@ -265,18 +268,18 @@ The goal is to (...)
 The main usages of the tool are:
 \begin{itemize}
 	\item running locally from the command-line before publishing, (...)
-	\item running in CI (e.g. GitHub Actions) to check PRs, (...)
+	\item running in continuous integration (e.g. GitHub Actions) to check PRs, (...)
 \end{itemize}
 
-<Here describe the vision on how the tool should be automatically run in CI
+<Here describe the vision on how the tool should be automatically run in continuous integration
 and how that will benefit the Rust developers>
 
-\subsection{Running in CI}
+\subsection{Running in continuous integration}
 
-<Here describe the vision on how the tool should be automatically run in CI
+<Here describe the vision on how the tool should be automatically run in continuous integration
 and how that will benefit the Rust developers>
 
-\subsection{On-going plans to merge the tool into cargo}
+\subsection{Plans to merge the tool into cargo}
 
 <Here describe the existing plans to merge the project in which we're contributing
 to the official Rust toolchain and how that will benefit the Rust developers>
@@ -293,16 +296,16 @@ with (...) issues.
 %               Theory                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Theory}\label{r:theory}
+\chapter{Theory}\label{r:chapter_theory}
 
-\section{Project structure}\label{r:projectstructure}
+\section{Project structure}\label{r:section_projectstructure}
 
 The tool heavily uses the rustdocs, (...).
 It parses its JSON through Trustfall (...).
 
 The project consists of three sub-projects:
 \begin{enumerate}
-	\item cargo-semver-checks -- a CLI tool to run lints that are Trustfall queries, (...)
+	\item cargo-semver-checks -- a command line interface tool to run lints that are Trustfall queries, (...)
 	\item trustfall-rustdoc -- allows running Trustfall queries over rustdoc in a version-agnostic manner, (...)
 	\item trustfall-rustdoc-adapter -- implements the Trustfall interface for one specific rustdoc version, (...)
 \end{enumerate}
@@ -312,7 +315,7 @@ The project consists of three sub-projects:
 
 \section{cargo-semver-checks}
 
-<Here describe the inner-workings of the CLI tool>
+<Here describe the inner-workings of the command line interface tool>
 
 
 \section{trustfall-rustdoc-adapter}
@@ -325,7 +328,7 @@ The project consists of three sub-projects:
 %           Implementation            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Implementation}\label{r:implementation}
+\chapter{Implementation}\label{r:chapter_implementation}
 
 \section{New lints}
 
@@ -337,9 +340,9 @@ The project consists of three sub-projects:
 <Here write a list about the improvements in the testing suite>
 
 
-\section{CLI usage}
+\section{Command line interface}
 
-<Here write a list about changes that made the CLI better>
+<Here write a list about changes that made the command line interface better>
 
 
 \section{Bugfixes}
@@ -347,9 +350,9 @@ The project consists of three sub-projects:
 <Here write a list about found and fixed bugs>
 
 
-\section{CI improvements}
+\section{Continuous integration improvements}
 
-<Here write a list about the V2 of the CI>
+<Here write a list about the V2 of the continuous integration>
 
 
 \section{Script}
@@ -366,7 +369,7 @@ The project consists of three sub-projects:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                Team                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Team}\label{r:team}
+\chapter{Team}\label{r:chapter_team}
 
 \section{Used methodology}
 
@@ -382,9 +385,9 @@ The project consists of three sub-projects:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %               Summary               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Summary}\label{r:summary}
+\chapter{Summary}\label{r:chapter_summary}
 
-\section{Steady progress in tool's popularity}
+\section{Steady increase in tool's popularity}
 
 <Here show how the number of downloads has changed>
 
@@ -394,8 +397,8 @@ The project consists of three sub-projects:
 
 <Here show the comments of users on GitHub.
 As one of the examples, give the maintainer of a big
-library that created an issue ,,Make CI runs faster''
-and after learning about one of our PRs to make the CI faster,
+library that created an issue ,,Make continuous integration runs faster''
+and after learning about one of our PRs to make the continuous integration faster,
 he was so excited that he wrote a comment with a tip in our PR>
 
 <Here list the maintainers of big libraries that started using the tool during our development>
@@ -422,7 +425,7 @@ he was so excited that he wrote a comment with a tip in our PR>
 
 \appendix
 
-\begin{thebibliography}{99}\label{r:bibliography}
+\begin{thebibliography}{99}\label{r:chapter_bibliography}
 \addcontentsline{toc}{chapter}{Bibliography}
 
 % \bibitem[Bea65]{beaman} Juliusz Beaman, \textit{Morbidity of the Jolly
@@ -473,7 +476,7 @@ he was so excited that he wrote a comment with a tip in our PR>
 %             Attachments             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter*{Attachments}\label{r:attachments}
+\chapter*{Attachments}\label{r:chapter_attachments}
 \addcontentsline{toc}{chapter}{Attachments}
 
 \section*{Source code structure}
