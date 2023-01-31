@@ -103,37 +103,42 @@ on the Rust community.
 
 \section{Rust language}
 
-Rust is a language (...)
+TODO:
+\begin{itemize}
+	\item describe Rust
+	\item mention its main selling points, wikipedia might be helpful
+		(though write the description yourself, without copy-pasting),
+		alternatively search for more informal Rust descriptions
+	\item mention its popularity (stackoverflow surveys, linux kernel, etc)
+\end{itemize}
 
+\section{Rust's package manager and build system -- cargo}
 
-\section{cargo}
-
-Cargo is the Rust package manager, which (...)
-
-Cargo requires the packages (called crates) to follow semantic versioning (semver).
-
-The place where cargo (...) is called the registry.
-Its web version is available at crates.io.
+TODO:
+\begin{itemize}
+	\item describe cargo
+	\item compare it to Python's pip -- a lot of people know what it is
+	\item mention differences with pip -- e.g. yanking releases
+	\item mention that it follows semver and it is described in another section
+	\item define Manifest file and lockfile
+	\item describe what happens during cargo update
+	\item define the registry and mention its site -- crates.io
+\end{itemize}
 
 
 \section{Semantic versioning (semver)}
 
-Semver is (...)
-
-There are three types of release:
+TODO:
 \begin{itemize}
-	\item patch -- (...)
-	\item minor -- (...)
-	\item major -- (...)
+	\item define semantic versioning, semver.org might be useful
+	\item describe why it is used
+	\item describe what happens during cargo update
+	\item exactly define how semver works in Rust
+	\item mention how yanking releases is useful for semver
+	\item mention that it is not clearly defined in Rust what is patch, minor and major,
+		use the comments from Predrag's tweets about patch vs minor https://twitter.com/PredragGruevski/status/1618684048389607424
+		and Predrag's blog about breaking vs major https://predr.ag/blog/some-rust-breaking-changes-do-not-require-major-version/
 \end{itemize}
-
-Each release is marked with a number (...)
-
-For example, (...)
-
-By default, cargo uses (...)
-
-Cargo supports yanking releases from the registry.
 
 
 
@@ -143,31 +148,39 @@ Cargo supports yanking releases from the registry.
 
 \chapter{State of the art}\label{r:chapter_stateoftheart}
 
-\section{Usage of semver in Rust}\label{r:section_usageofsemver}
+\section{Problems with using semver in Rust}\label{r:section_usageofsemver}
 
-<Above we explained what semver is, now explain in general what are the common difficulties and problems>
-
-<Why is it easy to break semver?>
-
-<Why people tend to break semver?>
+TODO:
+\begin{itemize}
+	\item explain why it is easy to break semver in Rust. Do that by giving specific, non-obvious code examples.
+	\item expand this TODO with sources from which to get examples
+	\item explain other reasons as to why people tend to break semver
+	\item don't give yet real-life examples (those will be in the sections under),
+		write in a general way
+	\item make it clear that using semver in Rust is hard
+\end{itemize}
 
 \section{Consequences of breaking semver}
 
-When a library maintainer breaks semver, for (...) reasons, the users' code stops compiling and (...)
+TODO:
+\begin{itemize}
+	\item describe that breaking semver means that people's code stops compiling
+	\item describe the possible scale of catastrophes
+\end{itemize}
 
 
 \section{Real-life examples of semver breaks}
 
-<Here write about cases our mentor mentioned in his blogs>
-
-<Here also write about cases users reported in the github issue>
-
-<Here mention the paper describing that 43\% of yanked releases
-are because of semver breaks and 3.7\% of all >300'000 releases are yanked>
-
-<Here mention that we've developed (currently: we're developing)
-a script that will scan all releases for the semver breaks
-we can detect and the results are presented in chapter (...)>
+TODO:
+\begin{itemize}
+	\item write (and cite) about cases our mentor mentioned in his blogs>
+	\item write about cases users reported in the github issue
+	\item mention the paper describing that 43\% of yanked releases
+are because of semver breaks and 3.7\% of all >300'000 releases are yanked
+	\item mention that we've developed 
+		a script that scans all releases for the semver breaks
+		we can detect and the results are presented in some chapter
+\end{itemize}
 
 
 \section{Existing tools for detecting semver breaks}
