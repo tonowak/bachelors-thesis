@@ -319,56 +319,71 @@ and focuses on structural or contextual details.
 
 \section{Problems with using semver in Rust}\label{r:section_usageofsemver}
 
-TODO:
-\begin{itemize}
-	\item explain why it is easy to break semver in Rust.
-		Do that by giving specific, non-obvious code examples.
-	\item search for sources from which to get examples
-	\item explain other reasons as to why people tend to break semver
-	\item don't give yet real-life examples (those will be in the sections under),
-		write in a general way
-	\item make it clear that using semver in Rust is hard
-\end{itemize}
+% TODO:
+% - explain why it is easy to break semver in Rust.
+%   Do that by giving specific, non-obvious code examples.
+% - search for sources from which to get examples
+% - explain other reasons as to why people tend to break semver
+% - don't give yet real-life examples (those will be in the sections under),
+%   write in a general way
+% - make it clear that using semver in Rust is hard
+
+It might seem easy to maintain semver, but some violations are really hard to notice, when not actively searching for them. Let's look at an example.
+
+\begin{verbatim}
+struct Foo {
+    x: String
+}
+
+pub struct Bar {
+    y: Foo
+}
+\end{verbatim}
+
+Changing {\ttfamily Foo.x} type from {\ttfamily String} to {\ttfamily Rc<str>} causes semver break, even though it is a non-public field of a non-public struct. Why? {\ttfamily String} implements {\ttfamily Send} and {\ttfamily Sync} traits, that are automatically derived, making both {\ttfamily Foo} and {\ttfamily Bar} implement {\ttfamily Send} and {\ttfamily Sync}. In contrary, {\ttfamily Rc<str>} implements neither of them, so the change results in publicly visible struct {\ttfamily Bar} losing a trait.
+
+Of course, things can get way more complex. Just for example, having these structs in very different locations complicates keeping track of such behaviours. It should be clear by now, that breaking semver on accident is possible.
 
 \section{Consequences of breaking semver}
 
-TODO:
-\begin{itemize}
-	\item describe that breaking semver means that people's code stops compiling
-	\item describe the possible scale of catastrophes
-	\item don't give yet real-life examples, write in a general way
-\end{itemize}
+% TODO:
+% - describe that breaking semver means that people's code stops compiling
+% - describe the possible scale of catastrophes
+% - don't give yet real-life examples, write in a general way
+
+When you publish a new version of a crate, that is breaking semver, you are causing a major inconvenience for the crate's users. 
+Their code might just stop compiling, when the offending version gets downloaded.
+
+This also could happen if the crate containing violation is not an immediate dependency, so one semver break, could result in tons of broken crates.
+
+Debugging a cryptic compilation error that starts showing up one day, without any change to the code, can be really frustrating, and might drive the users to stop using your crate.
 
 \section{Real-life examples of semver breaks}
 
-TODO:
-\begin{itemize}
-	\item write (and cite) about cases our mentor mentioned in his blogs
-	\item write about cases users reported in the github issue
-	\item mention the paper describing that 43\% of yanked releases
-		are because of semver breaks and 3.7\% of all >300'000 releases are yanked
-	\item mention that we've developed
-		a script that scans all releases for the semver breaks
-		we can detect and the results are presented in some chapter
-\end{itemize}
+% TODO:
+% - write (and cite) about cases our mentor mentioned in his blogs
+% - write about cases users reported in the github issue
+% - mention the paper describing that 43\% of yanked releases
+%   are because of semver breaks and 3.7\% of all >300'000 releases are yanked
+% - mention that we've developed 
+%   a script that scans all releases for the semver breaks
+%   we can detect and the results are presented in some chapter
 
 \section{Existing tools for detecting semver breaks}\label{r:section_existing_semver_tools}
 
-TODO:
-\begin{itemize}
-	\item list languages which have semver checking built-in,
-		explain that the language semantics were made for e.g. semver checking,
-	\item list current tools for detecting semver breaks in Rust:
-		cargo-breaking, rust-semverver, cargo-semver-checks
-	\item for the first two, explain a bit how they work and why they are no longer maintained.
-		Mieszko's slides have some info about that.
-	\item for cargo-semver-checks, explain a bit how it works (rustdoc, json, etc.)
-		and that contrary to the other two, it is maintained and it's made to be easily maintained.
-		Mention that this is the project we're working on.
-	\item research the current state of semver detection in other languages,
-		explain that it's hard to do in popular languages,
-		especially without features like rustdoc.
-\end{itemize}
+% TODO:
+% - list languages which have semver checking built-in,
+%   explain that the language semantics were made for e.g. semver checking,
+% - list current tools for detecting semver breaks in Rust:
+%   cargo-breaking, rust-semverver, cargo-semver-checks
+% - for the first two, explain a bit how they work and why they are no longer maintained.
+%   Mieszko's slides have some info about that.
+% - for cargo-semver-checks, explain a bit how it works (rustdoc, json, etc.)
+%   and that contrary to the other two, it is maintained and it's made to be easily maintained.
+%   Mention that this is the project we're working on.
+% - research the current state of semver detection in other languages,
+%   explain that it's hard to do in popular languages,
+%   especially without features like rustdoc.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %               Vision                %
@@ -702,6 +717,10 @@ TODO:
 \bibitem{Semantic-Versioning} semver.org,
 	\textit{Semantic Versioning 2.0.0} (2022) \\
 	https://semver.org/
+
+\bibitem[1]{beaman} Predrag Gruevski, 
+    \textit{Towards fearless cargo update} (2022) \\
+    https://predr.ag/blog/toward-fearless-cargo-update/
 
 \end{thebibliography}
 
