@@ -47,6 +47,23 @@ security patches and new functionality,
 without worrying about their app being broken by a dependency change.
 \end{abstract}
 
+% Abstrakt po polsku (potrzebny tylko w APD?)
+% W wielu językach programowania istnieją niezliczone niuanse sprawiające, że deweloperzy
+% omyłkowo publikują nowe wersje swoich pakietów bez zachowania kompatybilności wstecznej.
+% Takie publikacje mogą bezpośrednio wpłynąć na projekty korzystające z ich pakietów,
+% powodując błędy bądź nawet uniemożliwiając kompilację po aktualizacji do najnowszej wersji.
+% Jednym z dotkniętych tym problemem języków jest Rust, który również nie posiada wbudowanego
+% mechanizmu wymuszającego semantyczne wersjonowanie.
+
+% Celem tej pracy jest przedstawienie rozwoju narzędzia dla programistów w języku Rust, które
+% zmniejszaja szanse na publikację kodu nieprzestrzegającego zasad semantycznego wersjonowania.
+
+% Istnieją również plany aby narzędzie stało się częścią standardowego toolchainu
+% deweloperskiego. Skutkowałoby to jego powszechnym użyciem i tym samym pomogło użytkownikom
+% pakietów bezpiecznie korzystać z poprawek błędów, łatek bezpieczeństwa oraz nowych
+% funkcjonalności bez obaw o zepsucie ich aplikacji przez zmiany w którymś z wykorzystanych
+% pakietów.
+
 \tableofcontents
 %\listoffigures
 %\listoftables
@@ -180,7 +197,7 @@ TODO:
 	\item write about cases users reported in the github issue
 	\item mention the paper describing that 43\% of yanked releases
 		are because of semver breaks and 3.7\% of all >300'000 releases are yanked
-	\item mention that we've developed 
+	\item mention that we've developed
 		a script that scans all releases for the semver breaks
 		we can detect and the results are presented in some chapter
 \end{itemize}
