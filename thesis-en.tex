@@ -106,15 +106,39 @@ on the Rust community.
 \chapter{Definitions}\label{r:chapter_definitions}
 
 \section{Rust language}
+With its first stable release in 2015, Rust is a relatively new programming language that
+puts a strong emphasis on type-safety, memory-safety, performance and concurrency. Unlike
+other memory-safe languages, Rust does not use reference counting nor garbage collector.
+Instead it tracks the object lifetime of all the program's references during compilation,
+using its built-in mechanism named "borrow checker".
 
-TODO:
-\begin{itemize}
-	\item describe Rust
-	\item mention its main selling points, wikipedia might be helpful
-		(though write the description yourself, without copy-pasting),
-		alternatively search for more informal Rust descriptions
-	\item mention its popularity (stackoverflow surveys, linux kernel, etc)
-\end{itemize}
+Among many benefits and advantages of using Rust there are three dominant features. Firstly,
+it provides the user with great performance, both time- and memory-wise, allowing for
+writing efficient applications. Secondly, it is reliable -- with extensive type system and
+focus on runtime safety, Rust prevents the user from making multiple bugs
+already during compilation. Finally, it boosts productivity -- its documentation is
+comprehensive and the compiler's error messages are clear and helpful. Rust also provides
+an easy to use, integrated package manager (named cargo), a dedicated build tool,
+an auto-formatter and many more.
+
+According to surveys conducted among developers, Rust is considered to be the most enjoyable
+programming language for the 7th year in a row (as of 2022 summary, meaning it was always on top
+since its release in 2015). Over 87\% of respondents who have previously used Rust would
+like to continue programming in it.
+
+Because of the high level of safety it provides, Rust has also become the secondary
+language for writing Linux kernel (with the primary being C). While there have been
+attempts to add other languages (f.e. C++ in 1997), Rust is the first one to successfully
+make it since the kernel's first release in 1991.
+
+% TODO:
+% \begin{itemize}
+% 	\item describe Rust
+% 	\item mention its main selling points, wikipedia might be helpful
+% 		(though write the description yourself, without copy-pasting),
+% 		alternatively search for more informal Rust descriptions
+% 	\item mention its popularity (stackoverflow surveys, linux kernel, etc)
+% \end{itemize}
 
 \section{Rust's package manager and build system -- cargo}
 
@@ -180,7 +204,7 @@ TODO:
 	\item write about cases users reported in the github issue
 	\item mention the paper describing that 43\% of yanked releases
 		are because of semver breaks and 3.7\% of all >300'000 releases are yanked
-	\item mention that we've developed 
+	\item mention that we've developed
 		a script that scans all releases for the semver breaks
 		we can detect and the results are presented in some chapter
 \end{itemize}
@@ -427,6 +451,22 @@ TODO:
 
 % \bibitem[Bea65]{beaman} Juliusz Beaman, \textit{Morbidity of the Jolly
 %     function}, Mathematica Absurdica, 117 (1965) 338--9.
+
+\bibitem[]{Rust-1} the Rust Team,
+	\textit{Rust Programming Language} (2023) \\
+	https://www.rust-lang.org/
+
+\bibitem[]{Rust-2} Wikipedia,
+	\textit{Rust (programming language)} (2023) \\
+	https://en.wikipedia.org/wiki/Rust\_(programming\_language)/
+
+\bibitem[]{survey} Stack Overflow,
+	\textit{2022 Developer Survey} (2022) \\
+	https://survey.stackoverflow.co/2022/\#section-most-loved-dreaded-and-wanted-programming-scripting-and-markup-languages/
+
+\bibitem[]{Rust-for-Linux} Wikipedia,
+	\textit{Rust for Linux} (2023) \\
+	https://en.wikipedia.org/wiki/Rust\_for\_Linux/
 
 \end{thebibliography}
 
