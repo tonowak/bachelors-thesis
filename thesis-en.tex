@@ -342,7 +342,7 @@ pub struct Bar {
 
 Changing {\ttfamily Foo.x} type from {\ttfamily String} to {\ttfamily Rc<str>} causes semver break, even though it is a non-public field of a non-public struct. Why? {\ttfamily String} implements {\ttfamily Send} and {\ttfamily Sync} traits, that are automatically derived, making both {\ttfamily Foo} and {\ttfamily Bar} implement {\ttfamily Send} and {\ttfamily Sync}. In contrary, {\ttfamily Rc<str>} implements neither of them, so the change results in publicly visible struct {\ttfamily Bar} losing a trait.
 
-Of course, things can get way more complex. Just for example, having these structs in very different locations complicates keeping track of such behaviours. It should be clear by now, that breaking semver on accident is possible.
+Of course, things can get way more complex. Just for example, having these structs in very different locations complicates keeping track of such behaviours. Section 2.3 will also show that these conditions result in real-life unintended semver breaks. It should be clear by now, that breaking semver on accident is possible.
 
 \section{Consequences of breaking semver}
 
@@ -353,7 +353,6 @@ Of course, things can get way more complex. Just for example, having these struc
 
 When you publish a new version of a crate, that is breaking semver, you are causing a major inconvenience for the crate's users. 
 Their code might just stop compiling, when the offending version gets downloaded.
-
 This also could happen if the crate containing violation is not an immediate dependency, so one semver break, could result in tons of broken crates.
 
 Debugging a cryptic compilation error that starts showing up one day, without any change to the code, can be really frustrating, and might drive the users to stop using your crate.
@@ -384,6 +383,14 @@ Debugging a cryptic compilation error that starts showing up one day, without an
 % - research the current state of semver detection in other languages,
 %   explain that it's hard to do in popular languages,
 %   especially without features like rustdoc.
+
+There aren't many great existing tools for semver checking. The main reason for that, is that the semantics of popular languages do not allow for complete automatic verification. Of course, there are some initiatives to combat this - for example, the Elm languge enforces semantic versioning. It's type system enables automatic detection of all API changes.
+
+Unfortunately, the Rust langugage's semantic were not designed with semver in mind. Despite this, there are some existing tools for semver checking. First of them, cargo-breaking, works on the abstract syntax  tree. The problem here is that to compare API changes, you must navigate two trees at once, which can get really complex and tedious, because the abstract syntax tree could change quite a lot without any public API changes. Another issue is that both language syntax and the structure of the abstract syntax tree might change along with the development of the language, which makes maintenance time-consuming.
+
+The second existing tool is rust-semverver, which focuses on the metadata present in the rust-specific rlib binary dynamic static library format. Because of that, unfortunately, the user experience is far from ideal, as it forces the user into some specific unstable versions of the language, and the quality of error messages is limited. 
+
+In comparsion, the cargo-semver-checks' approach to write lints as queries, seems to work really well. Adding new queries is designed to be quite accessible, and the maintaince comes to keeping adapter up to date with rustdoc changes, which seems to be about as low effort as it could be.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %               Vision                %
@@ -718,9 +725,12 @@ TODO:
 	\textit{Semantic Versioning 2.0.0} (2022) \\
 	https://semver.org/
 
+% State of the art references:
 \bibitem[1]{beaman} Predrag Gruevski, 
     \textit{Towards fearless cargo update} (2022) \\
     https://predr.ag/blog/toward-fearless-cargo-update/
+
+% should this be mentioned? https://elm-lang.org/
 
 \end{thebibliography}
 
