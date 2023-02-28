@@ -361,7 +361,7 @@ It also mentions that 3.7\% of all releases (and there is more than 300 000 of t
 
 \section{Existing tools for detecting semver breaks}\label{r:section_existing_semver_tools}
 
-There aren't many great existing tools for semver checking. The main reason for that, is that the semantics of popular languages do not allow for complete automatic verification. Of course, there are some initiatives to combat this - for example, the Elm languge enforces semantic versioning. It's type system enables automatic detection of all API changes. Outside of that, it does not appear that tools for checking semver in estabilished languages like Python or C++ are commonly used in the industry.
+There aren't many great existing tools for semver checking. The main reason for that, is that the semantics of popular languages do not allow for complete automatic verification. Of course, there are some initiatives to combat this - for example, the Elm languge\footnote{https://elm-lang.org/} enforces semantic versioning. It's type system enables automatic detection of all API changes. Outside of that, it does not appear that tools for checking semver in estabilished languages like Python or C++ are commonly used in the industry.
 
 Unfortunately, the Rust langugage's semantic were not designed with semver in mind. Despite this, there are some existing tools for semver checking. First of them, cargo-breaking, works on the abstract syntax  tree. The problem here is that to compare API changes, you must navigate two trees at once, which can get really complex and tedious, because the abstract syntax tree could change quite a lot, even without any public API changes. Another issue is that both language syntax and the structure of the abstract syntax tree might change along with the development of the language, which makes maintenance time-consuming.
 
@@ -707,8 +707,6 @@ TODO:
 \bibitem[1]{beaman} Predrag Gruevski, 
     \textit{Towards fearless cargo update} (2022) \\
     https://predr.ag/blog/toward-fearless-cargo-update/
-
-% should this be mentioned? https://elm-lang.org/
 
 \end{thebibliography}
 
