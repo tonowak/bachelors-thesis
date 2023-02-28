@@ -347,15 +347,6 @@ Debugging a cryptic compilation error that starts showing up one day, without an
 
 \section{Real-life examples of semver breaks} \label{r:section_real_life_semver_breaks}
 
-% TODO:
-% - write (and cite) about cases our mentor mentioned in his blogs
-% - write about cases users reported in the github issue
-% - mention the paper describing that 43\% of yanked releases
-%   are because of semver breaks and 3.7\% of all >300'000 releases are yanked
-% - mention that we've developed 
-%   a script that scans all releases for the semver breaks
-%   we can detect and the results are presented in some chapter
-
 Some of popular Rust crates with millions of downloads happened to break semver:
 \begin{itemize}
     \item {\ttfamily pyo3 v0.5.1} accidentally changed a function signature\footnote{https://github.com/PyO3/pyo3/issues/285}
@@ -369,20 +360,6 @@ claims that out of the yanked (un-publised) releases, semver break was the leadi
 It also mentions that 3.7\% of all releases (and there is more than 300 000 of them already), are yanked, which should show the scale of the problem - thousands of detected semver breaks.
 
 \section{Existing tools for detecting semver breaks}\label{r:section_existing_semver_tools}
-
-% TODO:
-% - list languages which have semver checking built-in,
-%   explain that the language semantics were made for e.g. semver checking,
-% - list current tools for detecting semver breaks in Rust:
-%   cargo-breaking, rust-semverver, cargo-semver-checks
-% - for the first two, explain a bit how they work and why they are no longer maintained.
-%   Mieszko's slides have some info about that.
-% - for cargo-semver-checks, explain a bit how it works (rustdoc, json, etc.)
-%   and that contrary to the other two, it is maintained and it's made to be easily maintained.
-%   Mention that this is the project we're working on.
-% - research the current state of semver detection in other languages,
-%   explain that it's hard to do in popular languages,
-%   especially without features like rustdoc.
 
 There aren't many great existing tools for semver checking. The main reason for that, is that the semantics of popular languages do not allow for complete automatic verification. Of course, there are some initiatives to combat this - for example, the Elm languge enforces semantic versioning. It's type system enables automatic detection of all API changes. Outside of that, it does not appear that tools for checking semver in estabilished languages like Python or C++ are commonly used in the industry.
 
