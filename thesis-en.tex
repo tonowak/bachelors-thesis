@@ -319,37 +319,25 @@ and focuses on structural or contextual details.
 
 \section{Problems with using semver in Rust}\label{r:section_usageofsemver}
 
-% TODO:
-% - explain why it is easy to break semver in Rust.
-%   Do that by giving specific, non-obvious code examples.
-% - search for sources from which to get examples
-% - explain other reasons as to why people tend to break semver
-% - don't give yet real-life examples (those will be in the sections under),
-%   write in a general way
-% - make it clear that using semver in Rust is hard
-
 It might seem easy to maintain semver, but some violations are really hard to notice, when not actively searching for them. Let's look at an example.
-
+\vspace{-3pt}
 \begin{verbatim}
-struct Foo {
-    x: String
-}
+  struct Foo {
+      x: String
+  }
 
-pub struct Bar {
-    y: Foo
-}
+  pub struct Bar {
+      y: Foo
+  }
 \end{verbatim}
+\vspace{-5pt}
 
 Changing {\ttfamily Foo.x} type from {\ttfamily String} to {\ttfamily Rc<str>} causes semver break, even though it is a non-public field of a non-public struct. Why? {\ttfamily String} implements {\ttfamily Send} and {\ttfamily Sync} traits, that are automatically derived, making both {\ttfamily Foo} and {\ttfamily Bar} implement {\ttfamily Send} and {\ttfamily Sync}. In contrary, {\ttfamily Rc<str>} implements neither of them, so the change results in publicly visible struct {\ttfamily Bar} losing a trait.
 
-Of course, things can get way more complex. Just for example, having these structs in very different locations complicates keeping track of such behaviours. Section 2.3 will also show that these conditions result in real-life unintended semver breaks. It should be clear by now, that breaking semver on accident is possible.
+Of course, things can get way more complex. Just for example, having these structs in very different locations complicates keeping track of such behaviours. A similar error crept into release v3.2.0 of a well-known crate, {\ttfamily clap}. More of that later on in section \ref{r:section_real_life_semver_breaks}.
+It should be clear by now, that breaking semver on accident is possible.
 
 \section{Consequences of breaking semver}
-
-% TODO:
-% - describe that breaking semver means that people's code stops compiling
-% - describe the possible scale of catastrophes
-% - don't give yet real-life examples, write in a general way
 
 When you publish a new version of a crate, that is breaking semver, you are causing a major inconvenience for the crate's users. 
 Their code might just stop compiling, when the offending version gets downloaded.
@@ -357,7 +345,7 @@ This also could happen if the crate containing violation is not an immediate dep
 
 Debugging a cryptic compilation error that starts showing up one day, without any change to the code, can be really frustrating, and might drive the users to stop using your crate.
 
-\section{Real-life examples of semver breaks}
+\section{Real-life examples of semver breaks} \label{r:section_real_life_semver_breaks}
 
 % TODO:
 % - write (and cite) about cases our mentor mentioned in his blogs
@@ -367,6 +355,18 @@ Debugging a cryptic compilation error that starts showing up one day, without an
 % - mention that we've developed 
 %   a script that scans all releases for the semver breaks
 %   we can detect and the results are presented in some chapter
+
+Some of popular Rust crates with millions of downloads happened to break semver:
+\begin{itemize}
+    \item {\ttfamily pyo3 v0.5.1} accidentally changed a function signature\footnote{https://github.com/PyO3/pyo3/issues/285}
+    \item {\ttfamily clap v3.2.0} accidentally had a type stop implementing an auto-trait\footnote{https://github.com/clap-rs/clap/issues/3876};
+    \item multiple {\ttfamily block-buffer} versions accidentally broke their MSRV contract\footnote{https://github.com/RustCrypto/utils/issues/22};
+    \item and many more. We have developed a script that scans all releases for semver breaks we can detect, the results are covered in section \ref{r:section_scanning_script}
+\end{itemize}
+
+Of course, the problem is even more prominent in less popular crates, where developers might not be as experienced. A paper\footnote{https://arxiv.org/pdf/2201.11821.pdf}
+claims that out of the yanked (un-publised) releases, semver break was the leading reason for yanking, with shocking 43\% rate.
+It also mentions that 3.7\% of all releases (and there is more than 300 000 of them already), are yanked, which should show the scale of the problem - thousands of detected semver breaks.
 
 \section{Existing tools for detecting semver breaks}\label{r:section_existing_semver_tools}
 
@@ -384,13 +384,13 @@ Debugging a cryptic compilation error that starts showing up one day, without an
 %   explain that it's hard to do in popular languages,
 %   especially without features like rustdoc.
 
-There aren't many great existing tools for semver checking. The main reason for that, is that the semantics of popular languages do not allow for complete automatic verification. Of course, there are some initiatives to combat this - for example, the Elm languge enforces semantic versioning. It's type system enables automatic detection of all API changes.
+There aren't many great existing tools for semver checking. The main reason for that, is that the semantics of popular languages do not allow for complete automatic verification. Of course, there are some initiatives to combat this - for example, the Elm languge enforces semantic versioning. It's type system enables automatic detection of all API changes. Outside of that, it does not appear that tools for checking semver in estabilished languages like Python or C++ are commonly used in the industry.
 
-Unfortunately, the Rust langugage's semantic were not designed with semver in mind. Despite this, there are some existing tools for semver checking. First of them, cargo-breaking, works on the abstract syntax  tree. The problem here is that to compare API changes, you must navigate two trees at once, which can get really complex and tedious, because the abstract syntax tree could change quite a lot without any public API changes. Another issue is that both language syntax and the structure of the abstract syntax tree might change along with the development of the language, which makes maintenance time-consuming.
+Unfortunately, the Rust langugage's semantic were not designed with semver in mind. Despite this, there are some existing tools for semver checking. First of them, cargo-breaking, works on the abstract syntax  tree. The problem here is that to compare API changes, you must navigate two trees at once, which can get really complex and tedious, because the abstract syntax tree could change quite a lot, even without any public API changes. Another issue is that both language syntax and the structure of the abstract syntax tree might change along with the development of the language, which makes maintenance time-consuming.
 
 The second existing tool is rust-semverver, which focuses on the metadata present in the rust-specific rlib binary dynamic static library format. Because of that, unfortunately, the user experience is far from ideal, as it forces the user into some specific unstable versions of the language, and the quality of error messages is limited. 
 
-In comparsion, the cargo-semver-checks' approach to write lints as queries, seems to work really well. Adding new queries is designed to be quite accessible, and the maintaince comes to keeping adapter up to date with rustdoc changes, which seems to be about as low effort as it could be.
+In comparsion, the cargo-semver-checks' approach to write lints as queries, seems to work really well. Adding new queries is designed to be quite accessible, and the maintaince comes to keeping adapter up to date with rustdoc API changes, which seems to be about as low effort as it could be.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %               Vision                %
@@ -606,7 +606,7 @@ TODO:
 
 <Here write a list about the V2 of the continuous integration>
 
-\section{Script}
+\section{Script} 
 
 <Here write about the script that searches all existing releases for detected semver breaks>
 
@@ -635,11 +635,12 @@ TODO:
 	\item list the maintainers of big libraries that started using the tool during our development
 \end{itemize}
 
-\section{Script}
+\section{Script} \label{r:section_scanning_script}
 
 TODO:
 \begin{itemize}
-	\item show the results of the script that searches all existing releases for detected semver breaks
+        \item adjust the name of the subsection
+        \item show the results of the script that searches all existing releases for detected semver breaks
 	\item describe how our new lints can make an impact on the community based on the found semver breaks from the script
 \end{itemize}
 
