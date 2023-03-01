@@ -146,8 +146,8 @@ cargo has many advantages making it a lot safer than pip:
 		installed in a location that would interfere with unrelated code.
 	\item When a user adds a crate to their project, they can only use its interface and there is
 		no possibility of accessing eventual dependencies installed with it.
-	\item The crate's name must also be included in a special file named \texttt{Cargo.toml}, not
-		just in the source code file.
+	\item The dependency's name must also be included in a special file named \texttt{Cargo.toml},
+		not just in the source code file.
 	\item To make the package's public interface explicit, Rust provides a series of tools for
 		privacy management. Because of this, it is much more difficult for the user to make their
 		project depend on something that the package's author did not intend to offer and could
