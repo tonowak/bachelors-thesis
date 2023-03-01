@@ -145,8 +145,9 @@ cargo has many advantages making it a lot safer than pip:
 \begin{itemize}
 	\item Cargo's crates are always installed using virtual environments, thus they cannot be
 		installed in a location that would interfere with unrelated code.
-	\item When a user adds a crate to their project, they can only use its interface and there is
-		no possibility of accessing eventual dependencies installed with it.
+	\item When a user adds a crate to their project, they can only use its direct, public interface.
+		There is no possibility to access the interfaces of the dependencies that the added crate
+		is using itself.
 	\item The dependency's name must also be included in a special file named \texttt{Cargo.toml},
 		not just in the source code file.
 	\item To make the package's public interface explicit, Rust provides a series of tools for
