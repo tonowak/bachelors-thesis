@@ -208,9 +208,8 @@ Besides downloading dependencies, users can also publish their own packages usin
 the \texttt{cargo publish} command. To use the command, the user must first authenticate with
 an API token. After doing so, the command first performs preliminary checks, including searching
 the manifest for a key to determine whether the user is allowed to upload their package
-to the selected registry (by default crates.io). Once the checks are passed, all of the source code
-from the current directory is compressed into a single \texttt{.crate} that is then uploaded
-to the registry.
+to the selected registry (by default crates.io). Once the checks are passed, the package is
+uploaded and available publicly.
 
 \section{Semantic versioning (semver)}\label{r:section_semver}
 
