@@ -1,4 +1,5 @@
 \documentclass[licencjacka,en]{pracamgr}
+\usepackage{hyperref}
 
 \autor{Tomasz Nowak}{429575}
 \autori{Michał Staniewski}{429598}
@@ -201,7 +202,7 @@ TODO:
 		we can detect and the results are presented in some chapter
 \end{itemize}
 
-\section{Existing tools for detecting semver breaks}
+\section{Existing tools for detecting semver breaks}\label{r:section_existing_semver_tools}
 
 TODO:
 \begin{itemize}
@@ -227,54 +228,128 @@ TODO:
 
 \section{Project purpose}
 
-TODO:
+We have taken part in the development of \texttt{cargo-semver-checks}
+-- a tool meant to detect semver breaks of a Rust project before publishing
+its new version to the registry.
+The main goal of the project is to reduce the number of issues with new releases
+of libraries, which would deepen the Rust community's trust
+in the packages they are using and in the whole ecosystem.
+
+The tool is \textit{not} meant to detect all possible semver breaks.
+Instead, the detection mechanism and existing lints are written
+with a strong focus on finding only true-positives.
+Each false-positive (which is defined as a scenario where the tool
+wrongly reports a semver break) is perceived as a bug in the tool.
+There are two advantages with this approach:
 \begin{itemize}
-	\item explain for what the tool is designed for.
-	\item explain its goals.
+	\item the tool is suited to be used in continuous integration
+		for finding semver issues in commits or Pull Requests
+		-- it reports semver breaks only when
+		its output should not be ignored and requires manual inspection,
+	\item we're avoiding a scenario in which
+		a user encounters false-positives, they become frustated
+		and their trust in the tool is reduced, making them
+		less likely to use the tool again.
 \end{itemize}
+
+Similarly to the Rust compiler, the reports contain
+detailed information about the issues, including
+the line of code in which each one was found, both short and long description
+of the triggered lint and, if possible, reference links to the Rust documentation
+describing the semver issue in more detail.
 
 \section{Plans to merge the tool into cargo}
 
-TODO:
-\begin{itemize}
-	\item mention why this project was chosen to be merged into cargo
-	\item mention how that changed the project
-	\item mention the progress with merging
-	\item explain that it will happen with high probability
-\end{itemize}
+There are already on-going plans to merge cargo-semver-checks into
+the official Rust development toolchain,
+which has been initiated by one of the developers working on cargo \cite{issue-merge-cargo}.
+That would make the tool available to all Rust programmers
+through a cargo subcommand and would be a huge step towards reducing the number of
+package releases with semver issues.
+
+Because of those plans, the commandline interface of the project is similar
+to the interface of cargo's subcommands. Additionally, cargo developers
+take part in discussions about the design of the interface \cite{issue-cli-interface}
+or sometimes even review changes to the code or develop new functionalities.
+
+It is cargo-semver-checks that was chosen to be merged into cargo,
+not the other semver issues detecting tools,
+mainly because it is the easiest to maintain
+(as described in \ref{r:section_existing_semver_tools})
+and doesn't report false-positives.
 
 \section{Project usage}
 
-TODO:
-\begin{itemize}
-	\item list two usages of the tool: running it locally and from CI
-	\item explain them briefly
-\end{itemize}
+The basic functionality of the tool is to compare two versions of the code
+(the ,,current'' crate and the ,,baseline'' crate)
+and notify the user about the semver issues that were found when checking the two versions.
+
+One can run the tool by directly passing the path to the current crate
+and either getting the baseline crate from registry, or by directly passing
+a path to the baseline crate.
+
+Because a large portion of libraries are currently developed using GitHub,
+we are also providing a continuous integration job
+via GitHub Actions to automatically ensure that
+a Pull Request satisfies semver.
 
 \subsection{Running locally}
 
-TODO:
+The tool can be used on a local copy of the project
+(for example, just before releasing its new version to the registry
+through \texttt{cargo publish})
+by passing the path to its manifest.
+The baseline crate can be passed in a similar manner,
+but alternatively it's possible to either
+specify a version of the crate in the registry with which the
+current crate should be compared with, or
+(assuming that the current directory is a git repository)
+by passing a git revision where the baseline project is located.
+
+Additionally, it is possible to check all crates in a workspace
+(which is a collection of crates)
+one by one
+by passing the path to the manifest that defines the workspace.
+
+\subsection{Usage in continuous integration}
+
+Seeing that GitHub is the most popular internet hosting service for version control
+amongst the Rust libraries developers,
+one of the goals of the project is to implement a GitHub Action
+that checks whether a given git branch hasn't violated semver with recent changes.
+
+There are two reasons as to why this continuous integration job is beneficial for the developers:
 \begin{itemize}
-	\item explain why someone would want to run it locally, mention \texttt{cargo publish}
-	\item explain what options the user needs to run it locally (different ways to get rustdoc)
+	\item it can be used together with a job that automatically publishes a new version of the library
+		when it passes the semver lints and the version of the package has been raised
+		in the manifest file,
+	\item it provides important information for library maintainers for deciding when
+		a Pull Request should be merged -- in case the branch contains a minor or major change,
+		the maintainers could want to wait with merging it until they plan to make
+		a minor or major release of their library.
 \end{itemize}
 
-\subsection{Running in continuous integration}
-
 TODO:
 \begin{itemize}
-	\item define PRs and GitHub
-	\item describe the vision on how the tool should be automatically run in continuous integration
-		and how that will benefit the Rust developers
+	\item ask Mieszko to check this section
 \end{itemize}
 
 \section{Project baseline}
 
-TODO:
+Before our contributions, the project was already partially functional,
+but it had numerous issues which often prevented the community from adopting the tool
+into their workflow:
 \begin{itemize}
-	\item explain the state of the project before our contributions
-	\item explain the issues of the project before our contributions
-	\item explain how much the project vision weren't done before us
+	\item the project didn't have many lints,
+	\item the code was bugged in multiple ways and lacked some functionality,
+	\item the community wasn't satisfied with the implemented GitHub Action to the point where
+		some developers coded their own continuous integration job using just the command-line interface of the tool,
+	\item some existing lints had false-positives,
+	\item the codebase was not in a state where new contributors could easily begin making changes
+		to the project (which is crucial for the project to flourish in the long term).
+		For example, adding new lints and tests wasn't intuitive and required many manual steps, 
+		the filenames and variable names were not always descriptive enough
+		and the code lacked comments that explained some of the logic and decisions behind it.
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -443,6 +518,8 @@ TODO:
 
 % \bibitem[Bea65]{beaman} Juliusz Beaman, \textit{Morbidity of the Jolly
 %     function}, Mathematica Absurdica, 117 (1965) 338--9.
+\bibitem{issue-merge-cargo} \href{}{GitHub cargo-semver-checks issue \#61: Prepare for merging into cargo}
+\bibitem{issue-cli-interface} \href{}{GitHub cargo-semver-checks issue \#86 What should the CLI look like?}
 
 \end{thebibliography}
 
