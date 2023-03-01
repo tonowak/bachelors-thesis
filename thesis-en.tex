@@ -132,15 +132,6 @@ language for writing Linux kernel (with the primary being C). While there have b
 attempts to add other languages (f.e. C++ in 1997), Rust is the first one to successfully
 make it since the kernel's first release in 1991.
 
-% TODO:
-% \begin{itemize}
-% 	\item describe Rust
-% 	\item mention its main selling points, wikipedia might be helpful
-% 		(though write the description yourself, without copy-pasting),
-% 		alternatively search for more informal Rust descriptions
-% 	\item mention its popularity (stackoverflow surveys, linux kernel, etc)
-% \end{itemize}
-
 \section{Rust's package manager and build system -- cargo}
 
 Cargo is the official package manager for Rust. It is responsible for compiling the user's
@@ -220,18 +211,6 @@ to the selected registry (by default crates.io). Once the checks are passed, all
 from the current directory is compressed into a single \texttt{.crate} that is then uploaded
 to the registry.
 
-% TODO:
-% \begin{itemize}
-% 	\item describe cargo
-% 	\item compare it to Python's pip -- a lot of people know what it is
-% 	\item mention differences with pip -- e.g. yanking releases
-% 	\item mention that it follows semver and it is described in another section
-% 	\item define Manifest file
-% 	\item describe what happens during cargo update
-% 	\item define the registry and mention its site -- crates.io
-% 	\item describe how publishing packages work (e.g. how the CLI for it works)
-% \end{itemize}
-
 \section{Semantic versioning (semver)}
 
 Semantic versioning is a set of rules and requirements dictating how version numbers for packages
@@ -282,18 +261,6 @@ as it may be in use by some projects, but forces a version increment against its
 whenever the next version is released. The resolver ignores yanked package versions unless they are
 already present in the \texttt{Cargo.lock} file. While there are many reasons behind packages being
 yanked, one of the main causes remains breaking semver.
-
-
-% TODO:
-% \begin{itemize}
-% 	\item define semantic versioning, semver.org might be useful
-% 	\item describe why it is used
-% 	\item exactly define how semver works in Rust
-% 	\item mention how yanking releases is useful for semver
-% 	\item mention that it is not clearly defined in Rust what is patch, minor and major,
-% 		use the comments from Predrag's tweets about patch vs minor https://twitter.com/PredragGruevski/status/1618684048389607424
-% 		and Predrag's blog about breaking vs major https://predr.ag/blog/some-rust-breaking-changes-do-not-require-major-version/
-% \end{itemize}
 
 \section{Abstract syntax tree (AST)}
 
