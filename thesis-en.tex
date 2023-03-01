@@ -245,14 +245,14 @@ the user to select the upper bound for maximum compatible number anywhere from o
 version (not allowing any updates), to no limit at all (equivalent to allowing even major updates).
 The default behaviour is to update until the next major version.
 
-When updating, if multiple packages share a dependency, cargo's resolver attempts to ensure
-that they use as few versions of it as possible (ideally all packages may share a dependency
-version), while ensuring none of them is forced to use a version outside of their compatibility
-range. At the same time, the resolver tries to use the greatest version currently available within
-that range. However, the resolver does not allow to use multiple versions of a package within the
-same compatibility range and returns an error. For example, it is not possible to use two versions
-of a package with the same Major and different Minor numbers, because they both are compatible
-within the Major range by semver definition.
+% When updating, if multiple packages share a dependency, cargo's resolver attempts to ensure
+% that they use as few versions of it as possible (ideally all packages may share a dependency
+% version), while ensuring none of them is forced to use a version outside of their compatibility
+% range. At the same time, the resolver tries to use the greatest version currently available within
+% that range. However, the resolver does not allow to use multiple versions of a package within the
+% same compatibility range and returns an error. For example, it is not possible to use two versions
+% of a package with the same Major and different Minor numbers, because they both are compatible
+% within the Major range by semver definition.
 
 There also exists a procedure for packages that are not backwards-compatible despite their version
 number suggesting compatibility, called \textit{yanking}. A yanked release is created when
