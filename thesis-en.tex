@@ -85,7 +85,8 @@ It turns out that it is not obvious which changes are backwards-compatible
 and which are not. There are numerous examples (listed in \ref{r:section_usageofsemver})
 where experienced Rust developers made a mistake
 (due to insufficient knowledge about the language or by overlooking something)
-that changed the public API of a library in such a way that users' code stopped compiling.
+that changed the public API (Application Programming Interface) of a library in such a way that
+users' code stopped compiling.
 
 The authors of this thesis present their work on a tool that detects and notifies about
 a subset of problems that make Rust libraries' public API non-backwards compatible,
@@ -152,7 +153,7 @@ cargo has many advantages making it a lot safer than pip:
 		privacy management. Because of this, it is much more difficult for the user to make their
 		project depend on something that the package's author did not intend to offer and could
 		make private in future versions, causing a difficult to detect break on the user's end.
-	\item Compatibility is taken seriously in Rust, thus packages' APIs are expected to be
+	\item Compatibility is taken seriously in Rust, thus packages' APIs (Applications Programming Interfaces) are expected to be
 		backwards-compatible (and to follow semantic versioning, described in section \ref{r:section_semver}) when
 		a new version is released. When a package does not satisfy this requirement, there exists
 		a procedure called \textit{yanking}. It allows to remove the faulty version from the index
