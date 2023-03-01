@@ -242,8 +242,9 @@ Each false-positive (which is defined as a scenario where the tool
 wrongly reports a semver break) is perceived as a bug in the tool.
 There are two advantages with this approach:
 \begin{itemize}
-	\item it is reasonable to use the tool in continuous integration
-		-- the tool reports semver breaks only when
+	\item the tool is suited to be used in continuous integration
+		for checking semver issues in commits or Pull Requests
+		-- it reports semver breaks only when
 		its output shouldn't be ignored and requires manual inspection,
 	\item we're avoiding a scenario in which
 		when an user encounters false-positives, they become frustated
@@ -310,7 +311,7 @@ Additionally, it is possible to check all crates in a workspace
 one by one
 by passing the path to the manifest that defines the workspace.
 
-\subsection{Running in continuous integration}
+\subsection{Usage in continuous integration}
 
 Seeing that GitHub is the most popular internet hosting service for version control
 amongst the Rust libraries developers,
