@@ -106,6 +106,7 @@ on the Rust community.
 \chapter{Definitions}\label{r:chapter_definitions}
 
 \section{Rust language}
+
 With its first stable release in 2015, Rust is a relatively new programming language that
 puts a strong emphasis on type-safety, memory-safety, performance and concurrency. Unlike
 other memory-safe languages, Rust does not use reference counting nor garbage collector.
@@ -142,17 +143,85 @@ make it since the kernel's first release in 1991.
 
 \section{Rust's package manager and build system -- cargo}
 
-TODO:
+Cargo is the official package manager for Rust. It is responsible for compiling the user's packages,
+downloading their dependencies and uploading them to the selected package registry. It is important
+to note that in Rust, packages are often refered to as crates with both names being equivalent
+and commonly used.
+
+One can think of cargo as the Rust analogue of Python's pip. But although their roles are
+similar, cargo has many advantages making it a lot safer than pip:
 \begin{itemize}
-	\item describe cargo
-	\item compare it to Python's pip -- a lot of people know what it is
-	\item mention differences with pip -- e.g. yanking releases
-	\item mention that it follows semver and it is described in another section
-	\item define Manifest file
-	\item describe what happens during cargo update
-	\item define the registry and mention its site -- crates.io
-	\item describe how publishing packages work (e.g. how the CLI for it works)
+	\item Cargo's crates are installed using venvs (virtual environments), thus they cannot be
+		installed in a location that would interfere with unrelated code.
+	\item When user adds a crate to their project, they can only use its interface and there is
+		no possibility of accessing eventual dependencies installed with it.
+	\item The crate's name must also be included in a special file named \texttt{Cargo.toml}, not just in the source
+		code file.
+	\item To make the package's public interface explicit, Rust provides a series of tools for privacy
+		management. Because of this it is much more difficult for the user to make their project dependent
+		on something that the package's author did not intend to offer and could make private in future
+		versions, causing a difficult to detect break on the user's end.
+	\item Compatibility is taken seriously in Rust, thus packages' APIs are expected to be backwards-compatible
+		(and to follow semantic versioning, described in another section) when a new version is released.
+		If a package does not satisfy this requirement, there exists a procedure called \textit{yanking}.
+		It allows to remove the faulty version from the index without deleting any data, but moves the
+		index back to the most recent working version.
+		Yet in case an incompatible package is downloaded before being yanked, projects using the package
+		still mostly break during compilation or build time rather than runtime.
+	\item The packages are also written in Rust and never require anything to work other than the package
+		code itself. This minimizes the threat of missing pre-installed system dependencies.
+	\item Cargo allows for an executable to contain different versions of the same package, enabling the user to
+		include multiple dependencies based on a shared sub-dependency. If multiple versions of the
+		sub-dependency are required, they are all included without conflicts.
 \end{itemize}
+
+Each package in Rust contains a special \texttt{Cargo.toml} file, called \textit{manifest}. It is
+written in the TOML format for simplicity and contains all the metadata necessary for the package
+to compile. Every manifest has numerous sections, with the most important two being:
+\begin{itemize}
+	\item \texttt{[package]} -- contains the information for cargo to compile the package.
+		The minimum that must be provided are the package's name and version. Additional fields may be
+		required if the maintainer wants to share their work with others by publishing to a registry.
+	\item \texttt{[dependencies]} -- lists all of the package's dependencies.
+		Before compiling, cargo has to serach for and download all of them. The default search location
+		is crates.io. In this case, the minimum required for each dependency are its name and version.
+\end{itemize}
+Presence of the manifest file allows the crates.io registry to display useful information about a particular package.
+The users are provided with a Readme file, instructions on how to add the package to their own Cargo.toml
+file, a list of all available versions, statistics regarding the downloads for each version and more.
+
+There also exists a second, special cargo file -- \texttt{Cargo.lock}. It contains detailed information about
+the used dependencies. Since all dependencies come from some version control system, the user may not need to
+provide an exact revision of a dependency in their \texttt{Cargo.toml} file. In this case, there are two scenarios
+for what happens with the \texttt{Cargo.lock} file during compilation:
+\begin{itemize}
+	\item \texttt{Cargo.lock} is \textit{not} present -- cargo then creates it and for each dependency in
+		the manifest downloads the most recent revision available, saving additional data about
+		it in the file.
+	\item \texttt{Cargo.lock} is present -- for the dependencies already present in the file cargo does not
+		look for their newest version and instead downloads the one specified in the file. For dependencies that
+		are not present it does the same as above except it adds them to the file rather than overwrites it.
+\end{itemize}
+There is a dedicated command for updating the dependencies -- \texttt{cargo update}. Upon execution,
+the \texttt{Cargo.lock} file is either created or updated with the latest revisions of used dependencies.
+
+Besides downloading dependencies, users can also publish their own packages using the \texttt{cargo publish} command.
+To use the command, the user must first authenticate with an API token. After doing so, the command
+first performs preliminary checks, including searching the manifest for a key to determine whether the user
+is allowed to upload their package to the selected registry (by default crates.io). Once the checks are passed, all of the
+source code from the current directory is compressed into a single \texttt{.crate} that is then uploaded to the registry.
+
+% TODO:
+% \begin{itemize}
+% 	\item describe cargo
+% 	\item compare it to Python's pip -- a lot of people know what it is
+% 	\item mention differences with pip -- e.g. yanking releases
+% 	\item mention that it follows semver and it is described in another section
+% 	\item define Manifest file
+% 	\item describe what happens during cargo update
+% 	\item define the registry and mention its site -- crates.io
+% 	\item describe how publishing packages work (e.g. how the CLI for it works)
+% \end{itemize}
 
 \section{Semantic versioning (semver)}
 
@@ -160,7 +229,6 @@ TODO:
 \begin{itemize}
 	\item define semantic versioning, semver.org might be useful
 	\item describe why it is used
-	\item describe what happens during cargo update
 	\item exactly define how semver works in Rust
 	\item mention how yanking releases is useful for semver
 	\item mention that it is not clearly defined in Rust what is patch, minor and major,
@@ -452,7 +520,7 @@ TODO:
 % \bibitem[Bea65]{beaman} Juliusz Beaman, \textit{Morbidity of the Jolly
 %     function}, Mathematica Absurdica, 117 (1965) 338--9.
 
-\bibitem[]{Rust-1} the Rust Team,
+\bibitem[]{Rust-1} Rust Team,
 	\textit{Rust Programming Language} (2023) \\
 	https://www.rust-lang.org/
 
@@ -461,12 +529,20 @@ TODO:
 	https://en.wikipedia.org/wiki/Rust\_(programming\_language)/
 
 \bibitem[]{survey} Stack Overflow,
-	\textit{2022 Developer Survey} (2022) \\
-	https://survey.stackoverflow.co/2022/\#section-most-loved-dreaded-and-wanted-programming-scripting-and-markup-languages/
+	\textit{Annual Developer Survey} (2022) \\
+	https://insights.stackoverflow.com/survey/
 
 \bibitem[]{Rust-for-Linux} Wikipedia,
 	\textit{Rust for Linux} (2023) \\
 	https://en.wikipedia.org/wiki/Rust\_for\_Linux/
+
+\bibitem[]{Cargo} Rust Team,
+	\textit{The Cargo Book} (2023) \\
+	https://doc.rust-lang.org/cargo/index.html/
+
+\bibitem[]{Cargo-vs-pip} William Manley,
+	\textit{Pip and Cargo are not the same} (2022) \\
+	https://doc.rust-lang.org/cargo/index.html/
 
 \end{thebibliography}
 
