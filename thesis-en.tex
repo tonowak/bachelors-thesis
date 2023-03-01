@@ -269,22 +269,22 @@ in form of a tree, where every node denotes an occurence of some construct in it
 called ''abstract'', because it omits some syntax details, such as parantheses or if statements,
 and focuses on structural or contextual details.
 
-In most of the well-established programming languages, semver validation is incredibly difficult
-or even close to impossible. This is caused by the general lack of attention to semver during
-their design processes. One of the possible approaches to cope with these difficulties is to try
-detecting semver violations by looking at the abstract syntax tree of a language. Such trees of
-a particular language might be changed along with its development, what makes maintenance of this
-solution very time-consuming. Moreover, the work itself is pretty tedious and conceptually
-challenging since to check for semver violations one needs to work on the two trees at a time.
-To make matters worse, the tree sometimes changes without violating semver.
+% In most of the well-established programming languages, semver validation is incredibly difficult
+% or even close to impossible. This is caused by the general lack of attention to semver during
+% their design processes. One of the possible approaches to cope with these difficulties is to try
+% detecting semver violations by looking at the abstract syntax tree of a language. Such trees of
+% a particular language might be changed along with its development, what makes maintenance of this
+% solution very time-consuming. Moreover, the work itself is pretty tedious and conceptually
+% challenging since to check for semver violations one needs to work on the two trees at a time.
+% To make matters worse, the tree sometimes changes without violating semver.
 
-However, in some of the languages the problem becomes easier to handle. The Elm language was
-created with semver validation in mind, and its package manager enforces semver on the users.
-In the Rust language, there are some features that make semver validation easier. For example,
-there are crates that expose the language's abstract syntax tree. There is also a feature called
-\textit{rustdoc}, which exports all of the crate's public API into an accessible form (both human-
-and machine-readable). Thanks to these, the semver validation problem seems particularily managable
-in Rust, and there are some attempts addressing the issue already (mentioned in chapter
+% However, in some of the languages the problem becomes easier to handle. The Elm language was
+% created with semver validation in mind, and its package manager enforces semver on the users.
+% In the Rust language, there are some features that make semver validation easier. For example,
+% there are crates that expose the language's abstract syntax tree. There is also a feature called
+% \textit{rustdoc}, which exports all of the crate's public API into an accessible form (both human-
+% and machine-readable). Thanks to these, the semver validation problem seems particularily managable
+% in Rust, and there are some attempts addressing the issue already (mentioned in chapter
 \ref{r:chapter_stateoftheart}).
 
 
