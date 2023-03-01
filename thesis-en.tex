@@ -255,8 +255,8 @@ The default behaviour is to update until the next major version.
 % of a package with the same Major and different Minor numbers, because they both are compatible
 % within the Major range by semver definition.
 
-There also exists a procedure for packages that are not backwards-compatible despite their version
-number suggesting compatibility, called \textit{yanking}. The yanked release of a package is not
+There also exists a procedure for releases that are not backwards-compatible despite their version
+number satisfying it, called \textit{yanking}. The yanked release of a package is not
 deleted as it may be in use by some projects, but forces a version increment against its own number
 whenever the next version is released. The resolver ignores yanked package versions unless they are
 already present in the \texttt{Cargo.lock} file. While there are many reasons behind packages being
