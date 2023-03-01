@@ -123,9 +123,9 @@ comprehensive and the compiler's error messages are clear and helpful. Rust also
 an easy to use, integrated package manager and a dedicated build tool (named cargo),
 an auto-formatter and many more.
 
-According to surveys \cite{survey} conducted amongst developers, Rust is considered to be the most enjoyable
-programming language for the 7th year in a row (as of 2022 summary, meaning it was always on top
-since its release in 2015). Over 87\% of respondents who have previously used Rust would
+According to surveys \cite{survey} conducted amongst developers, Rust is considered to be the most
+enjoyable programming language for the 7th year in a row (as of 2022 summary, meaning it was always
+on top since its release in 2015). Over 87\% of respondents who have previously used Rust would
 like to continue programming in it.
 
 Because of the high level of safety it provides, Rust has also become the secondary
@@ -137,13 +137,13 @@ make it since the kernel's first release in 1991.
 
 Cargo is the official package manager for Rust. It is responsible for compiling the user's
 packages, downloading their dependencies and uploading them to the selected package registry.
-It is important to note that in Rust, packages are often refered to as \texttt{crates} with both names
-being equivalent and commonly used. Most of the currently publicly available crates are stored
-in the Rust community's default crate registry, \texttt{crates.io}. The role of the registries is to
-allow users to easily find appropriate crates for their projects, as well as publish their own work
-to be used by others. Each registry contains an index, which itself has a searchable list of
-all the crates available with its registry. Cargo uses the selected registry and index to download
-crates and update dependencies.
+It is important to note that in Rust, packages are often refered to as \texttt{crates} with both
+names being equivalent and commonly used. Most of the currently publicly available crates are
+stored in the Rust community's default crate registry, \texttt{crates.io}. The role of the
+registries is to allow users to easily find appropriate crates for their projects, as well as
+publish their own work to be used by others. Each registry contains an index, which itself has
+a searchable list of all the crates available with its registry. Cargo uses the selected registry
+and index to download crates and update dependencies.
 
 One can think of cargo as the Rust analogue of Python's pip. But despite their similar roles,
 cargo has many advantages making it a lot safer than pip:
@@ -159,13 +159,14 @@ cargo has many advantages making it a lot safer than pip:
 		privacy management. Because of this, it is much more difficult for the user to make their
 		project depend on something that the package's author did not intend to offer and could
 		make private in future versions, causing a difficult to detect break on the user's end.
-	\item Compatibility is taken seriously in Rust, thus packages' APIs (Applications Programming Interfaces) are expected to be
-		backwards-compatible (and to follow semantic versioning, described in section \ref{r:section_semver}) when
-		a new version is released. When a package does not satisfy this requirement, there exists
-		a procedure called \textit{yanking}. It allows to remove the faulty version from the index
-		without deleting any data, but moves the index back to the most recent working version.
-		Yet in case an incompatible package is downloaded before being yanked, projects using the
-		package still mostly break during compilation or build time rather than runtime.
+	\item Compatibility is taken seriously in Rust, thus packages' APIs (Applications Programming
+		Interfaces) are expected to be backwards-compatible (and to follow semantic versioning,
+		described in section \ref{r:section_semver}) when a new version is released. When a package
+		does not satisfy this requirement, there exists a procedure called \textit{yanking}.
+		It allows to remove the faulty version from the index without deleting any data, but moves
+		the index back to the most recent working version. Yet in case an incompatible package is
+		downloaded before being yanked, projects using the package still mostly break during
+		compilation or build time rather than runtime.
 	\item The packages are also written in Rust and never require anything to work other than the
 		package code itself. This minimizes the threat of missing pre-installed
 		system dependencies.
@@ -187,9 +188,9 @@ to compile. Every manifest has numerous sections, with the most important two be
 		cargo has to search for and download all of them. The default search location is crates.io.
 \end{itemize}
 Presence of the manifest file allows the crates.io registry to display useful information about
-a particular package. The users are provided with a \texttt{README.md} file, instructions on how to add
-the package to their own Cargo.toml file, a list of all available versions, statistics regarding
-the downloads for each version and more.
+a particular package. The users are provided with a \texttt{README.md} file, instructions on how
+to add the package to their own Cargo.toml file, a list of all available versions, statistics
+regarding the downloads for each version and more.
 
 There also exists a second file for cargo -- \texttt{Cargo.lock}. It contains detailed
 information about the used dependencies. Since all dependencies come from some version control
