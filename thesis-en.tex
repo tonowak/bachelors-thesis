@@ -153,7 +153,7 @@ cargo has many advantages making it a lot safer than pip:
 		project depend on something that the package's author did not intend to offer and could
 		make private in future versions, causing a difficult to detect break on the user's end.
 	\item Compatibility is taken seriously in Rust, thus packages' APIs are expected to be
-		backwards-compatible (and to follow semantic versioning, described in another section) when
+		backwards-compatible (and to follow semantic versioning, described in section \ref{r:section_semver}) when
 		a new version is released. When a package does not satisfy this requirement, there exists
 		a procedure called \textit{yanking}. It allows to remove the faulty version from the index
 		without deleting any data, but moves the index back to the most recent working version.
@@ -210,7 +210,7 @@ to the selected registry (by default crates.io). Once the checks are passed, all
 from the current directory is compressed into a single \texttt{.crate} that is then uploaded
 to the registry.
 
-\section{Semantic versioning (semver)}
+\section{Semantic versioning (semver)}\label{r:section_semver}
 
 Semantic versioning is a set of rules and requirements dictating how version numbers for packages
 are assigned and incremented. They are based on, but not limited, to currently widely used
