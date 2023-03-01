@@ -154,7 +154,7 @@ cargo has many advantages making it a lot safer than pip:
 		make private in future versions, causing a difficult to detect break on the user's end.
 	\item Compatibility is taken seriously in Rust, thus packages' APIs are expected to be
 		backwards-compatible (and to follow semantic versioning, described in another section) when
-		a new version is released. If a package does not satisfy this requirement, there exists
+		a new version is released. When a package does not satisfy this requirement, there exists
 		a procedure called \textit{yanking}. It allows to remove the faulty version from the index
 		without deleting any data, but moves the index back to the most recent working version.
 		Yet in case an incompatible package is downloaded before being yanked, projects using the
