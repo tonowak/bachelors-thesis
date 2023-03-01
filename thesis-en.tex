@@ -194,7 +194,7 @@ system, the user may not need to provide an exact revision of a dependency in th
 	\item \texttt{Cargo.lock} is \textit{not} present -- cargo then creates it and for each
 		dependency in the manifest downloads the most recent revision available, saving additional
 		data about it in the file.
-	\item \texttt{Cargo.lock} is present -- for the dependencies already present in the file cargo
+	\item \texttt{Cargo.lock} is present -- for the dependencies already present in the file, cargo
 		does not look for their newest version and instead downloads the one specified in the file.
 		For dependencies that are not present, it does the same as above except it adds them to
 		the file rather than overwrites it.
