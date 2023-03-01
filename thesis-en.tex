@@ -234,23 +234,73 @@ to the registry.
 
 \section{Semantic versioning (semver)}
 
-TODO:
+Semantic versioning is a set of rules and requirements dictating how version numbers for packages
+are assigned and incremented. They are based on, but not limited, to currently widely used
+practices in both open-source and closed software development. For these rules to work, one has to
+first declare a clear and precise public API, changes of which refer to specific incrementations of
+the package version number. The number is most often denoted as X.Y.Z (Major.Minor.Patch), where:
 \begin{itemize}
-	\item define semantic versioning, semver.org might be useful
-	\item describe why it is used
-	\item exactly define how semver works in Rust
-	\item mention how yanking releases is useful for semver
-	\item mention that it is not clearly defined in Rust what is patch, minor and major,
-		use the comments from Predrag's tweets about patch vs minor https://twitter.com/PredragGruevski/status/1618684048389607424
-		and Predrag's blog about breaking vs major https://predr.ag/blog/some-rust-breaking-changes-do-not-require-major-version/
+	\item \textbf{Major} number is incremented when backwards-incompatible API changes were made,
+	\item \textbf{Minor} number is incremented when a functionality was added in
+		a backwards-compatible manner,
+	\item \textbf{Patch} number is incremented when backwards-compatible bugfixes were made.
 \end{itemize}
+With these rules, version numbers and their changes reflect actions in the underlying
+package's code. By definition, two versions are considered compatible if their leftmost non-zero
+component remains unchanged.
+
+The main purpose of semantic versioning is to make releasing new package versions easier.
+When systems with multiple dependencies are considered, the lack of semver can have serious
+consequences. If the dependency rules are too tight, one is in danger of facing a version lock
+(inability to release a new version of one package without new versions of all packages depending
+on it). On the other hand, if the rules are too loose, there is risk of version promiscuity
+(assuring that currently released version will be compatible with too many future releases).
+Without semver, such issues can occur and make it difficult for developers to further expand
+their projects.
+
+In Rust, semver is used by cargo for specifying package version numbers. This makes for a common
+compatibility convention between different versions of the same package. Cargo assumes that
+it is safe to update a dependency within a compatibility range without it breaking the build.
+This range can be defined in the manifest using the \textit{version requirement syntax}, allowing
+the user to select the upper bound for maximum compatible number anywhere from one, specific
+version (not allowing any updates), to no limit at all (equivalent to allowing even major updates).
+The default behaviour is to update until the next major version.
+
+When updating, if multiple packages share a dependency, cargo's resolver attempts to ensure
+that they use as few versions of it as possible (ideally all packages may share a dependency
+version), while ensuring none of them is forced to use a version outside of their compatibility
+range. At the same time, the resolver tries to use the greatest version currently available within
+that range. However, the resolver does not allow to use multiple versions of a package within the
+same compatibility range and returns an error. For example, it is not possible to use two versions
+of a package with the same Major and different Minor numbers, because they both are compatible
+within the Major range by semver definition.
+
+There also exists a procedure for packages that are not backwards-compatible despite their version
+number suggesting compatibility, called \textit{yanking}. A yanked release is created when
+a regular one is marked by users, stating that it should not be used. The package is not deleted
+as it may be in use by some projects, but forces a version increment against its own number
+whenever the next version is released. The resolver ignores yanked package versions unless they are
+already present in the \texttt{Cargo.lock} file. While there are many reasons behind packages being
+yanked, one of the main causes remains breaking semver.
+
+
+% TODO:
+% \begin{itemize}
+% 	\item define semantic versioning, semver.org might be useful
+% 	\item describe why it is used
+% 	\item exactly define how semver works in Rust
+% 	\item mention how yanking releases is useful for semver
+% 	\item mention that it is not clearly defined in Rust what is patch, minor and major,
+% 		use the comments from Predrag's tweets about patch vs minor https://twitter.com/PredragGruevski/status/1618684048389607424
+% 		and Predrag's blog about breaking vs major https://predr.ag/blog/some-rust-breaking-changes-do-not-require-major-version/
+% \end{itemize}
 
 \section{Abstract syntax tree (AST)}
 
-An abstract syntax tree represents the abstract syntactic structure of the source code in form of
-a tree, where every node denotes an occurence of some construct in the code. The tree is called
-"abstract" because it omits some syntax details, such as parantheses or if statements, and focuses
-on structural or contextual details.
+An abstract syntax tree represents the abstract syntactic structure of the text (often source code)
+in form of a tree, where every node denotes an occurence of some construct in it. The tree is
+called "abstract" because it omits some syntax details, such as parantheses or if statements,
+and focuses on structural or contextual details.
 
 In most of the well-established programming languages semver validation is incredibly difficult
 or even close to impossible. This is caused by the general lack of attention to semver during
@@ -582,6 +632,10 @@ TODO:
 \bibitem[]{Abstract-Syntax-Tree} Wikipedia,
 	\textit{Abstract syntax tree} (2023) \\
 	https://en.wikipedia.org/wiki/Abstract\_syntax\_tree/
+
+\bibitem[]{Semantic-Versioning} semver.org,
+	\textit{Semantic Versioning 2.0.0} (2022) \\
+	https://semver.org/
 
 \end{thebibliography}
 
