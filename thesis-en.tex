@@ -102,7 +102,8 @@ It turns out that it is not obvious which changes are backwards-compatible
 and which are not. There are numerous examples (listed in \ref{r:section_usageofsemver})
 where experienced Rust developers made a mistake
 (due to insufficient knowledge about the language or by overlooking something)
-that changed the public API of a library in such a way that users' code stopped compiling.
+that changed the public API (Application Programming Interface) of a library in such a way that
+users' code stopped compiling.
 
 The authors of this thesis present their work on a tool that detects and notifies about
 a subset of problems that make Rust libraries' public API non-backwards compatible,
@@ -124,42 +125,191 @@ on the Rust community.
 
 \section{Rust language}
 
-TODO:
-\begin{itemize}
-	\item describe Rust
-	\item mention its main selling points, wikipedia might be helpful
-		(though write the description yourself, without copy-pasting),
-		alternatively search for more informal Rust descriptions
-	\item mention its popularity (stackoverflow surveys, linux kernel, etc)
-\end{itemize}
+With its first stable release in 2015, Rust is a relatively new programming language that
+puts a strong emphasis on type-safety, memory-safety, performance and concurrency. Unlike
+other memory-safe languages, Rust does not use reference counting nor a garbage collector.
+Instead it tracks the object lifetime of all the program's references during compilation,
+using its built-in mechanism named ``borrow checker''.
+
+Among many benefits and advantages of using Rust, there are three dominant features. Firstly,
+it provides the user with a great performance, both time- and memory-wise, allowing for
+writing efficient applications. Secondly, it is reliable -- with extensive type system and
+focus on runtime safety, Rust prevents the user from making multiple bugs
+already during compilation. Finally, it boosts productivity -- its documentation is
+comprehensive and the compiler's error messages are clear and helpful. Rust also provides
+an easy to use, integrated package manager and a dedicated build tool (named cargo),
+an auto-formatter and many more.
+
+According to surveys \cite{survey} conducted amongst developers, Rust is considered to be the most
+enjoyable programming language for the 7th year in a row (as of 2022 summary, meaning it was always
+on top since its release in 2015). Over 87\% of respondents who have previously used Rust would
+like to continue programming in it.
+
+Because of the high level of safety it provides, Rust has also become the secondary
+language for writing the Linux kernel (with the primary being C). While there have been
+attempts to add other languages (f.e. C++ in 1997), Rust is the first one to successfully
+make it since the kernel's first release in 1991.
 
 \section{Rust's package manager and build system -- cargo}
 
-TODO:
+Cargo is the official package manager for Rust. It is responsible for compiling the user's
+packages, downloading their dependencies and uploading them to the selected package registry.
+It is important to note that in Rust, packages are often refered to as \texttt{crates} with both
+names being equivalent and commonly used. Most of the currently publicly available crates are
+stored in the Rust community's default crate registry, \texttt{crates.io}. The role of the
+registries is to allow users to easily find appropriate crates for their projects, as well as
+publish their own work to be used by others. Each registry contains an index, which itself has
+a searchable list of all the crates available within its registry. Cargo uses the selected registry
+and index to download crates and update dependencies.
+
+One can think of cargo as the Rust analogue of Python's pip. But despite their similar roles,
+cargo has many advantages making it a lot safer than pip:
 \begin{itemize}
-	\item describe cargo
-	\item compare it to Python's pip -- a lot of people know what it is
-	\item mention differences with pip -- e.g. yanking releases
-	\item mention that it follows semver and it is described in another section
-	\item define Manifest file
-	\item describe what happens during cargo update
-	\item define the registry and mention its site -- crates.io
-	\item describe how publishing packages work (e.g. how the CLI for it works)
+	\item Cargo's crates are always installed using virtual environments, thus they cannot be
+		installed in a location that would interfere with unrelated code.
+	\item When a user adds a crate to their project, they can only use its direct, public interface.
+		There is no possibility to access the interfaces of the dependencies that the added crate
+		is using itself.
+	\item The dependency's name must also be included in a special file named \texttt{Cargo.toml},
+		not just in the source code file.
+	\item To make the package's public interface explicit, Rust provides a series of tools for
+		privacy management. Because of this, it is much more difficult for the user to make their
+		project depend on something that the package's author did not intend to offer and could
+		make private in future versions, causing a difficult to detect break on the user's end.
+	\item Compatibility is taken seriously in Rust, thus packages' APIs (Applications Programming
+		Interfaces) are expected to be backwards-compatible (and to follow semantic versioning,
+		described in section \ref{r:section_semver}) when a new version is released. When a package
+		does not satisfy this requirement, there exists a procedure called \textit{yanking}.
+		It allows to remove the faulty version from the index without deleting any data, but moves
+		the index back to the most recent working version. Yet in case an incompatible package is
+		downloaded before being yanked, projects using the package still mostly break during
+		compilation or build time rather than runtime.
+	\item The packages are also written in Rust and never require anything to work other than the
+		package code itself. This minimizes the threat of missing pre-installed
+		system dependencies.
+	\item Cargo allows for an executable to contain different versions of the same package,
+		enabling the user to include multiple dependencies based on a shared sub-dependency.
+		When multiple versions of the sub-dependency are required, they are all included
+		without conflicts.
 \end{itemize}
 
-\section{Semantic versioning (semver)}
-
-TODO:
+Each package in Rust contains a special \texttt{Cargo.toml} file, called \textit{manifest}. It is
+written in the TOML format for simplicity and contains all the metadata necessary for the package
+to compile. Every manifest has numerous sections, with the most important two being:
 \begin{itemize}
-	\item define semantic versioning, semver.org might be useful
-	\item describe why it is used
-	\item describe what happens during cargo update
-	\item exactly define how semver works in Rust
-	\item mention how yanking releases is useful for semver
-	\item mention that it is not clearly defined in Rust what is patch, minor and major,
-		use the comments from Predrag's tweets about patch vs minor https://twitter.com/PredragGruevski/status/1618684048389607424
-		and Predrag's blog about breaking vs major https://predr.ag/blog/some-rust-breaking-changes-do-not-require-major-version/
+	\item \texttt{[package]} -- contains the information for cargo to compile the package.
+		The minimum that must be provided are the package's name and version. Additional fields
+		may be required when the maintainer wants to share their work with others by publishing
+		to a registry.
+	\item \texttt{[dependencies]} -- lists all of the package's dependencies. Before compiling,
+		cargo has to search for and download all of them. The default search location is crates.io.
 \end{itemize}
+Presence of the manifest file allows the crates.io registry to display useful information about
+a particular package. The users are provided with a \texttt{README.md} file, instructions on how
+to add the package to their own Cargo.toml file, a list of all available versions, statistics
+regarding the downloads for each version and more.
+
+There also exists a second file for cargo -- \texttt{Cargo.lock}. It contains detailed
+information about the used dependencies. Since all dependencies come from some version control
+system, the user may not need to provide an exact revision of a dependency in their
+\texttt{Cargo.toml} file. In this case, there are two scenarios for what happens with the
+\texttt{Cargo.lock} file during compilation:
+\begin{itemize}
+	\item \texttt{Cargo.lock} is \textit{not} present -- cargo then creates it and for each
+		dependency in the manifest downloads the most recent revision available, saving additional
+		data about it in the file.
+	\item \texttt{Cargo.lock} is present -- for the dependencies already present in the file, cargo
+		does not look for their newest version and instead downloads the one specified in the file.
+		For dependencies that are not present, it does the same as above except it adds them to
+		the file rather than overwrites it.
+\end{itemize}
+There is a dedicated command for updating the dependencies -- \texttt{cargo update}.
+Upon execution, the \texttt{Cargo.lock} file is either created or updated with the latest
+revisions of used dependencies.
+
+Besides downloading dependencies, users can also publish their own packages using
+the \texttt{cargo publish} command. To use the command, the user must first authenticate with
+an API token. After doing so, the command first performs preliminary checks, including searching
+the manifest for a key to determine whether the user is allowed to upload their package
+to the selected registry (by default crates.io). Once the checks are passed, the package is
+uploaded and available publicly.
+
+\section{Semantic versioning (semver)}\label{r:section_semver}
+
+Semantic versioning is a set of rules and requirements dictating how version numbers for packages
+are assigned and incremented. They are based on, but not limited to currently widely used
+practices in both open-source and closed software development. For these rules to work, one has to
+first declare a clear and precise public API, changes of which refer to specific incrementations of
+the package version number. The number is most often denoted as X.Y.Z (Major.Minor.Patch), where:
+\begin{itemize}
+	\item \textbf{Major} number is incremented when backwards-incompatible API changes were made,
+	\item \textbf{Minor} number is incremented when a functionality was added in
+		a backwards-compatible manner,
+	\item \textbf{Patch} number is incremented when backwards-compatible bugfixes were made.
+\end{itemize}
+With these rules, version numbers and their changes reflect actions in the underlying
+package's code. By definition, two versions are considered compatible if their leftmost non-zero
+component remains unchanged.
+
+The main purpose of semantic versioning is to track the changes of a package's API and reflect
+their severity with appropriate numbering.
+When systems with multiple dependencies are considered, the lack of semver can have serious
+consequences. If the dependency rules are too tight, one is in danger of facing a version lock
+(inability to release a new version of one package without new versions of all packages depending
+on it). On the other hand, if the rules are too loose, there is a risk of version promiscuity
+(assuring that currently released version will be compatible with too many future releases).
+Without semver, such issues can occur and make it difficult for developers to further expand
+their projects.
+
+In Rust, semver is used by cargo for specifying package version numbers. This makes for a common
+compatibility convention between different versions of the same package. Cargo assumes that
+it is safe to update a dependency within a compatibility range without it breaking the build.
+This range can be defined in the manifest using the \textit{version requirement syntax}, allowing
+the user to select the upper bound for maximum compatible number anywhere from one, specific
+version (not allowing any updates), to no limit at all (equivalent to allowing even major updates).
+The default behaviour is to update until the next major version.
+
+% When updating, if multiple packages share a dependency, cargo's resolver attempts to ensure
+% that they use as few versions of it as possible (ideally all packages may share a dependency
+% version), while ensuring none of them is forced to use a version outside of their compatibility
+% range. At the same time, the resolver tries to use the greatest version currently available within
+% that range. However, the resolver does not allow to use multiple versions of a package within the
+% same compatibility range and returns an error. For example, it is not possible to use two versions
+% of a package with the same Major and different Minor numbers, because they both are compatible
+% within the Major range by semver definition.
+
+There also exists a procedure for releases that are not backwards-compatible despite their version
+number satisfying it, called \textit{yanking}. The yanked release of a package is not
+deleted as it may be in use by some projects, but forces a version increment against its own number
+whenever the next version is released. The resolver ignores yanked package versions unless they are
+already present in the \texttt{Cargo.lock} file. While there are many reasons behind packages being
+yanked, one of the main causes remains breaking semver.
+
+\section{Abstract syntax tree (AST)}
+
+An abstract syntax tree represents the abstract syntactic structure of the text (often source code)
+in form of a tree, where every node denotes an occurence of some construct in it. The tree is
+called ``abstract'', because it omits some syntax details, such as parantheses or if statements,
+and focuses on structural or contextual details.
+
+% In most of the well-established programming languages, semver validation is incredibly difficult
+% or even close to impossible. This is caused by the general lack of attention to semver during
+% their design processes. One of the possible approaches to cope with these difficulties is to try
+% detecting semver violations by looking at the abstract syntax tree of a language. Such trees of
+% a particular language might be changed along with its development, what makes maintenance of this
+% solution very time-consuming. Moreover, the work itself is pretty tedious and conceptually
+% challenging since to check for semver violations one needs to work on the two trees at a time.
+% To make matters worse, the tree sometimes changes without violating semver.
+
+% However, in some of the languages the problem becomes easier to handle. The Elm language was
+% created with semver validation in mind, and its package manager enforces semver on the users.
+% In the Rust language, there are some features that make semver validation easier. For example,
+% there are crates that expose the language's abstract syntax tree. There is also a feature called
+% \textit{rustdoc}, which exports all of the crate's public API into an accessible form (both human-
+% and machine-readable). Thanks to these, the semver validation problem seems particularily managable
+% in Rust, and there are some attempts addressing the issue already (mentioned in chapter
+% \ref{r:chapter_stateoftheart}).
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %          State of the art           %
@@ -520,6 +670,38 @@ TODO:
 %     function}, Mathematica Absurdica, 117 (1965) 338--9.
 \bibitem{issue-merge-cargo} \href{}{GitHub cargo-semver-checks issue \#61: Prepare for merging into cargo}
 \bibitem{issue-cli-interface} \href{}{GitHub cargo-semver-checks issue \#86 What should the CLI look like?}
+
+\bibitem{Rust-1} Rust Team,
+	\textit{Rust Programming Language} (2023) \\
+	https://www.rust-lang.org/
+
+\bibitem{Rust-2} Wikipedia,
+	\textit{Rust (programming language)} (2023) \\
+	https://en.wikipedia.org/wiki/Rust\_(programming\_language)/
+
+\bibitem{survey} Stack Overflow,
+	\textit{Annual Developer Survey} (2022) \\
+	https://insights.stackoverflow.com/survey/
+
+\bibitem{Rust-for-Linux} Wikipedia,
+	\textit{Rust for Linux} (2023) \\
+	https://en.wikipedia.org/wiki/Rust\_for\_Linux/
+
+\bibitem{Cargo} Rust Team,
+	\textit{The Cargo Book} (2023) \\
+	https://doc.rust-lang.org/cargo/index.html/
+
+\bibitem{Cargo-vs-pip} William Manley,
+	\textit{Pip and Cargo are not the same} (2022) \\
+	https://doc.rust-lang.org/cargo/index.html/
+
+\bibitem{Abstract-Syntax-Tree} Wikipedia,
+	\textit{Abstract syntax tree} (2023) \\
+	https://en.wikipedia.org/wiki/Abstract\_syntax\_tree/
+
+\bibitem{Semantic-Versioning} semver.org,
+	\textit{Semantic Versioning 2.0.0} (2022) \\
+	https://semver.org/
 
 \end{thebibliography}
 
