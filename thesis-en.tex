@@ -319,7 +319,7 @@ and focuses on structural or contextual details.
 
 \section{Problems with using semver in Rust}\label{r:section_usageofsemver}
 
-It might seem easy to maintain semver, but some violations are really hard to notice, 
+It might seem easy to maintain semver, but some violations are hard to notice
 when not actively searching for them. Let's look at an example.
 \vspace{-3pt}
 \begin{verbatim}
@@ -335,53 +335,60 @@ when not actively searching for them. Let's look at an example.
 
 Changing {\ttfamily Foo.x} type from {\ttfamily String} to {\ttfamily Rc<str>} 
 causes semver break, even though it is a non-public field of a non-public struct. 
-Why? {\ttfamily String} implements {\ttfamily Send} and {\ttfamily Sync} traits, 
+That's because {\ttfamily String} implements {\ttfamily Send} and {\ttfamily Sync} traits
 that are automatically derived, making both {\ttfamily Foo} and {\ttfamily Bar} 
 implement {\ttfamily Send} and {\ttfamily Sync}. 
 In contrary, {\ttfamily Rc<str>} implements neither of them, 
 so the change results in publicly visible struct {\ttfamily Bar} losing a trait.
 
-Of course, things can get way more complex. 
-Just for example, having these structs in very different locations 
-complicates keeping track of such behaviours. 
-A similar error crept into release v3.2.0 of a well-known crate, {\ttfamily clap}. 
+The given example is not only non-obvious, but also is even harder to notice
+in large codebases, where those struct could be in very different locations.
+In fact, a similar error crept into release v3.2.0 of a well-known crate
+maintained by the Rust team -- {\ttfamily clap}.
 More of that later on in section \ref{r:section_real_life_semver_breaks}.
+% TODO: add another example
 It should be clear by now, that breaking semver on accident is possible.
 
 \section{Consequences of breaking semver}
 
-When you publish a new version of a crate, that is breaking semver, 
+When you publish a new version of a crate that is breaking semver,
 you are causing a major inconvenience for the crate's users. 
-Their code might just stop compiling, when the offending version gets downloaded.
+Their code might just stop compiling when the offending version gets downloaded.
 This also could happen if the crate containing violation is not an immediate dependency, 
-so one semver break, could result in tons of broken crates.
+so one semver break could result in tons of broken crates.
 
 Debugging a cryptic compilation error that starts showing up one day, 
 without any change to the code, can be really frustrating, 
 and might drive the users to stop using your crate.
 
+Because of that, maintainers have to yank
+the incorrect releases as soon as possible
+-- otherwise more users would encounter this problem and their trust
+in this crate (and crates using it as a dependency)
+would decrease.
+
 \section{Real-life examples of semver breaks} \label{r:section_real_life_semver_breaks}
 
 Some of popular Rust crates with millions of downloads happened to break semver:
 \begin{itemize}
-    \item {\ttfamily pyo3 v0.5.1} accidentally changed a function signature\footnote{https://github.com/PyO3/pyo3/issues/285}
-    \item {\ttfamily clap v3.2.0} accidentally had a type stop implementing an auto-trait\footnote{https://github.com/clap-rs/clap/issues/3876};
-    \item multiple {\ttfamily block-buffer} versions accidentally broke their MSRV contract\footnote{https://github.com/RustCrypto/utils/issues/22};
+    \item {\ttfamily pyo3 v0.5.1} accidentally changed a function signature\footnote{https://github.com/PyO3/pyo3/issues/285},
+    \item {\ttfamily clap v3.2.0} accidentally had a type stop implementing an auto-trait\footnote{https://github.com/clap-rs/clap/issues/3876},
+    \item multiple {\ttfamily block-buffer} versions accidentally broke their MSRV contract\footnote{https://github.com/RustCrypto/utils/issues/22},
     \item and many more. We have developed a script that scans all releases 
-		for semver breaks we can detect, the results are covered in section \ref{r:section_scanning_script}
+		for semver breaks we can detect. The results are covered in section \ref{r:section_scanning_script}
 \end{itemize}
 
-Of course, the problem is even more prominent in less popular crates, 
-where developers might not be as experienced. A paper\footnote{https://arxiv.org/pdf/2201.11821.pdf}
+Those were examples of popular crates with experienced maintainers, but the problem is even more prominent in less popular crates
+where developers might not know the common semver pitfalls. A paper\footnote{https://arxiv.org/pdf/2201.11821.pdf}
 claims that out of the yanked (un-publised) releases, 
-semver break was the leading reason for yanking, with shocking 43\% rate.
+semver break was the leading reason for yanking, with a shocking 43\% rate.
 It also mentions that 3.7\% of all releases (and there is more than 300 000 of them already), 
-are yanked, which should show the scale of the problem - thousands of detected semver breaks.
+are yanked, which shows the scale of the problem - thousands of detected semver breaks.
 
 \section{Existing tools for detecting semver breaks}\label{r:section_existing_semver_tools}
 
 There aren't many great existing tools for semver checking. 
-The main reason for that, is that the semantics of popular languages 
+The main reason for that is that the semantics of popular languages
 do not allow for complete automatic verification. 
 Of course, there are some initiatives to combat this - for example, 
 the Elm languge\footnote{https://elm-lang.org/} enforces semantic versioning. 
@@ -404,8 +411,8 @@ Because of that, unfortunately, the user experience is far from ideal,
 as it forces the user into some specific unstable versions of the language, and the quality of error messages is limited. 
 
 In comparsion, the cargo-semver-checks' approach to write lints as queries, seems to work really well. 
-Adding new queries is designed to be quite accessible, and the maintaince comes to 
-keeping adapter up to date with rustdoc API changes, which seems to be about as low effort as it could be.
+Adding new queries is designed to be quite accessible, and the maintenance comes to
+keeping up to date with rustdoc API changes, which seems to be about as low effort as it could be.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %               Vision                %
