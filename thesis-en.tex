@@ -351,8 +351,8 @@ It should be clear by now, that breaking semver on accident is possible.
 
 \section{Consequences of breaking semver}
 
-When you publish a new version of a crate that is breaking semver,
-you are causing a major inconvenience for the crate's users.
+When a maintainer publishes a new version of a crate that is breaking semver,
+it is causing a major inconvenience for the crate's users.
 Their code might just stop compiling when the offending version gets downloaded.
 This also could happen if the crate containing the violation is not an immediate dependency,
 so one semver break could result in tons of broken crates.
