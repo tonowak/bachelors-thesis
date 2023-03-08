@@ -339,7 +339,7 @@ That's because {\ttfamily String} implements {\ttfamily Send} and {\ttfamily Syn
 that are automatically derived, making both {\ttfamily Foo} and {\ttfamily Bar}
 implement {\ttfamily Send} and {\ttfamily Sync}.
 In contrary, {\ttfamily Rc<str>} implements neither of them,
-so the change results in publicly visible struct {\ttfamily Bar} losing a trait.
+so the change results in a publicly visible struct {\ttfamily Bar} losing a trait.
 
 The given example is not only non-obvious, but also is even harder to notice
 in large codebases, where those struct could be in very different locations.
@@ -354,11 +354,11 @@ It should be clear by now, that breaking semver on accident is possible.
 When you publish a new version of a crate that is breaking semver,
 you are causing a major inconvenience for the crate's users.
 Their code might just stop compiling when the offending version gets downloaded.
-This also could happen if the crate containing violation is not an immediate dependency,
+This also could happen if the crate containing the violation is not an immediate dependency,
 so one semver break could result in tons of broken crates.
 
 Debugging a cryptic compilation error that starts showing up one day,
-without any change to the code, can be really frustrating. Actually, we have experienced it during our contributions, as one of the dependencies broke semver. This is a major problem, as it might drive the users to stop using your crate.
+without any change to the code, can be frustrating. In fact, we have experienced it during our contributions, as one of our dependencies broke semver. This is a major problem, as it might drive the users to stop using your crate.
 
 Because of that, maintainers have to yank
 the incorrect releases as soon as possible
@@ -370,15 +370,15 @@ would decrease. Even though yanking the release seems easy, fixing the semver br
 
 Some of popular Rust crates with millions of downloads happened to break semver:
 \begin{itemize}
-    \item {\ttfamily pyo3 v0.5.1} accidentally changed a function signature\footnote{https://github.com/PyO3/pyo3/issues/285},
+    \item {\ttfamily pyo3 v0.5.1} accidentally changed a function signature \footnote{https://github.com/PyO3/pyo3/issues/285},
     \item {\ttfamily clap v3.2.0} accidentally had a type stop implementing an auto-trait\footnote{https://github.com/clap-rs/clap/issues/3876},
     \item multiple {\ttfamily block-buffer} versions accidentally broke their MSRV contract\footnote{https://github.com/RustCrypto/utils/issues/22},
     \item and many more. We have developed a script that scans all releases
 		for semver breaks we can detect. The results are covered in section \ref{r:section_scanning_script}
 \end{itemize}
 
-Those were examples of popular crates with experienced maintainers, but the problem is even more prominent in less popular crates
-where developers might not know the common semver pitfalls. A paper\footnote{https://arxiv.org/pdf/2201.11821.pdf}
+Those were examples of popular crates with experienced maintainers, but the problem is even more prominent in less used crates
+where developers might not know the common semver pitfalls. A paper \cite{paper}
 claims that out of the yanked (un-publised) releases,
 semver break was the leading reason for yanking, with a shocking 43\% rate.
 It also mentions that 3.7\% of all releases (and there is more than 300 000 of them already),
@@ -390,7 +390,7 @@ There aren't many great existing tools for semver checking.
 The main reason for that is that the semantics of popular languages
 do not allow for complete automatic verification.
 There are some initiatives to combat this. For example,
-the Elm languge\footnote{https://elm-lang.org/} by design enforces semantic versioning.
+the Elm languge\cite{elm-lang} by design enforces semantic versioning.
 Its type system enables automatic detection of all API changes.
 Outside of that, it does not appear that tools for checking semver
 in estabilished languages like Python or C++ are commonly used in the industry.
@@ -398,19 +398,20 @@ in estabilished languages like Python or C++ are commonly used in the industry.
 Unfortunately, the Rust langugage's semantic were also not designed with semver in mind.
 Despite this, there are some existing tools for semver checking.
 First of them, \texttt{cargo-breaking}, works on the abstract syntax tree.
-The problem here is that to compare API changes, you must navigate two trees at once,
-which can get really complex and tedious (especially when checking for moved or removed items), because the abstract syntax tree could change quite a lot,
+Although ASTs contain all the information needed for comparing API changes,
+it has a major drawback -- you must navigate two trees at once.
+It can get complex and tedious (especially when checking for moved or removed items), because the abstract syntax tree could change quite a lot,
 even without any public API changes.
 Another issue is that both language syntax and the structure of the abstract syntax tree
-often change along with the development of the language, which makes maintenance time-consuming.
+often changes along with the development of the language, which makes maintenance time-consuming.
 
 The second existing tool is \texttt{rust-semverver}, which focuses on
 the metadata present in the rust-specific rlib binary static library format.
 Because of that, unfortunately, the user experience is far from ideal,
 as it forces the user to use some specific unstable versions of the language, and the quality of error messages is limited.
 
-In comparsion, the cargo-semver-checks' approach to write lints as queries, seems to work really well.
-Adding new queries is designed to be quite accessible, and the maintenance comes to
+In comparison, the cargo-semver-checks' approach to write lints as queries, seems to work really well.
+Adding new queries is designed to be accessible, and the maintenance comes to
 keeping up with rustdoc API changes, which seems to be about as low effort as it could be.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -747,13 +748,20 @@ TODO:
 	\textit{Semantic Versioning 2.0.0} (2022) \\
 	https://semver.org/
 
-% State of the art references:
-\bibitem[1]{beaman} Predrag Gruevski,
+\bibitem{paper} Hao Li, Filpe R Cogo, Cor-Paul Bezemer, \\
+    \textit{An Empirical Study of Yanked Releases in the Rust Package Registry}
+    (2022) \\ https://arxiv.org/pdf/2201.11821.pdf
+
+\bibitem{fearless-cargo-update} Predrag Gruevski,
     \textit{Towards fearless cargo update} (2022) \\
     https://predr.ag/blog/toward-fearless-cargo-update/
 
-\end{thebibliography}
+\bibitem{elm-lang} Evan Czaplicki,
+    \textit{Elm Programming Language} (2021) \\
+    https://elm-lang.org/
 
+
+\end{thebibliography}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %             Attachments             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
