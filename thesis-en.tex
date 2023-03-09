@@ -346,8 +346,13 @@ in large codebases, where those struct could be in very different locations.
 In fact, a similar error crept into release v3.2.0 of a well-known crate
 maintained by the Rust team -- {\ttfamily clap}.
 More of that later on in section \ref{r:section_real_life_semver_breaks}.
-% TODO: add another example
-It should be clear by now, that breaking semver on accident is possible.
+
+The same issue almost happened
+(but has been prevented thanks to our tool)
+in another common library \texttt{rust-libp2p},
+in which from the conversation \cite{issue-libp2p} it's clear that the maintainers
+were not expecting their type to stop being \texttt{UnwindSafe} and were likely not even aware that
+their type was publicly \texttt{UnwindSafe} to start with.
 
 \section{Consequences of breaking semver}
 
@@ -358,7 +363,8 @@ This also could happen if the crate containing the violation is not an immediate
 so one semver break could result in tons of broken crates.
 
 Debugging a cryptic compilation error that starts showing up one day,
-without any change to the code, can be frustrating. In fact, we have experienced it during our contributions, as one of our dependencies broke semver. This is a major problem, as it might drive the users to stop using your crate.
+without any change to the code, can be frustrating. In fact, we have experienced it during our contributions
+(one of the tool's users opened a GitHub Issue \cite{issue-compiling-fails}), as one of our dependencies broke semver. This is a major problem, as it might drive the users to stop using your crate.
 
 Because of that, maintainers have to yank
 the incorrect releases as soon as possible
@@ -388,7 +394,7 @@ are yanked, which shows the scale of the problem -- thousands of detected semver
 
 There aren't many great existing tools for semver checking.
 The main reason for that is that the semantics of popular languages
-do not allow for complete automatic verification.
+makes it that complete automatic verification is practically impossible.
 There are some initiatives to combat this. For example,
 the Elm languge\cite{elm-lang} by design enforces semantic versioning.
 Its type system enables automatic detection of all API changes.
@@ -407,7 +413,7 @@ often changes along with the development of the language, which makes maintenanc
 
 The second existing tool is \texttt{rust-semverver}, which focuses on
 the metadata present in the rust-specific rlib binary static library format.
-Because of that, unfortunately, the user experience is far from ideal,
+Because of that, the user experience is far from ideal,
 as it forces the user to use some specific unstable versions of the language, and the quality of error messages is limited.
 
 In comparison, the cargo-semver-checks' approach to write lints as queries, seems to work really well.
@@ -715,6 +721,8 @@ TODO:
 %     function}, Mathematica Absurdica, 117 (1965) 338--9.
 \bibitem{issue-merge-cargo} \href{}{GitHub cargo-semver-checks issue \#61: Prepare for merging into cargo}
 \bibitem{issue-cli-interface} \href{}{GitHub cargo-semver-checks issue \#86 What should the CLI look like?}
+\bibitem{issue-compiling-fails} \href{}{GitHub cargo-semver-checks issue \#317: compiling semver-checks fails}
+\bibitem{issue-libp2p} \href{}{GitHub rust-libp2p issue \#3312: feat: migrate to quick-protobuf}
 
 \bibitem{Rust-1} Rust Team,
 	\textit{Rust Programming Language} (2023) \\
