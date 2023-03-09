@@ -376,9 +376,9 @@ would decrease. Even though yanking the release seems easy, fixing the semver br
 
 Some of popular Rust crates with millions of downloads happened to break semver:
 \begin{itemize}
-    \item {\ttfamily pyo3 v0.5.1} accidentally changed a function signature \footnote{https://github.com/PyO3/pyo3/issues/285},
-    \item {\ttfamily clap v3.2.0} accidentally had a type stop implementing an auto-trait\footnote{https://github.com/clap-rs/clap/issues/3876},
-    \item multiple {\ttfamily block-buffer} versions accidentally broke their MSRV contract\footnote{https://github.com/RustCrypto/utils/issues/22},
+    \item {\ttfamily pyo3 v0.5.1} accidentally changed a function signature \cite{pyo3-issue}
+    \item {\ttfamily clap v3.2.0} accidentally had a type stop implementing an auto-trait \cite{clap-issue}
+    \item multiple {\ttfamily block-buffer} versions accidentally broke their MSRV contract \cite{block-buffer-issue}
     \item and many more. We have developed a script that scans all releases
 		for semver breaks we can detect. The results are covered in section \ref{r:section_scanning_script}
 \end{itemize}
@@ -768,6 +768,17 @@ TODO:
     \textit{Elm Programming Language} (2021) \\
     https://elm-lang.org/
 
+\bibitem{pyo3-issue}
+    \textit{Github PyO3 issue \#285} (2018) \\
+    https://github.com/PyO3/pyo3/issues/285
+
+\bibitem{clap-issue}
+    \textit{Github clap issue \#3876} (2022) \\
+    https://github.com/clap-rs/clap/issues/3876
+
+\bibitem{block-buffer-issue}
+    \textit{Github RustCrypto issue \#22} \\
+    https://github.com/RustCrypto/utils/issues/22
 
 \end{thebibliography}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
