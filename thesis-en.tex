@@ -319,56 +319,106 @@ and focuses on structural or contextual details.
 
 \section{Problems with using semver in Rust}\label{r:section_usageofsemver}
 
-TODO:
-\begin{itemize}
-	\item explain why it is easy to break semver in Rust.
-		Do that by giving specific, non-obvious code examples.
-	\item search for sources from which to get examples
-	\item explain other reasons as to why people tend to break semver
-	\item don't give yet real-life examples (those will be in the sections under),
-		write in a general way
-	\item make it clear that using semver in Rust is hard
-\end{itemize}
+It might seem easy to maintain semver, but some violations are hard to notice
+when not actively searched for. Consider the following example:
+\vspace{-3pt}
+\begin{verbatim}
+  struct Foo {
+      x: String
+  }
+
+  pub struct Bar {
+      y: Foo
+  }
+\end{verbatim}
+\vspace{-5pt}
+
+Changing {\ttfamily Foo.x} type from {\ttfamily String} to {\ttfamily Rc<str>}
+causes semver break, even though it is a non-public field of a non-public struct.
+That is because {\ttfamily String} implements {\ttfamily Send} and {\ttfamily Sync} traits
+that are automatically derived, making both {\ttfamily Foo} and {\ttfamily Bar}
+implement {\ttfamily Send} and {\ttfamily Sync}.
+In contrary, {\ttfamily Rc<str>} implements neither of them,
+so the change results in a publicly visible struct {\ttfamily Bar} losing a trait.
+
+The given example is not only unobvious, but also even harder to notice
+in large codebases, where those structs could be in completely different locations.
+In fact, a similar error crept into the release v3.2.0 of a well-known crate
+maintained by the Rust team -- {\ttfamily clap}.
+More details about it can be found in section \ref{r:section_real_life_semver_breaks}.
+
+The same issue almost happened
+(but has been prevented thanks to our tool)
+in another common library \texttt{rust-libp2p},
+where it is clear from the conversation \cite{issue-libp2p} that the maintainers
+were not expecting their type to stop being \texttt{UnwindSafe} and were likely not even aware that
+their type was publicly \texttt{UnwindSafe} to start with.
 
 \section{Consequences of breaking semver}
 
-TODO:
+When a maintainer publishes a new version of their crate that is breaking semver,
+it is causing a major inconvenience for the crate's users.
+Their code might just stop compiling when the offending version gets downloaded.
+This could also happen if the crate containing the violation is not an immediate dependency,
+so one semver break could result in tons of other broken crates.
+
+Debugging a cryptic compilation error that starts showing up one day,
+without any change to the code, can be frustrating. In fact, we have experienced it during our contributions
+(one of the tool's users opened a GitHub Issue \cite{issue-compiling-fails}), as one of our dependencies broke semver. This is a major problem, as it might drive the users to stop using such crate.
+
+Because of that, maintainers have to yank
+the incorrect releases as soon as possible
+-- otherwise more users would encounter this problem and their trust
+in this particular crate (and crates using it as a dependency)
+would decrease. Even though yanking the release seems easy, fixing the semver break could also result in a lot of additional work for the maintainers -- they have to investigate the semver break when it is reported, inform the users about the yanking and possibly help some move away from the faulty release.
+
+\section{Real-life examples of semver breaks} \label{r:section_real_life_semver_breaks}
+
+Some of popular Rust crates with millions of downloads happened to break semver:
 \begin{itemize}
-	\item describe that breaking semver means that people's code stops compiling
-	\item describe the possible scale of catastrophes
-	\item don't give yet real-life examples, write in a general way
+    \item {\ttfamily pyo3 v0.5.1} accidentally changed a function signature \cite{pyo3-issue}
+    \item {\ttfamily clap v3.2.0} accidentally had a type stop implementing an auto-trait \cite{clap-issue}
+    \item multiple {\ttfamily block-buffer} versions accidentally broke their MSRV contract \cite{block-buffer-issue}
+    \item and many more. We have developed a script that scans all releases
+		for semver breaks we can detect. The results are covered in section \ref{r:section_scanning_script}
 \end{itemize}
 
-\section{Real-life examples of semver breaks}
-
-TODO:
-\begin{itemize}
-	\item write (and cite) about cases our mentor mentioned in his blogs
-	\item write about cases users reported in the github issue
-	\item mention the paper describing that 43\% of yanked releases
-		are because of semver breaks and 3.7\% of all >300'000 releases are yanked
-	\item mention that we've developed
-		a script that scans all releases for the semver breaks
-		we can detect and the results are presented in some chapter
-\end{itemize}
+Those were examples of popular crates with experienced maintainers, but the problem is even more prominent in less used crates
+where developers might not know the common semver pitfalls. A paper \cite{paper}
+claims that out of the yanked (un-publised) releases,
+semver break was the leading reason for yanking, with a shocking 43\% rate.
+It also mentions that 3.7\% of all releases (and there is more than 300 000 of them already)
+are yanked, which shows the scale of the problem -- thousands of detected semver breaks.
 
 \section{Existing tools for detecting semver breaks}\label{r:section_existing_semver_tools}
 
-TODO:
-\begin{itemize}
-	\item list languages which have semver checking built-in,
-		explain that the language semantics were made for e.g. semver checking,
-	\item list current tools for detecting semver breaks in Rust:
-		cargo-breaking, rust-semverver, cargo-semver-checks
-	\item for the first two, explain a bit how they work and why they are no longer maintained.
-		Mieszko's slides have some info about that.
-	\item for cargo-semver-checks, explain a bit how it works (rustdoc, json, etc.)
-		and that contrary to the other two, it is maintained and it's made to be easily maintained.
-		Mention that this is the project we're working on.
-	\item research the current state of semver detection in other languages,
-		explain that it's hard to do in popular languages,
-		especially without features like rustdoc.
-\end{itemize}
+There are not many great tools for semver checking in existence.
+The main reason for that is that the semantics of popular languages
+make complete and automatic verification practically impossible.
+There are some initiatives to combat this. For example,
+the Elm languge\cite{elm-lang} by design enforces semantic versioning.
+Its type system enables automatic detection of all API changes.
+Outside of that, it does not appear that tools for checking semver
+in estabilished languages like Python or C++ are commonly used in the industry.
+
+Unfortunately, the Rust language's semantics were also not designed with semver in mind.
+Despite this, there are some existing tools for semver checking.
+First of them, \texttt{cargo-breaking}, works on the abstract syntax tree.
+Although ASTs contain all the information needed for comparing API changes,
+it has a major drawback -- two trees must be navigated at once.
+It can get complex and tedious (especially when checking for moved or removed items), because the abstract syntax tree could change quite a lot,
+even without any public API changes.
+Another issue is that both language syntax and the structure of the abstract syntax tree
+often change along with the development of the language, which makes maintenance time-consuming.
+
+The second existing tool is \texttt{rust-semverver}, which focuses on
+the metadata present in the rust-specific rlib binary static library format.
+Because of that, the user experience is far from ideal,
+as it forces the user to use some specific unstable versions of the language, and the quality of error messages is limited.
+
+In comparison, the cargo-semver-checks' approach to write lints as queries seems to work really well.
+Adding new queries is designed to be accessible and the maintenance comes down to
+keeping up with rustdoc API changes, which seems to be about as low effort as it could be.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %               Vision                %
@@ -497,7 +547,7 @@ into their workflow:
 	\item some existing lints had false-positives,
 	\item the codebase was not in a state where new contributors could easily begin making changes
 		to the project (which is crucial for the project to flourish in the long term).
-		For example, adding new lints and tests wasn't intuitive and required many manual steps, 
+		For example, adding new lints and tests was not intuitive and required many manual steps,
 		the filenames and variable names were not always descriptive enough
 		and the code lacked comments that explained some of the logic and decisions behind it.
 \end{itemize}
@@ -613,11 +663,12 @@ TODO:
 	\item list the maintainers of big libraries that started using the tool during our development
 \end{itemize}
 
-\section{Script}
+\section{Script} \label{r:section_scanning_script}
 
 TODO:
 \begin{itemize}
-	\item show the results of the script that searches all existing releases for detected semver breaks
+        \item adjust the name of the subsection
+        \item show the results of the script that searches all existing releases for detected semver breaks
 	\item describe how our new lints can make an impact on the community based on the found semver breaks from the script
 \end{itemize}
 
@@ -670,6 +721,8 @@ TODO:
 %     function}, Mathematica Absurdica, 117 (1965) 338--9.
 \bibitem{issue-merge-cargo} \href{}{GitHub cargo-semver-checks issue \#61: Prepare for merging into cargo}
 \bibitem{issue-cli-interface} \href{}{GitHub cargo-semver-checks issue \#86 What should the CLI look like?}
+\bibitem{issue-compiling-fails} \href{}{GitHub cargo-semver-checks issue \#317: compiling semver-checks fails}
+\bibitem{issue-libp2p} \href{}{GitHub rust-libp2p issue \#3312: feat: migrate to quick-protobuf}
 
 \bibitem{Rust-1} Rust Team,
 	\textit{Rust Programming Language} (2023) \\
@@ -703,8 +756,31 @@ TODO:
 	\textit{Semantic Versioning 2.0.0} (2022) \\
 	https://semver.org/
 
-\end{thebibliography}
+\bibitem{paper} Hao Li, Filpe R Cogo, Cor-Paul Bezemer, \\
+    \textit{An Empirical Study of Yanked Releases in the Rust Package Registry}
+    (2022) \\ https://arxiv.org/pdf/2201.11821.pdf
 
+\bibitem{fearless-cargo-update} Predrag Gruevski,
+    \textit{Towards fearless cargo update} (2022) \\
+    https://predr.ag/blog/toward-fearless-cargo-update/
+
+\bibitem{elm-lang} Evan Czaplicki,
+    \textit{Elm Programming Language} (2021) \\
+    https://elm-lang.org/
+
+\bibitem{pyo3-issue}
+    \textit{Github PyO3 issue \#285} (2018) \\
+    https://github.com/PyO3/pyo3/issues/285
+
+\bibitem{clap-issue}
+    \textit{Github clap issue \#3876} (2022) \\
+    https://github.com/clap-rs/clap/issues/3876
+
+\bibitem{block-buffer-issue}
+    \textit{Github RustCrypto issue \#22} \\
+    https://github.com/RustCrypto/utils/issues/22
+
+\end{thebibliography}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %             Attachments             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
