@@ -335,7 +335,7 @@ when not actively searched for. Consider the following example:
 
 Changing {\ttfamily Foo.x} type from {\ttfamily String} to {\ttfamily Rc<str>}
 causes semver break, even though it is a non-public field of a non-public struct.
-That's because {\ttfamily String} implements {\ttfamily Send} and {\ttfamily Sync} traits
+That is because {\ttfamily String} implements {\ttfamily Send} and {\ttfamily Sync} traits
 that are automatically derived, making both {\ttfamily Foo} and {\ttfamily Bar}
 implement {\ttfamily Send} and {\ttfamily Sync}.
 In contrary, {\ttfamily Rc<str>} implements neither of them,
