@@ -405,7 +405,7 @@ Unfortunately, the Rust langugage's semantic were also not designed with semver 
 Despite this, there are some existing tools for semver checking.
 First of them, \texttt{cargo-breaking}, works on the abstract syntax tree.
 Although ASTs contain all the information needed for comparing API changes,
-it has a major drawback -- you must navigate two trees at once.
+it has a major drawback -- two trees must be navigated at once.
 It can get complex and tedious (especially when checking for moved or removed items), because the abstract syntax tree could change quite a lot,
 even without any public API changes.
 Another issue is that both language syntax and the structure of the abstract syntax tree
