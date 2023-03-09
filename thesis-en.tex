@@ -341,7 +341,7 @@ implement {\ttfamily Send} and {\ttfamily Sync}.
 In contrary, {\ttfamily Rc<str>} implements neither of them,
 so the change results in a publicly visible struct {\ttfamily Bar} losing a trait.
 
-The given example is not only non-obvious, but also is even harder to notice
+The given example is not only unobvious, but also even harder to notice
 in large codebases, where those struct could be in very different locations.
 In fact, a similar error crept into the release v3.2.0 of a well-known crate
 maintained by the Rust team -- {\ttfamily clap}.
