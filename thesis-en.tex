@@ -359,7 +359,7 @@ their type was publicly \texttt{UnwindSafe} to start with.
 When a maintainer publishes a new version of their crate that is breaking semver,
 it is causing a major inconvenience for the crate's users.
 Their code might just stop compiling when the offending version gets downloaded.
-This also could happen if the crate containing the violation is not an immediate dependency,
+This could also happen if the crate containing the violation is not an immediate dependency,
 so one semver break could result in tons of broken crates.
 
 Debugging a cryptic compilation error that starts showing up one day,
