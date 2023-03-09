@@ -342,7 +342,7 @@ In contrary, {\ttfamily Rc<str>} implements neither of them,
 so the change results in a publicly visible struct {\ttfamily Bar} losing a trait.
 
 The given example is not only unobvious, but also even harder to notice
-in large codebases, where those struct could be in very different locations.
+in large codebases, where those structs could be in completely different locations.
 In fact, a similar error crept into the release v3.2.0 of a well-known crate
 maintained by the Rust team -- {\ttfamily clap}.
 More of that later on in section \ref{r:section_real_life_semver_breaks}.
