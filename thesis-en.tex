@@ -723,13 +723,17 @@ TODO:
 				and updated \texttt{CONTRIBUTING.md} \cite{pr_renamed_directories_3}.
 			\item Replaced code duplication with a Rust macro and made adding new
 				lints easier \cite{pr_one_macro}.
-			\item Improved the tests -- split each test into separate pairs of crates
-				(that are baseline and current crates for the tool),
-				made it so that the tool runs the lint on all crates
-				(which has detected multiple new false-positives),
-				massively improved the readability and ease of adding new tests and lints,
-				and improved the error messages when the test output didn't match,
-				which speeds up the process of adding new lints \cite{pr_split_each_test}.
+			\item Improved the tests \cite{pr_split_each_test}, 
+				which speeded up the process of adding new lints.
+				More precisely:
+				\begin{itemize}
+					\item splitted each test into separate pairs of crates
+						(that are baseline and current crates for the tool),
+					\item made it so that the tool runs each lint on all testing crates
+						(which has detected multiple new false-positives),
+					\item massively improved the readability and ease of adding new tests and lints,
+					\item improved the error messages when the test output didn't match.
+				\end{itemize}
 			\item Made a change in the tests that runs the tool on crates that did not change
 				to detect possible false-positives \cite{pr_run_lints_nonchanged_crates}.
 			\item Commited changes suggested by a new version of the Rust formatter \cite{pr_clippy_lint}.
@@ -760,13 +764,15 @@ TODO:
 				which just has the checked crate as a dependency.
 				It solves a bug encountered by a user \cite{issue_apple_bitflags}
 				where running the tool updates the \texttt{Cargo.lock} file,
-				and allows to easily specify the set of crate's features to run the rustdoc command on.
-				The change was done by moving and splitting existing functions into smaller ones \cite{pr_placeholder_1},
-				switching the baseline rustdoc generation to using the new placeholder project \cite{pr_placeholder_2},
-				changing functions' arguments for better readability \cite{pr_placeholder_3},
-				renaming files for the same reason \cite{pr_placeholder_4},
-				chosing variable names that fit more nicely with the current code \cite{pr_placeholder_5}
-				and finally switching to the new rustdoc generation logic \cite{pr_placeholder_6}.
+				and allows to easily specify the set of crate's features to run the rustdoc command on
+				\cite{pr_placeholder_1} \cite{pr_placeholder_2} \cite{pr_placeholder_3} 
+				\cite{pr_placeholder_4} \cite{pr_placeholder_5} \cite{pr_placeholder_6}.
+				% The change was done by moving and splitting existing functions into smaller ones \cite{pr_placeholder_1},
+				% switching the baseline rustdoc generation to using the new placeholder project \cite{pr_placeholder_2},
+				% changing functions' arguments for better readability \cite{pr_placeholder_3},
+				% renaming files for the same reason \cite{pr_placeholder_4},
+				% chosing variable names that fit more nicely with the current code \cite{pr_placeholder_5}
+				% and finally switching to the new rustdoc generation logic \cite{pr_placeholder_6}.
 			\item Reported a bug where the tool failed to work when
 				generating rustdoc of a crate that only has yanked releases \cite{issue_fails_yanked}.
 			\item Reported a bug where the tool prints some internal data
