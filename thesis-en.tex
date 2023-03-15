@@ -831,20 +831,30 @@ TODO:
 
 	\item Mieszko:
 		\begin{itemize}
-			\item Reported an incorrect behavior of the CLI which was choosing the latest release from the registry as a baseline version even when it had been yanked \cite{issue_choosing_baseline}. Introduced a fix and created a set of unit tests for choosing the baseline crate \cite{pr_choosing_baseline}.
+			\item Reported an incorrect behavior of the CLI which was choosing the latest release from the registry as
+				a baseline version even when it had been yanked \cite{issue_choosing_baseline}. Introduced a fix and
+				created a set of unit tests for choosing the baseline crate \cite{pr_choosing_baseline}.
 
-			\item Reported a problem in release \texttt{v0.18.2}, where the CLI was not looking for the baseline in the registry as it was supposed to do \cite{issue_finding_registry_baseline}.
+			\item Reported a problem in release \texttt{v0.18.2}, where the CLI was not looking for the baseline in the
+				registry as it was supposed to do \cite{issue_finding_registry_baseline}.
 
-			\item Reported a bug where the precompiled tool crashed on Windows machines \cite{issue_fail_on_windows}. Added a CI job exposing the issue \cite{pr_fail_on_windows} \cite{pr_ci_windows_comment}.
+			\item Reported a bug where the precompiled tool crashed on Windows machines \cite{issue_fail_on_windows}.
+				Added a CI job exposing the issue \cite{pr_fail_on_windows} \cite{pr_ci_windows_comment}.
 
-			\item Developed a new version of \texttt{cargo-semver-checks-action} \cite{pr_action_v2} \cite{pr_action_inputs_issues}, which consisted of
+			\item Developed a new version of \texttt{cargo-semver-checks-action} \cite{pr_action_v2}
+				\cite{pr_action_inputs_issues}, which consisted of
 			\begin{itemize}
-				\item creating a test repository \cite{repo_action_tests} and using it to add CI workflow that tests the basic functionalities of the action \cite{pr_action_first_tests}, then further developing the CI tests to cover all options added in the new version;
-				\item making use of \texttt{cargo-semver-checks} built-in baseline choosing logic, which fixed the user-reported issue \cite{issue_action_builtin_logic};
+				\item creating a test repository \cite{repo_action_tests} and using it to add CI workflow that tests
+					the basic functionalities of the action \cite{pr_action_first_tests}, then further developing the
+					CI tests to cover all options added in the new version;
+				\item making use of \texttt{cargo-semver-checks} built-in baseline choosing logic, which fixed the
+					user-reported issue \cite{issue_action_builtin_logic};
 				\item adding support for running the action on Windows- and MacOs-based runners;
-				\item introducing input \texttt{manifest-path}, as requested by a user \cite{issue_action_manifest_path};
+				\item introducing input \texttt{manifest-path}, as requested by a user
+					\cite{issue_action_manifest_path};
 				\item introducing input \texttt{verbose}, as requested by a user \cite{issue_action_verbose};
-				\item using pre-build binaries to speed up the action, as requested by a user \cite{issue_action_binaries};
+				\item using pre-build binaries to speed up the action, as requested by a user
+					\cite{issue_action_binaries};
 				\item \textbf{TODO}: \textit{baseline caching, when I will finish it...};
 				\item rewriting the documentation of the action.
 			\end{itemize}
@@ -900,7 +910,8 @@ TODO:
 			\item Added a new lint (trustfall query, test crates, tests) to detect when an exhaustive
 				public enum has the \texttt{non\_exhuastive} attribute added \cite{pr_lint_enum_non_exhaustive}.
 
-			\item Designed and implemented new adapter schema for handling attributes \cite{pr_adapter_new_schema_for_attributes}.
+			\item Designed and implemented new adapter schema for handling attributes
+				\cite{pr_adapter_new_schema_for_attributes}.
 				Updated all lints that check attributes to use the new schema, as well as added multiple
 				new test cases to the queries \cite{pr_new_schema_for_attributes}.
 		\end{itemize}
