@@ -864,29 +864,18 @@ TODO:
 			No meeting was complete without his touch, \\
 			A true master of the notetaking clutch. \\
 
-			\item Added a new lint (trustfall query, test crates, tests) to
-				detect when an enum has been marked with the \texttt{must\_use}
-				attribute \cite{pr_lint_enum_must_use_added}.
-
-			\item Added a new lint (trustfall query, test crates, tests) to
-				detect when a struct has been marked with the \texttt{must\_use}
-				attribute \cite{pr_lint_struct_must_use_added}.
-
-			\item Added a new lint (trustfall query, test crates, tests) to
-				detect when a trait has been marked with the \texttt{must\_use}
-				attribute \cite{pr_lint_trait_must_use_added}.
-
-			\item Added a new lint (trustfall query, test crates, tests) to
-				detect when a function has been marked with the \texttt{must\_use}
-				attribute \cite{pr_lint_function_must_use_added}.
-
-			\item Added a new lint (trustfall query, test crates, tests) to
-				detect when a method is moved to a public trait and marked with the
-				\texttt{must\_use} attribute at the same time \cite{pr_method_moved_to_trait_must_use_added}.
-
-			\item Added a new lint (trustfall query, test crates, tests) to
-				detect when an inherent method has been marked with the \texttt{must\_use}
-				attribute \cite{pr_inherent_method_must_use_added}.
+			\item Added several new lints (trustfall queries, test crates, tests)
+				to detect when different items have been marked with the \texttt{must\_use}
+				attribute:
+				\begin{itemize}
+					\item enums \cite{pr_lint_enum_must_use_added},
+					\item structs \cite{pr_lint_struct_must_use_added},
+					\item traits \cite{pr_lint_trait_must_use_added},
+					\item functions \cite{pr_lint_function_must_use_added},
+					\item methods \cite{pr_method_moved_to_trait_must_use_added},
+					\item inherent methods (when both moved to a public trait and marked
+						with the attribute) \cite{pr_inherent_method_must_use_added}.
+				\end{itemize}
 
 			% Not closed yet:
 			% https://github.com/obi1kenobi/cargo-semver-checks/issues/217
@@ -989,14 +978,11 @@ TODO:
 \bibitem{pr_action_v2} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks-action/pull/21
 \bibitem{pr_action_inputs_issues} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks-action/pull/25
 
-\bibitem{issue_repr_attribute_trailing_characters} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/217
 \bibitem{pr_lint_struct_must_use_added} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/279
 \bibitem{pr_lint_trait_must_use_added} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/280
 \bibitem{pr_lint_function_must_use_added} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/281
 \bibitem{pr_lint_enum_must_use_added} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/278
-\bibitem{issue_add_union_to_schema} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/292
 \bibitem{pr_inherent_method_must_use_added} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/283
-\bibitem{issue_non_sealed_pub_trait_method_default_implementation_removed} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/294
 \bibitem{pr_method_moved_to_trait_must_use_added} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/282
 
 \bibitem{Rust-1} Rust Team,
