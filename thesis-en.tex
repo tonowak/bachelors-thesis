@@ -749,7 +749,7 @@ Additionally, we held weekly meetings with the four of us to discuss the progres
 				and updated \texttt{CONTRIBUTING.md} \cite{pr_renamed_directories_3}.
 			\item Replaced code duplication with a Rust macro and made adding new
 				lints easier \cite{pr_one_macro}.
-			\item Improved the tests \cite{pr_split_each_test}, 
+			\item Improved the tests \cite{pr_split_each_test},
 				which speeded up the process of adding new lints.
 				More precisely:
 				\begin{itemize}
@@ -791,7 +791,7 @@ Additionally, we held weekly meetings with the four of us to discuss the progres
 				It solves a bug encountered by a user \cite{issue_apple_bitflags}
 				where running the tool updates the \texttt{Cargo.lock} file,
 				and allows to easily specify the set of crate's features to run the rustdoc command on
-				\cite{pr_placeholder_1} \cite{pr_placeholder_2} \cite{pr_placeholder_3} 
+				\cite{pr_placeholder_1} \cite{pr_placeholder_2} \cite{pr_placeholder_3}
 				\cite{pr_placeholder_4} \cite{pr_placeholder_5} \cite{pr_placeholder_6}.
 				% The change was done by moving and splitting existing functions into smaller ones \cite{pr_placeholder_1},
 				% switching the baseline rustdoc generation to using the new placeholder project \cite{pr_placeholder_2},
@@ -857,45 +857,93 @@ Additionally, we held weekly meetings with the four of us to discuss the progres
 
 	\item Mieszko:
 		\begin{itemize}
-			\item TODO
+			\item Reported an incorrect behavior of the CLI which was choosing the latest release from the registry as
+				a baseline version even when it had been yanked \cite{issue_choosing_baseline}. Introduced a fix and
+				created a set of unit tests for choosing the baseline crate \cite{pr_choosing_baseline}.
+
+			\item Reported a problem in release \texttt{v0.18.2} where the CLI was not looking for the baseline in the
+				registry as it was supposed to do \cite{issue_finding_registry_baseline}.
+
+			\item Reported a bug where the precompiled tool crashed on Windows machines \cite{issue_fail_on_windows}.
+				Added a CI job that checks for similar issues \cite{pr_fail_on_windows} \cite{pr_ci_windows_comment}.
+
+			\item Developed a new version of \texttt{cargo-semver-checks-action} \cite{pr_action_v2}
+				\cite{pr_action_inputs_issues}, which consisted of:
+			\begin{itemize}
+				\item creating a test repository \cite{repo_action_tests} and using it to add a CI workflow that tests
+					the basic functionalities of the action \cite{pr_action_first_tests}, then further developing the
+					CI tests to cover all options added in the new version,
+				\item making use of \texttt{cargo-semver-checks} built-in baseline choosing logic, which fixed the
+					user-reported issue \cite{issue_action_builtin_logic},
+				\item adding support for running the action on Windows- and MacOs-based runners,
+				\item introducing input \texttt{manifest-path}, as requested by a user
+					\cite{issue_action_manifest_path},
+				\item introducing input \texttt{verbose}, as requested by a user \cite{issue_action_verbose},
+				\item using pre-build binaries to speed up the action, as requested by a user
+					\cite{issue_action_binaries},
+				% \item \textbf{TODO}: \textit{baseline caching, when I will finish it...},
+				\item rewriting the documentation of the action.
+			\end{itemize}
+
+			% These two are not even worth mentioning...
+			% https://github.com/obi1kenobi/cargo-semver-checks/issues/390
+			% https://github.com/obi1kenobi/cargo-semver-checks-action/issues/24
 		\end{itemize}
 
 	\item Bartosz:
 		\begin{itemize}
-			\item TODO
-		\end{itemize}
+			% \item \emph{SCRIBE!} \\
+			% This scribe was like no other, \\
+			% His notes could make a person shudder, \\
+			% Each word he wrote, a work of art, \\
+			% A skill that set him far apart. \\
+
+			% Meetings became a grand event, \\
+			% When his pen and paper were present, \\
+			% Colleagues vied for his attention, \\
+			% To ensure their words got a mention. \\
+
+			% For this scribe's notes were legendary, \\
+			% Capturing every detail, quite extraordinary, \\
+			% No meeting was complete without his touch, \\
+			% A true master of the notetaking clutch. \\
+
+			\item Added several new lints (trustfall queries, test crates, tests)
+				to detect when different items have been marked with the \texttt{must\_use}
+				attribute. Writing separate lints for individual items allowed to provide more
+				detailed messages for the user, improved the code structure by creating smaller,
+				more specialized files and made the final review process easier. The items that
+				undergo those checks are:
+				\begin{itemize}
+					\item enums \cite{pr_lint_enum_must_use_added},
+					\item structs \cite{pr_lint_struct_must_use_added},
+					\item traits \cite{pr_lint_trait_must_use_added},
+					\item functions \cite{pr_lint_function_must_use_added},
+					\item methods \cite{pr_method_moved_to_trait_must_use_added},
+					\item inherent methods (reported only when one was both moved to
+						a public trait and marked with the attribute)
+						\cite{pr_inherent_method_must_use_added}.
+				\end{itemize}
+
+			% Not closed yet:
+			% https://github.com/obi1kenobi/cargo-semver-checks/issues/217
+			% https://github.com/obi1kenobi/cargo-semver-checks/issues/292
+			% https://github.com/obi1kenobi/cargo-semver-checks/issues/294
+
+\end{itemize}
 
 	\item Mieszko and Bartosz:
 		\begin{itemize}
-			\item TODO
+			\item Added a new lint (trustfall query, test crates, tests) to detect when an exhaustive
+				public enum has the \texttt{non\_exhaustive} attribute added \cite{pr_lint_enum_non_exhaustive}.
+
+			\item Designed and implemented a new adapter schema for handling attributes
+				\cite{pr_adapter_new_schema_for_attributes}.
+				Updated all lints that check attributes to use the new schema, as well as added multiple
+				new test cases to the queries \cite{pr_new_schema_for_attributes}.
 		\end{itemize}
 \end{itemize}
 
-% All of Mieszko's and Bartosz's PRs and Issues (open and closed)
-% https://github.com/obi1kenobi/cargo-semver-checks/pull/155
-% https://github.com/obi1kenobi/cargo-semver-checks/pull/158
-% https://github.com/obi1kenobi/trustfall-rustdoc-adapter/pull/5
-% https://github.com/obi1kenobi/cargo-semver-checks-action/pull/19
-% https://github.com/obi1kenobi/cargo-semver-checks/pull/255
-% https://github.com/obi1kenobi/cargo-semver-checks/pull/171
-% https://github.com/obi1kenobi/cargo-semver-checks/issues/217
-% https://github.com/obi1kenobi/cargo-semver-checks/pull/279
-% https://github.com/obi1kenobi/cargo-semver-checks/pull/280
-% https://github.com/obi1kenobi/cargo-semver-checks/pull/281
-% https://github.com/obi1kenobi/cargo-semver-checks/pull/278
-% https://github.com/obi1kenobi/cargo-semver-checks/issues/292
-% https://github.com/obi1kenobi/cargo-semver-checks/pull/283
-% https://github.com/obi1kenobi/cargo-semver-checks/issues/294
-% https://github.com/obi1kenobi/cargo-semver-checks/pull/282
-% https://github.com/obi1kenobi/cargo-semver-checks-action/pull/20
-% https://github.com/obi1kenobi/cargo-semver-checks/issues/382
-% https://github.com/obi1kenobi/cargo-semver-checks/issues/390
-% https://github.com/obi1kenobi/cargo-semver-checks-action/issues/24
-% https://github.com/obi1kenobi/cargo-semver-checks/pull/389
-% https://github.com/obi1kenobi/cargo-semver-checks/issues/276
-% https://github.com/obi1kenobi/cargo-semver-checks/pull/407
-% https://github.com/obi1kenobi/cargo-semver-checks-action/pull/21
-% https://github.com/obi1kenobi/cargo-semver-checks-action/pull/25
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %            Bibliography             %
@@ -965,6 +1013,36 @@ Additionally, we held weekly meetings with the four of us to discuss the progres
 \bibitem{issue_color_always} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/326
 \bibitem{pr_color_always} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/360
 \bibitem{pr_library} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/314
+\bibitem{pr_lint_enum_non_exhaustive} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/155
+\bibitem{pr_new_schema_for_attributes} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/171
+\bibitem{pr_adapter_new_schema_for_attributes} TODO \\ https://github.com/obi1kenobi/trustfall-rustdoc-adapter/pull/5
+
+\bibitem{pr_action_first_tests} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks-action/pull/19
+\bibitem{issue_choosing_baseline} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/254
+\bibitem{pr_choosing_baseline} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/255
+\bibitem{pr_action_inputs_readme} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks-action/pull/20
+\bibitem{issue_finding_registry_baseline} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/382
+\bibitem{issue_fail_on_windows} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/276
+\bibitem{pr_fail_on_windows} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/389
+\bibitem{pr_ci_windows_comment} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/407
+\bibitem{pr_action_v2} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks-action/pull/21
+\bibitem{pr_action_inputs_issues} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks-action/pull/25
+\bibitem{repo_action_tests} TODO \\
+https://github.com/mgr0dzicki/cargo-semver-action-ref-slice
+\bibitem{issue_action_builtin_logic} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks-action/issues/23
+\bibitem{issue_action_manifest_path} TODO \\
+https://github.com/obi1kenobi/cargo-semver-checks-action/issues/18
+\bibitem{issue_action_verbose} TODO \\
+https://github.com/obi1kenobi/cargo-semver-checks-action/issues/16
+\bibitem{issue_action_binaries} TODO \\
+https://github.com/obi1kenobi/cargo-semver-checks-action/issues/8
+
+\bibitem{pr_lint_struct_must_use_added} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/279
+\bibitem{pr_lint_trait_must_use_added} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/280
+\bibitem{pr_lint_function_must_use_added} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/281
+\bibitem{pr_lint_enum_must_use_added} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/278
+\bibitem{pr_inherent_method_must_use_added} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/283
+\bibitem{pr_method_moved_to_trait_must_use_added} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/282
 
 \bibitem{Rust-1} Rust Team,
 	\textit{Rust Programming Language} (2023) \\
