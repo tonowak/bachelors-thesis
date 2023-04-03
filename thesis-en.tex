@@ -559,18 +559,28 @@ into their workflow:
 \chapter{Theory}\label{r:chapter_theory}
 
 \section{Project structure}\label{r:section_projectstructure}
+In order to check two versions of a crate for semver violations our tool needs a consistent method
+for generating the data to be compared. This is achieved by using rustdoc -- the official tool for
+generating the documentation for Rust projects. However, the documentation itself does not come in
+a form that is easy to analyze and compare. For this purpose, our tool uses Trustfall to parse the
+output received from rustdoc into much more managable form.
 
-TODO:
-\begin{itemize}
-	\item explain that the tool heavily uses rustdocs
-	\item explain that it parses rustdoc through Trustfall
-	\item define Trustfall
-	\item explain how the lints look like
-	\item mention that the project is split into three sub-projects,
-		in this order: cargo-semver-checks, trustfall-rustdoc-adapter, trustfall-rustdoc,
-		cargo-semver-checks-action,
-		and briefly define what they do (like in our docs)
-\end{itemize}
+Trustfall is a special query engine, designed to query any data source or a combination of data
+sources such as APIs, raw files (JSON, CSV, etc.), git commits and many more. Its main idea is to
+represent the data as an organised graph with vertices and egdes that the engine can traverse. To
+navigate during the search, it follows consecutive filtering rules defined by the users in special
+\texttt{.ron} (rusty object notation) files, named \texttt{lints}.
+% TODO:
+% \begin{itemize}
+% 	\item explain that the tool heavily uses rustdocs
+% 	\item explain that it parses rustdoc through Trustfall
+% 	\item define Trustfall
+% 	\item explain how the lints look like
+% 	\item mention that the project is split into three sub-projects,
+% 		in this order: cargo-semver-checks, trustfall-rustdoc-adapter, trustfall-rustdoc,
+% 		cargo-semver-checks-action,
+% 		and briefly define what they do (like in our docs)
+% \end{itemize}
 
 \section{cargo-semver-checks}
 
@@ -1099,6 +1109,18 @@ https://github.com/obi1kenobi/cargo-semver-checks-action/issues/8
 \bibitem{block-buffer-issue}
     \textit{Github RustCrypto issue \#22} \\
     https://github.com/RustCrypto/utils/issues/22
+
+\bibitem{rustdoc-theory}
+	\textit{The rustdoc book} \\
+	https://doc.rust-lang.org/rustdoc/what-is-rustdoc.html
+
+\bibitem{trustfall}
+	\textit{Trustfall -- Query (Almost) Everything} \\
+	https://github.com/obi1kenobi/trustfall
+
+\bibitem{cargo-semver-checks}
+	\textit{cargo-semver-checks repository} \\
+	https://github.com/obi1kenobi/cargo-semver-checks
 
 \end{thebibliography}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
