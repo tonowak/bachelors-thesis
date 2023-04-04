@@ -29,40 +29,36 @@
 \maketitle
 
 \begin{abstract}
-In many programming languages there exist countless nuances,
-making developers accidentally release new versions of their packages
-that are not backwards-compatible.
-Such releases can directly impact projects which are using their packages,
-causing bugs or even compilation errors when using the latest version.
-One of the affected languages is Rust,
-which also lacks (itself) a built-in mechanism for enforcing semantic versioning.
+In many programming languages there exist countless nuances, making developers accidentally release
+new versions of their packages that are not backwards-compatible. Such releases can directly impact
+projects which are using their packages, causing bugs or even compilation errors when using the
+latest version. One of the affected languages is Rust, which also lacks (itself) a built-in
+mechanism for enforcing semantic versioning.
 
-The aim of this thesis is to describe the development of a tool
-for Rust programmers to reduce the chances of publishing
-a new version of the code that violates semantic versioning.
+The aim of this thesis is to describe the development of a tool for Rust programmers to reduce the
+chances of publishing a new version of the code that violates semantic versioning.
 
-There are already on-going plans to bundle this tool
-into the language's standard development toolchain.
-It would make it commonly used and therefore help users to safely get bug fixes,
-security patches and new functionality,
-without worrying about their app being broken by a dependency change.
+There are already on-going plans to bundle this tool into the language's standard
+development toolchain. It would make it commonly used and therefore help users to safely get
+bug fixes, security patches and new functionality, without worrying about their app being broken
+by a dependency change.
 \end{abstract}
 
 % Abstrakt po polsku (potrzebny tylko w APD?)
-% W wielu językach programowania istnieją liczne niuanse sprawiające, że deweloperzy
-% omyłkowo publikują nowe wersje swoich pakietów bez zachowania kompatybilności wstecznej.
-% Takie sytuacje mogą bezpośrednio wpłynąć na projekty korzystające z ich pakietów,
-% powodując błędy bądź nawet uniemożliwiając kompilację po aktualizacji do najnowszej wersji.
-% Jednym z języków dotkniętych tym problemem jest Rust, który nie posiada wbudowanego
-% mechanizmu wymuszającego semantyczne wersjonowanie.
+% W wielu językach programowania istnieją liczne niuanse sprawiające, że deweloperzy omyłkowo
+% publikują nowe wersje swoich pakietów bez zachowania kompatybilności wstecznej. Takie sytuacje
+% mogą bezpośrednio wpłynąć na projekty korzystające z ich pakietów, powodując błędy bądź nawet
+% uniemożliwiając kompilację po aktualizacji do najnowszej wersji. Jednym z języków dotkniętych
+% tym problemem jest Rust, który nie posiada wbudowanego mechanizmu wymuszającego
+% semantyczne wersjonowanie.
 
-% Celem tej pracy jest przedstawienie rozwoju narzędzia dla języka Rust, które
-% zmniejsza ryzyko publikacji kodu nieprzestrzegającego zasad semantycznego wersjonowania.
+% Celem tej pracy jest przedstawienie rozwoju narzędzia dla języka Rust, które zmniejsza ryzyko
+% publikacji kodu nieprzestrzegającego zasad semantycznego wersjonowania.
 
-% Są również plany, aby narzędzie to stało się częścią standardowego toolchainu
-% deweloperskiego. Skutkowałoby to jego powszechnym użyciem i tym samym zagwarantowałoby
-% użytkownikom, że korzystanie z poprawek błędów, łatek bezpieczeństwa oraz nowych
-% funkcjonalności pakietów nie doprowadzi do awarii ich aplikacji.
+% Są również plany, aby narzędzie to stało się częścią standardowego toolchainu deweloperskiego.
+% Skutkowałoby to jego powszechnym użyciem i tym samym zagwarantowałoby użytkownikom, że korzystanie
+% z poprawek błędów, łatek bezpieczeństwa oraz nowych funkcjonalności pakietów nie doprowadzi do
+% awarii ich aplikacji.
 
 \tableofcontents
 %\listoffigures
