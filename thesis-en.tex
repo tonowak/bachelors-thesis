@@ -1,5 +1,7 @@
 \documentclass[licencjacka,en]{pracamgr}
 \usepackage{hyperref}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
 
 \autor{Tomasz Nowak}{429575}
 \autori{Michał Staniewski}{429598}
@@ -562,25 +564,54 @@ into their workflow:
 In order to check two versions of a crate for semver violations our tool needs a consistent method
 for generating the data to be compared. This is achieved by using rustdoc -- the official tool for
 generating the documentation for Rust projects. However, the documentation itself does not come in
-a form that is easy to analyze and compare. For this purpose, our tool uses Trustfall to parse the
-output received from rustdoc into much more managable form.
+a form that is easy to analyze or compare. For this purpose, our tool uses Trustfall to parse the
+output received from rustdoc into a more managable form.
 
 Trustfall is a special query engine, designed to query any data source or a combination of data
 sources such as APIs, raw files (JSON, CSV, etc.), git commits and many more. Its main idea is to
 represent the data as an organised graph with vertices and egdes that the engine can traverse. To
-navigate during the search, it follows consecutive filtering rules defined by the users in special
-\texttt{.ron} (rusty object notation) files, named \texttt{lints}.
-% TODO:
-% \begin{itemize}
-% 	\item explain that the tool heavily uses rustdocs
-% 	\item explain that it parses rustdoc through Trustfall
-% 	\item define Trustfall
-% 	\item explain how the lints look like
-% 	\item mention that the project is split into three sub-projects,
-% 		in this order: cargo-semver-checks, trustfall-rustdoc-adapter, trustfall-rustdoc,
-% 		cargo-semver-checks-action,
-% 		and briefly define what they do (like in our docs)
-% \end{itemize}
+navigate during the search, it follows consecutive filtering rules defined by the user in a special
+\texttt{.ron} (rusty object notation) file. These files are formally named \texttt{lints}.
+
+\begin{figure}[h]
+	\centering
+	\caption{Example of a lint}
+	\includegraphics[width=\linewidth]{lint-example.png}
+\end{figure}
+
+In cargo-semver-checks, each lint consists of the following fields:
+\begin{itemize}
+	\item \texttt{id} -- a short, unique name identifying the lint, most often matching the
+		file name,
+	\item \texttt{human\_readable\_name} -- a longer, more informative name,
+	\item \texttt{description} -- general information about what is the detected problem,
+	\item \texttt{required\_update} -- the minimum version bump needed to avoid breaking semver,
+	\item \texttt{reference\_link} -- a link to the official Rust documentation coresponding to
+		the issue (if available),
+	\item \texttt{query} -- the filtering rules responsible for comparing two versions and
+		detecting semver violations (more detail in section \ref{r:section_new_lints}),
+	\item \texttt{arguments} -- optional, user-defined constants for the query,
+	\item \texttt{error\_message} -- the exact problem and some of its possible causes,
+	\item \texttt{per\_result\_error\_template} -- the exact location of the code that broke semver.
+\end{itemize} \bigskip
+
+Despite being the project's core component, new lints are not the only thing we developed. In total
+there are four repositories that we have been actively contributing to for the last few months:
+\begin{itemize}
+	\item \textbf{cargo-semver-checks} -- a CLI tool that runs lints (Trustfall queries),
+	\item \textbf{trustfall-rustdoc-adapter} -- implements the Trustfall interface for one specific
+		rustdoc version,
+	\item \textbf{trustfall-rustdoc} -- allows to run Trustfall queries over rustdoc regardless of
+		the version,
+	\item \textbf{cargo-semver-checks-action} -- the tool in form of a GitHub Action.
+\end{itemize}
+
+% INSERT THE PROJECT STRUCTURE DIAGRAM ON WHITE BACKGROUND
+% \begin{figure}[h]
+% 	\centering
+% 	\caption{Diagram of the project structure}
+% 	\includegraphics[width=\linewidth]{project-structure-diagram.png}
+% \end{figure}
 
 \section{cargo-semver-checks}
 
@@ -624,7 +655,7 @@ TODO:
 	\item change names to ,,why users care about this''
 \end{itemize}
 
-\section{New lints}
+\section{New lints}\label{r:section_new_lints}
 
 <Here write a list about the new lints we've written>
 
