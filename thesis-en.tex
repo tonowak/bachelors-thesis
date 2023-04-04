@@ -22,47 +22,44 @@
   }
 
 \title{Accelerating package expansion in Rust through development of a semantic versioning tool}
-\titlepl{Przyspieszenie rozwoju pakietów w języku Rust poprzez rozbudowę narzędzia do semantycznego wersjonowania}
+\titlepl{Przyspieszenie rozwoju pakietów w języku Rust poprzez rozbudowę narzędzia do
+	semantycznego wersjonowania}
 \keywords{Rust, semantic versioning, continuous integration, package manager}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-In many programming languages there exist countless nuances,
-making developers accidentally release new versions of their packages
-that are not backwards-compatible.
-Such releases can directly impact projects which are using their packages,
-causing bugs or even compilation errors when using the latest version.
-One of the affected languages is Rust,
-which also lacks (itself) a built-in mechanism for enforcing semantic versioning.
+In many programming languages there exist countless nuances, making developers accidentally release
+new versions of their packages that are not backwards-compatible. Such releases can directly impact
+projects which are using their packages, causing bugs or even compilation errors when using the
+latest version. One of the affected languages is Rust, which also lacks (itself) a built-in
+mechanism for enforcing semantic versioning.
 
-The aim of this thesis is to describe the development of a tool
-for Rust programmers to reduce the chances of publishing
-a new version of the code that violates semantic versioning.
+The aim of this thesis is to describe the development of a tool for Rust programmers to reduce the
+chances of publishing a new version of the code that violates semantic versioning.
 
-There are already on-going plans to bundle this tool
-into the language's standard development toolchain.
-It would make it commonly used and therefore help users to safely get bug fixes,
-security patches and new functionality,
-without worrying about their app being broken by a dependency change.
+There are already on-going plans to bundle this tool into the language's standard
+development toolchain. It would make it commonly used and therefore help users to safely get
+bug fixes, security patches and new functionality, without worrying about their app being broken
+by a dependency change.
 \end{abstract}
 
 % Abstrakt po polsku (potrzebny tylko w APD?)
-% W wielu językach programowania istnieją liczne niuanse sprawiające, że deweloperzy
-% omyłkowo publikują nowe wersje swoich pakietów bez zachowania kompatybilności wstecznej.
-% Takie sytuacje mogą bezpośrednio wpłynąć na projekty korzystające z ich pakietów,
-% powodując błędy bądź nawet uniemożliwiając kompilację po aktualizacji do najnowszej wersji.
-% Jednym z języków dotkniętych tym problemem jest Rust, który nie posiada wbudowanego
-% mechanizmu wymuszającego semantyczne wersjonowanie.
+% W wielu językach programowania istnieją liczne niuanse sprawiające, że deweloperzy omyłkowo
+% publikują nowe wersje swoich pakietów bez zachowania kompatybilności wstecznej. Takie sytuacje
+% mogą bezpośrednio wpłynąć na projekty korzystające z ich pakietów, powodując błędy bądź nawet
+% uniemożliwiając kompilację po aktualizacji do najnowszej wersji. Jednym z języków dotkniętych
+% tym problemem jest Rust, który nie posiada wbudowanego mechanizmu wymuszającego
+% semantyczne wersjonowanie.
 
-% Celem tej pracy jest przedstawienie rozwoju narzędzia dla języka Rust, które
-% zmniejsza ryzyko publikacji kodu nieprzestrzegającego zasad semantycznego wersjonowania.
+% Celem tej pracy jest przedstawienie rozwoju narzędzia dla języka Rust, które zmniejsza ryzyko
+% publikacji kodu nieprzestrzegającego zasad semantycznego wersjonowania.
 
-% Są również plany, aby narzędzie to stało się częścią standardowego toolchainu
-% deweloperskiego. Skutkowałoby to jego powszechnym użyciem i tym samym zagwarantowałoby
-% użytkownikom, że korzystanie z poprawek błędów, łatek bezpieczeństwa oraz nowych
-% funkcjonalności pakietów nie doprowadzi do awarii ich aplikacji.
+% Są również plany, aby narzędzie to stało się częścią standardowego toolchainu deweloperskiego.
+% Skutkowałoby to jego powszechnym użyciem i tym samym zagwarantowałoby użytkownikom, że korzystanie
+% z poprawek błędów, łatek bezpieczeństwa oraz nowych funkcjonalności pakietów nie doprowadzi do
+% awarii ich aplikacji.
 
 \tableofcontents
 %\listoffigures
@@ -83,39 +80,34 @@ TODO:
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
 
-Rust is a relatively new language that has lately been gaining on popularity.
-Amongst its standard development toolchain there is a software called cargo
--- Rust's build system and package manager,
-which handles building a crate -- a package with Rust code.
-One of cargo's responsibilities is to search for the newest crate versions,
-download them and build dependencies
-(that is, other libraries / crates that the code uses).
+Rust is a relatively new language that has lately been gaining on popularity. Amongst its standard
+development toolchain there is a software called cargo -- Rust's build system and package manager,
+which handles building a crate -- a package with Rust code. One of cargo's responsibilities is to
+search for the newest crate versions, download them and build dependencies (that is, other
+libraries / crates that the code uses).
 
-Cargo assumes that all crates follow semantic versioning
--- a set of rules that decide when it is safe to use the new version of a library
-without any problems (the projects that depend on this library must still compile).
-Thanks to that, developers of libraries can release patches and bugfixes
-and cargo by default will automatically use those newest releases.
-The exact definition of semantic versioning is explained in chapter \ref{r:chapter_definitions}.
+Cargo assumes that all crates follow semantic versioning -- a set of rules that decide when it is
+safe to use the new version of a library without any problems (the projects that depend on this
+library must still compile). Thanks to that, developers of libraries can release patches and
+bugfixes and cargo by default will automatically use those newest releases. The exact definition of
+semantic versioning is explained in chapter \ref{r:chapter_definitions}.
 
-It turns out that it is not obvious which changes are backwards-compatible
-and which are not. There are numerous examples (listed in \ref{r:section_usageofsemver})
-where experienced Rust developers made a mistake
-(due to insufficient knowledge about the language or by overlooking something)
-that changed the public API (Application Programming Interface) of a library in such a way that
-users' code stopped compiling.
+It turns out that it is not obvious which changes are backwards-compatible and which are not.
+There are numerous examples (listed in \ref{r:section_usageofsemver}) where experienced Rust
+developers made a mistake (due to insufficient knowledge about the language or by overlooking
+something) that changed the public API (Application Programming Interface) of a library in such
+a way that users' code stopped compiling.
 
-The authors of this thesis present their work on a tool that detects and notifies about
-a subset of problems that make Rust libraries' public API non-backwards compatible,
-with the goal to make problems with semantic versioning less frequent in the Rust community.
-The exact goals of this project are described in chapter \ref{r:chapter_vision}.
+The authors of this thesis present their work on a tool that detects and notifies about a subset of
+problems that make Rust libraries' public API non-backwards compatible, with the goal to make
+problems with semantic versioning less frequent in the Rust community. The exact goals of this
+project are described in chapter \ref{r:chapter_vision}.
 
-The project is open-source -- all of the authors' work is visible in public repositories
-(listed in \ref{r:section_projectstructure}). The project existed before their contributions,
-thus chapter \ref{r:chapter_implementation} mainly describes how they have
-extended the project's functionalities and fixed its issues.
-Chapter \ref{r:chapter_evaluation} is a summary of their results and the project's impact
-on the Rust community.
+The project is open-source -- all of the authors' work is visible in public repositories (listed in
+\ref{r:section_projectstructure}). The project existed before their contributions, thus chapter
+\ref{r:chapter_implementation} mainly describes how they have extended the project's
+functionalities and fixed its issues. Chapter \ref{r:chapter_evaluation} is a summary of their
+results and the project's impact on the Rust community.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %             Definitions             %
@@ -341,18 +333,15 @@ implement {\ttfamily Send} and {\ttfamily Sync}.
 In contrary, {\ttfamily Rc<str>} implements neither of them,
 so the change results in a publicly visible struct {\ttfamily Bar} losing a trait.
 
-The given example is not only unobvious, but also even harder to notice
-in large codebases, where those structs could be in completely different locations.
-In fact, a similar error crept into the release v3.2.0 of a well-known crate
-maintained by the Rust team -- {\ttfamily clap}.
-More details about it can be found in section \ref{r:section_real_life_semver_breaks}.
+The given example is not only unobvious, but also even harder to notice in large codebases, where
+those structs could be in completely different locations. In fact, a similar error crept into the
+release v3.2.0 of a well-known crate maintained by the Rust team -- {\ttfamily clap}. More details
+about it can be found in section \ref{r:section_real_life_semver_breaks}.
 
-The same issue almost happened
-(but has been prevented thanks to our tool)
-in another common library \texttt{rust-libp2p},
-where it is clear from the conversation \cite{issue_libp2p} that the maintainers
-were not expecting their type to stop being \texttt{UnwindSafe} and were likely not even aware that
-their type was publicly \texttt{UnwindSafe} to start with.
+The same issue almost happened (but has been prevented thanks to our tool) in another common
+library \texttt{rust-libp2p}, where it is clear from the conversation \cite{issue_libp2p} that
+the maintainers were not expecting their type to stop being \texttt{UnwindSafe} and were likely
+not even aware that their type was publicly \texttt{UnwindSafe} to start with.
 
 \section{Consequences of breaking semver}
 
@@ -363,61 +352,63 @@ This could also happen if the crate containing the violation is not an immediate
 so one semver break could result in tons of other broken crates.
 
 Debugging a cryptic compilation error that starts showing up one day,
-without any change to the code, can be frustrating. In fact, we have experienced it during our contributions
-(one of the tool's users opened a GitHub Issue \cite{issue_compiling_fails}), as one of our dependencies broke semver. This is a major problem, as it might drive the users to stop using such crate.
+without any change to the code, can be frustrating. In fact, we have experienced it during our
+contributions (one of the tool's users opened a GitHub Issue \cite{issue_compiling_fails}), as one
+of our dependencies broke semver. This is a major problem, as it might drive the users to stop
+using such crate.
 
-Because of that, maintainers have to yank
-the incorrect releases as soon as possible
--- otherwise more users would encounter this problem and their trust
-in this particular crate (and crates using it as a dependency)
-would decrease. Even though yanking the release seems easy, fixing the semver break could also result in a lot of additional work for the maintainers -- they have to investigate the semver break when it is reported, inform the users about the yanking and possibly help some move away from the faulty release.
+Because of that, maintainers have to yank the incorrect releases as soon as possible -- otherwise
+more users would encounter this problem and their trust in this particular crate (and crates using
+it as a dependency) would decrease. Even though yanking the release seems easy, fixing the semver
+break could also result in a lot of additional work for the maintainers -- they have to investigate
+the semver break when it is reported, inform the users about the yanking and possibly help some
+move away from the faulty release.
 
 \section{Real-life examples of semver breaks} \label{r:section_real_life_semver_breaks}
 
 Some of popular Rust crates with millions of downloads happened to break semver:
 \begin{itemize}
     \item {\ttfamily pyo3 v0.5.1} accidentally changed a function signature \cite{pyo3-issue}
-    \item {\ttfamily clap v3.2.0} accidentally had a type stop implementing an auto-trait \cite{clap-issue}
-    \item multiple {\ttfamily block-buffer} versions accidentally broke their MSRV contract \cite{block-buffer-issue}
-    \item and many more. We have developed a script that scans all releases
-		for semver breaks we can detect. The results are covered in section \ref{r:section_scanning_script}
+    \item {\ttfamily clap v3.2.0} accidentally had a type stop implementing an auto-trait
+		\cite{clap-issue}
+    \item multiple {\ttfamily block-buffer} versions accidentally broke their MSRV contract
+		\cite{block-buffer-issue}
+    \item and many more. We have developed a script that scans all releases for semver breaks we
+		can detect. The results are covered in section \ref{r:section_scanning_script}
 \end{itemize}
 
-Those were examples of popular crates with experienced maintainers, but the problem is even more prominent in less used crates
-where developers might not know the common semver pitfalls. A paper \cite{paper}
-claims that out of the yanked (un-publised) releases,
-semver break was the leading reason for yanking, with a shocking 43\% rate.
-It also mentions that 3.7\% of all releases (and there is more than 300 000 of them already)
-are yanked, which shows the scale of the problem -- thousands of detected semver breaks.
+Those were examples of popular crates with experienced maintainers, but the problem is even more
+prominent in less used crates where developers might not know the common semver pitfalls. A paper
+\cite{paper} claims that out of the yanked (un-publised) releases, semver break was the leading
+reason for yanking, with a shocking 43\% rate. It also mentions that 3.7\% of all releases
+(and there is more than 300 000 of them already) are yanked, which shows the scale of the problem
+-- thousands of detected semver breaks.
 
 \section{Existing tools for detecting semver breaks}\label{r:section_existing_semver_tools}
 
-There are not many great tools for semver checking in existence.
-The main reason for that is that the semantics of popular languages
-make complete and automatic verification practically impossible.
-There are some initiatives to combat this. For example,
-the Elm languge\cite{elm-lang} by design enforces semantic versioning.
-Its type system enables automatic detection of all API changes.
-Outside of that, it does not appear that tools for checking semver
-in estabilished languages like Python or C++ are commonly used in the industry.
+There are not many great tools for semver checking in existence. The main reason for that is that
+the semantics of popular languages make complete and automatic verification practically impossible.
+There are some initiatives to combat this. For example, the Elm languge\cite{elm-lang} by design
+enforces semantic versioning. Its type system enables automatic detection of all API changes.
+Outside of that, it does not appear that tools for checking semver in estabilished languages like
+Python or C++ are commonly used in the industry.
 
 Unfortunately, the Rust language's semantics were also not designed with semver in mind.
-Despite this, there are some existing tools for semver checking.
-First of them, \texttt{cargo-breaking}, works on the abstract syntax tree.
-Although ASTs contain all the information needed for comparing API changes,
-it has a major drawback -- two trees must be navigated at once.
-It can get complex and tedious (especially when checking for moved or removed items), because the abstract syntax tree could change quite a lot,
-even without any public API changes.
-Another issue is that both language syntax and the structure of the abstract syntax tree
+Despite this, there are some existing tools for semver checking. First of them,
+\texttt{cargo-breaking}, works on the abstract syntax tree. Although ASTs contain all the
+information needed for comparing API changes, it has a major drawback -- two trees must be
+navigated at once. It can get complex and tedious (especially when checking for moved or removed
+items), because the abstract syntax tree could change quite a lot, even without any public API
+changes. Another issue is that both language syntax and the structure of the abstract syntax tree
 often change along with the development of the language, which makes maintenance time-consuming.
 
-The second existing tool is \texttt{rust-semverver}, which focuses on
-the metadata present in the rust-specific rlib binary static library format.
-Because of that, the user experience is far from ideal,
-as it forces the user to use some specific unstable versions of the language, and the quality of error messages is limited.
+The second existing tool is \texttt{rust-semverver}, which focuses on the metadata present in the
+rust-specific rlib binary static library format. Because of that, the user experience is far from
+ideal, as it forces the user to use some specific unstable versions of the language, and the
+quality of error messages is limited.
 
-In comparison, the cargo-semver-checks' approach to write lints as queries seems to work really well.
-Adding new queries is designed to be accessible and the maintenance comes down to
+In comparison, the cargo-semver-checks' approach to write lints as queries seems to work
+really well. Adding new queries is designed to be accessible and the maintenance comes down to
 keeping up with rustdoc API changes, which seems to be about as low effort as it could be.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -428,105 +419,86 @@ keeping up with rustdoc API changes, which seems to be about as low effort as it
 
 \section{Project purpose}
 
-We have taken part in the development of \texttt{cargo-semver-checks}
--- a tool meant to detect semver breaks of a Rust project before publishing
-its new version to the registry.
-The main goal of the project is to reduce the number of issues with new releases
-of libraries, which would deepen the Rust community's trust
-in the packages they are using and in the whole ecosystem.
+We have taken part in the development of \texttt{cargo-semver-checks} -- a tool meant to detect
+semver breaks of a Rust project before publishing its new version to the registry. The main goal
+of the project is to reduce the number of issues with new releases of libraries, which would deepen
+the Rust community's trust in the packages they are using and in the whole ecosystem.
 
-The tool is \textit{not} meant to detect all possible semver breaks.
-Instead, the detection mechanism and existing lints are written
-with a strong focus on finding only true-positives.
-Each false-positive (which is defined as a scenario where the tool
-wrongly reports a semver break) is perceived as a bug in the tool.
-There are two advantages with this approach:
+The tool is \textit{not} meant to detect all possible semver breaks. Instead, the detection
+mechanism and existing lints are written with a strong focus on finding only true-positives.
+Each false-positive (which is defined as a scenario where the tool wrongly reports a semver break)
+is perceived as a bug in the tool. There are two advantages with this approach:
 \begin{itemize}
-	\item the tool is suited to be used in continuous integration
-		for finding semver issues in commits or Pull Requests
-		-- it reports semver breaks only when
-		its output should not be ignored and requires manual inspection,
-	\item we're avoiding a scenario in which
-		a user encounters false-positives, they become frustated
-		and their trust in the tool is reduced, making them
-		less likely to use the tool again.
+	\item the tool is suited to be used in continuous integration for finding semver issues in
+		commits or Pull Requests -- it reports semver breaks only when its output should not be
+		ignored and requires manual inspection,
+	\item we're avoiding a scenario in which a user encounters false-positives, they become
+		frustated and their trust in the tool is reduced, making them less likely to use the
+		tool again.
 \end{itemize}
 
-Similarly to the Rust compiler, the reports contain
-detailed information about the issues, including
-the line of code in which each one was found, both short and long description
-of the triggered lint and, if possible, reference links to the Rust documentation
-describing the semver issue in more detail.
+Similarly to the Rust compiler, the reports contain detailed information about the issues,
+including the line of code in which each one was found, both short and long description of the
+triggered lint and, if possible, reference links to the Rust documentation describing the semver
+issue in more detail.
 
 \section{Plans to merge the tool into cargo}
 
-There are already on-going plans to merge cargo-semver-checks into
-the official Rust development toolchain,
-which has been initiated by one of the developers working on cargo \cite{issue_merge_cargo}.
-That would make the tool available to all Rust programmers
-through a cargo subcommand and would be a huge step towards reducing the number of
-package releases with semver issues.
+There are already on-going plans to merge cargo-semver-checks into the official Rust development
+toolchain, which has been initiated by one of the developers working on cargo
+\cite{issue_merge_cargo}. That would make the tool available to all Rust programmers through
+a cargo subcommand and would be a huge step towards reducing the number of package releases with
+semver issues.
 
-Because of those plans, the commandline interface of the project is similar
-to the interface of cargo's subcommands. Additionally, cargo developers
-take part in discussions about the design of the interface \cite{issue_cli_interface}
-or sometimes even review changes to the code or develop new functionalities.
+Because of those plans, the commandline interface of the project is similar to the interface of
+cargo's subcommands. Additionally, cargo developers take part in discussions about the design of
+the interface \cite{issue_cli_interface} or sometimes even review changes to the code or develop
+new functionalities.
 
-It is cargo-semver-checks that was chosen to be merged into cargo,
-not the other semver issues detecting tools,
-mainly because it is the easiest to maintain
-(as described in \ref{r:section_existing_semver_tools})
-and doesn't report false-positives.
+It is cargo-semver-checks that was chosen to be merged into cargo, not the other semver issues
+detecting tools, mainly because it is the easiest to maintain (as described in
+\ref{r:section_existing_semver_tools}) and doesn't report false-positives.
 
 \section{Project usage}
 
-The basic functionality of the tool is to compare two versions of the code
-(the ,,current'' crate and the ,,baseline'' crate)
-and notify the user about the semver issues that were found when checking the two versions.
+The basic functionality of the tool is to compare two versions of the code (the ,,current'' crate
+and the ,,baseline'' crate) and notify the user about the semver issues that were found when
+checking the two versions.
 
-One can run the tool by directly passing the path to the current crate
-and either getting the baseline crate from registry, or by directly passing
-a path to the baseline crate.
+One can run the tool by directly passing the path to the current crate and either getting the
+baseline crate from registry, or by directly passing a path to the baseline crate.
 
-Because a large portion of libraries are currently developed using GitHub,
-we are also providing a continuous integration job
-via GitHub Actions to automatically ensure that
-a Pull Request satisfies semver.
+Because a large portion of libraries are currently developed using GitHub, we are also providing
+a continuous integration job via GitHub Actions to automatically ensure that a Pull Request
+satisfies semver.
 
 \subsection{Running locally}
 
-The tool can be used on a local copy of the project
-(for example, just before releasing its new version to the registry
-through \texttt{cargo publish})
-by passing the path to its manifest.
-The baseline crate can be passed in a similar manner,
-but alternatively it's possible to either
-specify a version of the crate in the registry with which the
-current crate should be compared with, or
-(assuming that the current directory is a git repository)
-by passing a git revision where the baseline project is located.
+The tool can be used on a local copy of the project (for example, just before releasing its new
+version to the registry through \texttt{cargo publish}) by passing the path to its manifest.
+The baseline crate can be passed in a similar manner, but alternatively it's possible to either
+specify a version of the crate in the registry with which the current crate should be compared
+with, or (assuming that the current directory is a git repository) by passing a git revision where
+the baseline project is located.
 
-Additionally, it is possible to check all crates in a workspace
-(which is a collection of crates)
-one by one
-by passing the path to the manifest that defines the workspace.
+Additionally, it is possible to check all crates in a workspace (which is a collection of crates)
+one by one by passing the path to the manifest that defines the workspace.
 
 \subsection{Usage in continuous integration}
 
-Seeing that GitHub is the most popular internet hosting service for version control
-amongst the Rust libraries developers,
-one of the goals of the project is to implement a GitHub Action
-that checks whether a given git branch hasn't violated semver with recent changes.
+Seeing that GitHub is the most popular internet hosting service for version control amongst the
+Rust libraries developers, one of the goals of the project is to implement a GitHub Action that
+checks whether a given git branch hasn't violated semver with recent changes.
 
 There are two reasons as to why this continuous integration job is beneficial for the developers:
 \begin{itemize}
-	\item it can be used together with a job that automatically publishes a new version of the library
-		when it passes the semver lints and the version of the package has been raised
+	\item it can be used together with a job that automatically publishes a new version of the
+		library when it passes the semver lints and the version of the package has been raised
 		in the manifest file,
-	\item it provides important information for library maintainers for deciding when
-		a Pull Request should be merged -- in case the branch contains a minor or major change,
-		the maintainers could want to wait with merging it until they plan to make
-		a minor or major release of their library.
+	\item it provides important information for library maintainers for deciding when a Pull
+		Request should be merged -- in case the branch contains a minor or major change, the
+		maintainers could want to wait with merging it until they plan to make a minor or major
+		release of their library.
 \end{itemize}
 
 TODO:
@@ -536,20 +508,20 @@ TODO:
 
 \section{Project baseline}
 
-Before our contributions, the project was already partially functional,
-but it had numerous issues which often prevented the community from adopting the tool
-into their workflow:
+Before our contributions, the project was already partially functional, but it had numerous issues
+which often prevented the community from adopting the tool into their workflow:
 \begin{itemize}
 	\item the project didn't have many lints,
 	\item the code was bugged in multiple ways and lacked some functionality,
-	\item the community wasn't satisfied with the implemented GitHub Action to the point where
-		some developers coded their own continuous integration job using just the command-line interface of the tool,
+	\item the community wasn't satisfied with the implemented GitHub Action to the point where some
+		developers coded their own continuous integration job using just the command-line interface
+		of the tool,
 	\item some existing lints had false-positives,
 	\item the codebase was not in a state where new contributors could easily begin making changes
 		to the project (which is crucial for the project to flourish in the long term).
 		For example, adding new lints and tests was not intuitive and required many manual steps,
-		the filenames and variable names were not always descriptive enough
-		and the code lacked comments that explained some of the logic and decisions behind it.
+		the filenames and variable names were not always descriptive enough and the code lacked
+		comments that explained some of the logic and decisions behind it.
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -687,6 +659,7 @@ TODO:
 	\item write a conclusion
 \end{itemize}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                Team                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -694,38 +667,37 @@ TODO:
 
 \section{Used methodology}
 
-The project's functionalities and goals can be split into independent improvements,
-hence our contributions were mostly composed of multiple smaller changes.
-The usual workflow of writing code was as follows:
+The project's functionalities and goals can be split into independent improvements, hence our
+contributions were mostly composed of multiple smaller changes. The usual workflow of writing
+code was as follows:
 \begin{enumerate}
-	\item discussing with our mentor (who is also the project maintainer) about
-		which improvements have the highest priority,
+	\item discussing with our mentor (who is also the project maintainer) about which improvements
+		have the highest priority,
 	\item individually picking a few tasks based on our preferences,
-	\item implementing those tasks
-		(and sometimes also thinking about the design of the change)
-		and creating Pull Requests
-		on the project's GitHub repositories,
-	\item going through an extensive review process with our mentor
-		(as there are often other contributors in the project besides us,
-		the code's readability is a strong focus point in the project),
-	\item getting the Pull Request merged by our mentor
-		and releasing (usually a few days later) a new version of the binary to the registry.
+	\item implementing those tasks (and sometimes also thinking about the design of the change)
+		and creating Pull Requests on the project's GitHub repositories,
+	\item going through an extensive review process with our mentor (as there are often other
+		contributors in the project besides us, the code's readability is a strong focus point
+		in the project),
+	\item getting the Pull Request merged by our mentor and releasing (usually a few days later)
+		a new version of the binary to the registry.
 \end{enumerate}
 
 There were some exceptions to this workflow:
 \begin{itemize}
-	\item at the beginning, we split into two pairs and our mentor gave each of us
-		introductory tasks to work on together and familiarize with different aspects of the existing code,
-	\item to speedup the process of merging the Pull Requests,
-		we sometimes reviewed each others' code before passing it to our mentor,
-	\item when a user reported a bug, we often looked into the problem
-		and searched for a temporary fix of the bug as soon as possible,
-	\item when we encountered bugs or thought of possible additional improvements
-		in the tool's functionality,
-		we created an appropriate Issue on the GitHub repository.
+	\item at the beginning, we split into two pairs and our mentor gave each of us introductory
+		tasks to work on together and familiarize with different aspects of the existing code,
+	\item to speedup the process of merging the Pull Requests, we sometimes reviewed each others'
+		code before passing it to our mentor,
+	\item when a user reported a bug, we often looked into the problem and searched for a temporary
+		fix of the bug as soon as possible,
+	\item when we encountered bugs or thought of possible additional improvements in the tool's
+		functionality, we created an appropriate Issue on the GitHub repository.
 \end{itemize}
 
-Additionally, we held weekly meetings with the four of us to discuss the progress and future contributions (we did not need to have regular meeting with our mentor, because we had constant and immediate contact with him through chat).
+Additionally, we held weekly meetings with the four of us to discuss the progress and future
+contributions (we did not need to have regular meeting with our mentor, because we had constant
+and immediate contact with him through chat).
 
 \section{Responsibilities}
 
