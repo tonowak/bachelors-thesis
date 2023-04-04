@@ -154,8 +154,7 @@ publish their own work to be used by others. Each registry contains an index, wh
 a searchable list of all the crates available within its registry. Cargo uses the selected registry
 and index to download crates and update dependencies.
 
-One can think of cargo as the Rust analogue of Python's pip (the official package manager for
-Python, responsible for handling all \texttt{import} statements). But despite their similar roles,
+One can think of cargo as the Rust analogue of Python's pip. But despite their similar roles,
 cargo has many advantages making it a lot safer than pip:
 \begin{itemize}
 	\item Cargo's crates are always installed using virtual environments, thus they cannot be
@@ -456,9 +455,9 @@ cargo's subcommands. Additionally, cargo developers take part in discussions abo
 the interface \cite{issue_cli_interface} or sometimes even review changes to the code or develop
 new functionalities.
 
-cargo-semver-checks was the one tool chosen to be merged into cargo, mainly because it is the
-easiest to maintain (as described in \ref{r:section_existing_semver_tools}) and does not report
-false-positives.
+It is cargo-semver-checks that was chosen to be merged into cargo, not the other semver issues
+detecting tools, mainly because it is the easiest to maintain (as described in
+\ref{r:section_existing_semver_tools}) and doesn't report false-positives.
 
 \section{Project usage}
 
@@ -502,10 +501,10 @@ There are two reasons as to why this continuous integration job is beneficial fo
 		release of their library.
 \end{itemize}
 
-% TODO:
-% \begin{itemize}
-% 	\item ask Mieszko to check this section
-% \end{itemize}
+TODO:
+\begin{itemize}
+	\item ask Mieszko to check this section
+\end{itemize}
 
 \section{Project baseline}
 
