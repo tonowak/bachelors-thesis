@@ -589,7 +589,8 @@ In cargo-semver-checks, each lint consists of the following fields:
 	\item \texttt{query} -- the Trustfall filtering rules responsible for comparing two versions and
 		detecting semver violations (more detail in section \ref{r:section_new_lints}),
 	\item \texttt{arguments} -- optional, user-defined Trustfall constants for the query,
-	\item \texttt{error\_message} -- the exact problem and some of its possible causes,
+	\item \texttt{error\_message} -- a longer and more technical information, telling the user
+	    about the exact semver violation that occured and some of its possible causes,
 	\item \texttt{per\_result\_error\_template} -- the name of the item that broke semver and
 	    its exact position in the code.
 \end{itemize} \bigskip
