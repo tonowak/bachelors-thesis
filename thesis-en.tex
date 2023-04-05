@@ -571,30 +571,6 @@ sources such as APIs, raw files (JSON, CSV, etc.), git commits and many more. It
 represent the data as an organised graph with vertices and edges that the engine can traverse. To
 navigate during the search, it follows consecutive filtering rules defined by the user. In cargo-semver-checks, these rules are contained within \texttt{.ron} files which are called \texttt{lints} inside the project.
 
-\begin{figure}[h]
-	\centering
-	\caption{Example of a lint}
-	\includegraphics[width=\linewidth]{lint-example.png}
-\end{figure}
-
-In cargo-semver-checks, each lint consists of the following fields:
-\begin{itemize}
-	\item \texttt{id} -- a short, unique name identifying the lint, most often matching the
-		filename that contains the lint,
-	\item \texttt{human\_readable\_name} -- a longer, more informative name,
-	\item \texttt{description} -- general information about what is the detected problem,
-	\item \texttt{required\_update} -- the minimum version bump needed to avoid breaking semver,
-	\item \texttt{reference\_link} -- a link to the official Rust documentation corresponding to
-		the issue (if available),
-	\item \texttt{query} -- the Trustfall filtering rules responsible for comparing two versions and
-		detecting semver violations (more detail in section \ref{r:section_new_lints}),
-	\item \texttt{arguments} -- optional, user-defined Trustfall constants for the query,
-	\item \texttt{error\_message} -- a longer and more technical information, telling the user
-	    about the exact semver violation that occured and some of its possible causes,
-	\item \texttt{per\_result\_error\_template} -- the name of the item that broke semver and
-	    its exact position in the code.
-\end{itemize} \bigskip
-
 Despite being the project's core component, new lints are not the only thing we developed. In total
 there are four repositories that we have been actively contributing to for the last few months:
 \begin{itemize}
