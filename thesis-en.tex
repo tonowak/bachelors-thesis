@@ -592,7 +592,8 @@ In cargo-semver-checks, each lint consists of the following fields:
 		detecting semver violations (more detail in section \ref{r:section_new_lints}),
 	\item \texttt{arguments} -- optional, user-defined Trustfall constants for the query,
 	\item \texttt{error\_message} -- the exact problem and some of its possible causes,
-	\item \texttt{per\_result\_error\_template} -- the exact location of the code that broke semver.
+	\item \texttt{per\_result\_error\_template} -- the name of the item that broke semver and
+	    its exact position in the code.
 \end{itemize} \bigskip
 
 Despite being the project's core component, new lints are not the only thing we developed. In total
