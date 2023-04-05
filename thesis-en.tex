@@ -575,20 +575,25 @@ TODO:
 \end{itemize}
 
 \section{cargo-semver-checks}
-Cargo-semver-checks is a CLI tool for detecting semantic versioning violations within Rust crates.
-To do so, a new version of a crate undergoes multiple lint checks, which are meant to find
-public API changes between the base and new version of the crate. All of the data needed to compare
-the two versions is retrieved from rustdoc using Trustfall, which allows to introduce a layer
-of abstraction that remains constant (functions, structs, enums, variants etc.). To learn about the
-tool's practical usage and long-term goals, see chapter \ref{r:chapter_vision}.
+cargo-semver-checks goal is to detect semver violations within Rust crates. Given two versions
+of the same crate -- baseline (considered valid) and current (new) -- the tool parses them using
+Trustfall to introduce a layer of abstraction that remains constant (functions, structs, enums,
+variants etc.). After that the versions are compared using all of the available lints to find
+possible public API changes. They are the core component of the project and are carefully designed
+so that one break can only be reported by one, specialized lint.
 
-\begin{figure}[h!]
+% Possibly introduce a pagebreak here before the final merge into main, depending on how the layout
+% looks like -- it would be great to have the header, image and bullet list all on one page!
+
+In cargo-semver-checks, each lint contains a single \texttt{SemverQuery} to execute, consisting of
+the following fields:
+
+\begin{figure}[h]
 	\centering
 	\caption{Example of a lint}
 	\includegraphics[width=\linewidth]{lint-example.png}
 \end{figure}
 
-In cargo-semver-checks, each lint consists of the following fields:
 \begin{itemize}
 	\item \texttt{id} -- a short, unique name identifying the lint, most often matching the
 		filename that contains the lint,
