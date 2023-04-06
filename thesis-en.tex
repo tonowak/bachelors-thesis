@@ -578,7 +578,7 @@ TODO:
 cargo-semver-checks goal is to detect semver violations within Rust crates. Given two versions
 of the same crate -- baseline (considered valid) and current (new) -- the tool parses them using
 Trustfall to introduce a layer of abstraction that remains constant (functions, structs, enums,
-variants etc.). After that the versions are compared using all of the available lints to find
+variants etc.). After that, the versions are compared using all of the implemented lints to find
 possible public API changes. They are the core component of the project and are carefully designed
 so that one break can only be reported by one, precise lint.
 
