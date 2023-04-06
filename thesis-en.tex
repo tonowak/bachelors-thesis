@@ -580,7 +580,9 @@ of the same crate -- baseline (considered valid) and current (new) -- the tool p
 Trustfall to introduce a layer of abstraction that remains constant (functions, structs, enums,
 variants etc.). After that, the versions are compared using all of the implemented lints to find
 the breaking public API changes. They are the core component of the project and are carefully designed
-so that one break can only be reported by one, precise lint.
+so that one break can only be reported by one, precise lint. This is especially important because
+the user must be provided with an extensive, coherent and clear information about the error
+they have made.
 
 % Possibly introduce a pagebreak here before the final merge into main, depending on how the layout
 % looks like -- it would be great to have the header, image and bullet list all on one page!
