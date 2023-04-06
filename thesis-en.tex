@@ -580,7 +580,7 @@ of the same crate -- baseline (considered valid) and current (new) -- the tool p
 Trustfall to introduce a layer of abstraction that remains constant (functions, structs, enums,
 variants etc.). After that the versions are compared using all of the available lints to find
 possible public API changes. They are the core component of the project and are carefully designed
-so that one break can only be reported by one, specialized lint.
+so that one break can only be reported by one, precise lint.
 
 % Possibly introduce a pagebreak here before the final merge into main, depending on how the layout
 % looks like -- it would be great to have the header, image and bullet list all on one page!
@@ -612,27 +612,40 @@ the following fields:
 	    its exact position in the code.
 \end{itemize}
 
-Each query defines the rules for filtering the baseline and current versions of a crate. Consider
-the following example:
-
+Each query defines the filtering rules necessary to compare the baseline and current versions of
+a crate. Consider the following example:
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\linewidth]{lint-query-example.png}
 	\caption{Example of a lint's query}
 \end{figure}
-
-The query above is part of the lint seen in figure \ref{fig:enum_missing_lint} and can
-be interpreted as:
-
+The query above is part of the lint seen in figure \ref{fig:enum_missing_lint}. It contains
+elements such as:
 \begin{itemize}
-	\item
-	\item
-	\item
-	\item
-	\item
-	\item
-	\item
+	\item \texttt{@tag} -- allows the value to be used elsewhere in the query by
+		tagging its name,
+	\item \texttt{@filter}, \texttt{@fold}, \texttt{@transform} -- some of the available Trustfall
+		directives,
+	\item \texttt{@output} -- specifies which values are returned by the query,
+	\item \texttt{@optional} -- hides all of the underlying \texttt{@output}, requiring additional
+		execution flags to show it,
+	\item \texttt{... on Enum} -- \texttt{...} inlines the query to one, specified kind of items,
+		in this case Enums,
+	\item \texttt{\$public}, \texttt{\$zero} -- \texttt{\$} refers to the argument with the same
+		name,
+	\item \texttt{\%path} -- \texttt{\%} refers to a tagged element with the same name.
 \end{itemize}
+During its execution, Trustfall successively:
+\begin{itemize}
+	\item collects all of the baseline crate's public Enums, tagging their paths,
+	\item collects all of the current crate's public Enums such that their path is present among
+		the baseline version's tagged paths,
+	\item counts the occurences of the filtered current Enums among the filtered baseline Enums,
+	\item filters the current Enums by their resulting count being zero,
+	\item returns the Enums that passed the last filtering.
+\end{itemize}
+Just like that, the query has returned all of the public Enums that were present in the baseline
+version of the crate, but got removed in the current version.
 
 \section{trustfall-rustdoc-adapter}
 
