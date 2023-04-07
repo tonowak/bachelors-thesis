@@ -530,6 +530,13 @@ which often prevented the community from adopting the tool into their workflow:
 \chapter{Theory}\label{r:chapter_theory}
 
 \section{Project structure}\label{r:section_project_structure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{project-structure-diagram.png}
+	\caption{Diagram of the project structure}
+\end{figure}
+
 In order to check two versions of a crate for semver violations, the tool needs a consistent method
 for generating the data to be compared. This is achieved by using rustdoc (from the official
 Rust toolchain) to generate the documentation for Rust projects. However, the documentation itself
@@ -557,12 +564,6 @@ there are four repositories that we have been actively contributing to for the l
 	\item \textbf{cargo-semver-checks-action} -- the tool in form of a GitHub Action that can
 	    be added to GitHub repositories.
 \end{itemize}
-
-\begin{figure}[h]
-	\centering
-	\caption{Diagram of the project structure}
-	\includegraphics[width=\linewidth]{project-structure-diagram.png}
-\end{figure}
 
 \section{cargo-semver-checks}\label{r:section_cargo_semver_checks}
 
