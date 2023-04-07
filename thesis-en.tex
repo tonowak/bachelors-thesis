@@ -648,12 +648,18 @@ the following methods:
 \end{itemize}
 These are used by the Trustfall engine to execute lint queries written in the Trustfall language.
 
-\section{trustfall-adapter}
+\section{trustfall-rustdoc}
 
-TODO:
-\begin{itemize}
-	\item describe the purpose of the adapter and what it does
-\end{itemize}
+Rustdoc output format is under constant development and changes between Rust versions. Since
+the tool is supposed to be widely used, it is important to ensure that it
+works with the recent versions of Rust (and consequently with all recent versions of
+rustdoc). Therefore, the trustfall-rustdoc-adapter is developed on several different git
+branches, each of them handling a~specific rustdoc version.
+
+The trustfall-rustdoc brings them together in the form of a single tool. Given the path to the rustdoc JSON
+output, trustfall-rustdoc loads the file, detects which rustdoc version was used and chooses the
+corresponding trustfall-rustdoc-adapter branch to run the Trustfall queries.
+This provides a version-independent interface which is used by cargo-semver-checks.
 
 \section{cargo-semver-checks-action}
 
