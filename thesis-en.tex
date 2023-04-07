@@ -534,8 +534,8 @@ In order to check two versions of a crate for semver violations, the tool needs 
 for generating the data to be compared. This is achieved by using rustdoc (from the official
 Rust toolchain) to generate the documentation for Rust projects. However, the documentation itself
 often changes its format and thus is not stable nor organized enough to be directly used by
-cargo-semver-checks. For this reason, the tool uses Trustfall to parse the output received from
-rustdoc into a more manageable form.
+cargo-semver-checks. For this reason, the tool uses Trustfall to access and query the output received from
+rustdoc.
 
 Trustfall is a special query engine, designed to query any data source or a combination of data
 sources such as APIs, raw files (JSON, CSV, etc.), git version control, webpages and many more.
