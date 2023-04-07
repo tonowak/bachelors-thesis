@@ -579,7 +579,7 @@ The goal of cargo-semver-checks is to detect semver violations within Rust crate
 of the same crate:
 \begin{itemize}
 	\item \textbf{baseline} -- the existing version that defines a public API,
-	\item \textbf{current} -- the modified version of baseline that is vulnerable to breaking semver,
+	\item \textbf{current} -- the modified version of the baseline that is vulnerable to breaking semver,
 \end{itemize}
 the tool parses them using Trustfall to introduce a layer of abstraction that remains constant
 (functions, structs, enums, variants etc.). After that, the versions are compared using all of
