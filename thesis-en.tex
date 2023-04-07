@@ -626,8 +626,8 @@ elements such as:
 	\item \texttt{@filter}, \texttt{@fold}, \texttt{@transform} -- some of the available Trustfall
 		directives that modify the sets of items processed by the query,
 	\item \texttt{@output} -- specifies which values are returned by the query,
-	\item \texttt{@optional} -- hides all of the underlying \texttt{@output}, requiring additional
-		execution flags to show it,
+	\item \texttt{@optional} -- edges marked optional are allowed to not exist, in which case \texttt{@output}
+		properties within become \texttt{null} instead of causing that result to be discarded,
 	\item \texttt{... on Enum} -- \texttt{...} inlines the query to the specified kind of items,
 		in this case Enums,
 	\item \texttt{\$public}, \texttt{\$zero} -- \texttt{\$} refers to the argument with the same
