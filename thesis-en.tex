@@ -591,6 +591,11 @@ It is hosted on a public repository and can be used in continuous integration by
 in the workflow file. Besides being run with default parameters, the action can be configured by providing optional inputs
 (such as the name of the crate to check), which are passed to the CLI of the cargo-semver-checks binary.
 
+The V1 version of the action was implemented as a bash script, which was a~quick, but difficult to maintain solution,
+and allowed the action to be run only on Linux hosts. The V2 version of the action is implemented in a platform-independent way
+using TypeScript and Node.js, which allows it to be used on all runners supported by GitHub Actions. The differences
+between the V1 and V2 of the action are further discussed in \ref{r:section_continuous_integration_improvements}.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %           Implementation            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -618,7 +623,7 @@ TODO:
 
 <Here write a list about found and fixed bugs>
 
-\section{Continuous integration improvements}
+\section{Continuous integration improvements}\label{r:section_continuous_integration_improvements}
 
 <Here write a list about the V2 of the continuous integration>
 
