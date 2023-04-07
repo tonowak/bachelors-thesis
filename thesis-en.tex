@@ -529,21 +529,43 @@ which often prevented the community from adopting the tool into their workflow:
 
 \chapter{Theory}\label{r:chapter_theory}
 
-\section{Project structure}\label{r:section_projectstructure}
+\section{Project structure}\label{r:section_project_structure}
+In order to check two versions of a crate for semver violations, the tool needs a consistent method
+for generating the data to be compared. This is achieved by using rustdoc (from the official
+Rust toolchain) to generate the documentation for Rust projects. However, the documentation itself
+often changes its format and thus is not stable nor organized enough to be directly used by
+cargo-semver-checks. For this reason, the tool uses Trustfall to parse the output received from
+rustdoc into a more manageable form.
 
-TODO:
+Trustfall is a special query engine, designed to query any data source or a combination of data
+sources such as APIs, raw files (JSON, CSV, etc.), git version control, webpages and many more.
+Its main idea is to represent the data as an organised graph with vertices and edges that the
+engine can traverse. To navigate during the search, it follows consecutive filtering rules defined
+by the user. In cargo-semver-checks, these rules are contained within \texttt{.ron} files which
+are called \texttt{lints} inside the project (more detail in section
+\ref{r:section_cargo_semver_checks}).
+
+Despite being the project's core component, new lints are not the only thing we developed. In total
+there are four repositories that we have been actively contributing to for the last few months:
 \begin{itemize}
-	\item explain that the tool heavily uses rustdocs
-	\item explain that it parses rustdoc through Trustfall
-	\item define Trustfall
-	\item explain how the lints look like
-	\item mention that the project is split into three sub-projects,
-		in this order: cargo-semver-checks, trustfall-rustdoc-adapter, trustfall-rustdoc,
-		cargo-semver-checks-action,
-		and briefly define what they do (like in our docs)
+	\item \textbf{cargo-semver-checks} -- a CLI (Command Line Interface) tool that runs the lints
+		(Trustfall queries),
+	\item \textbf{trustfall-rustdoc-adapter} -- implements the Trustfall interface for one specific
+		rustdoc version,
+	\item \textbf{trustfall-rustdoc} -- allows to run Trustfall queries over rustdoc regardless of
+		the currently used rustdoc version,
+	\item \textbf{cargo-semver-checks-action} -- the tool in form of a GitHub Action that can
+	    be added to GitHub repositories.
 \end{itemize}
 
-\section{cargo-semver-checks}
+\begin{figure}[h]
+	\centering
+	\caption{Diagram of the project structure (TODO: make it more pretty, add github action)}
+	\includegraphics[width=\linewidth]{project-structure-diagram.png}
+\end{figure}
+
+\section{cargo-semver-checks}\label{r:section_cargo_semver_checks}
+
 The goal of cargo-semver-checks is to detect semver violations within Rust crates. Given two versions
 of the same crate:
 \begin{itemize}
@@ -688,7 +710,7 @@ TODO:
 	\item change names to ,,why users care about this''
 \end{itemize}
 
-\section{New lints}
+\section{New lints}\label{r:section_new_lints}
 
 <Here write a list about the new lints we've written>
 
@@ -1181,6 +1203,18 @@ https://github.com/obi1kenobi/cargo-semver-checks-action/issues/8
 \bibitem{python-pip} Wikipedia,
 	\textit{Python pip} \\
 	https://en.wikipedia.org/wiki/Pip\_(package\_manager)
+
+\bibitem{rustdoc-theory}
+	\textit{The rustdoc book} \\
+	https://doc.rust-lang.org/rustdoc/what-is-rustdoc.html
+
+\bibitem{trustfall}
+	\textit{Trustfall -- Query (Almost) Everything} \\
+	https://github.com/obi1kenobi/trustfall
+
+\bibitem{cargo-semver-checks}
+	\textit{cargo-semver-checks repository} \\
+	https://github.com/obi1kenobi/cargo-semver-checks
 
 \end{thebibliography}
 
