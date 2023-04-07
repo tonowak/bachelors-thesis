@@ -560,7 +560,7 @@ there are four repositories that we have been actively contributing to for the l
 
 \begin{figure}[h]
 	\centering
-	\caption{Diagram of the project structure (TODO: make it more pretty, add github action)}
+	\caption{Diagram of the project structure}
 	\includegraphics[width=\linewidth]{project-structure-diagram.png}
 \end{figure}
 
@@ -628,7 +628,7 @@ elements such as:
 	\item \texttt{@output} -- specifies which values are returned by the query,
 	\item \texttt{@optional} -- edges marked optional are allowed to not exist, in which case \texttt{@output}
 		properties within become \texttt{null} instead of causing that result to be discarded,
-	\item \texttt{... on Enum} -- \texttt{...} narrows that location in the query to the specified kind of items 
+	\item \texttt{... on Enum} -- \texttt{...} narrows that location in the query to the specified kind of items
 		(in this case Enums), discarding all results that had other types of data in that location
 	\item \texttt{\$public}, \texttt{\$zero} -- \texttt{\$} refers to the argument with the same
 		name,
