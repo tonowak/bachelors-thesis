@@ -1,5 +1,7 @@
 \documentclass[licencjacka,en]{pracamgr}
 \usepackage{hyperref}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
 
 \autor{Tomasz Nowak}{429575}
 \autori{Michał Staniewski}{429598}
@@ -542,12 +544,85 @@ TODO:
 \end{itemize}
 
 \section{cargo-semver-checks}
-
-TODO:
+The goal of cargo-semver-checks is to detect semver violations within Rust crates. Given two versions
+of the same crate:
 \begin{itemize}
-	\item describe in detail what is the job of cargo-semver-checks, without the adapters
-	\item describe its different usages and how they retrieve the necessary data
+	\item \textbf{baseline} -- the existing version that defines a public API,
+	\item \textbf{current} -- the modified version of the baseline that is vulnerable to breaking semver,
 \end{itemize}
+the tool parses them using Trustfall to introduce a layer of abstraction that remains constant
+(functions, structs, enums, variants, etc.) After that, the versions are compared using all of
+the implemented lints to find the breaking public API changes. They are the core component of
+the project and are carefully designed so that one break can only be reported by one, precise
+lint. This is especially important because we want the user to be provided with an extensive, coherent
+and clear information about the error they have made.
+
+% Possibly introduce a pagebreak here before the final merge into main, depending on how the layout
+% looks like -- it would be great to have the header, image and bullet list all on one page!
+
+In cargo-semver-checks, each lint contains a single \texttt{SemverQuery} to execute, consisting of
+the following fields:
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{lint-example.png}
+	\caption{The \texttt{enum\_missing} lint (for its entire query, see figure
+		\ref{fig:enum_missing_lint_query})}
+	\label{fig:enum_missing_lint}
+\end{figure}
+
+\begin{itemize}
+	\item \texttt{id} -- a short, unique name identifying the lint, most often matching the
+		filename that contains the lint,
+	\item \texttt{human\_readable\_name} -- a longer, human-readable name,
+	\item \texttt{description} -- general information about what is the detected problem,
+	\item \texttt{required\_update} -- the minimum version bump needed to avoid breaking semver,
+	\item \texttt{reference\_link} -- a link to the official Rust documentation corresponding to
+		the issue (when available),
+	\item \texttt{query} -- the Trustfall filtering rules responsible for comparing two versions and
+		detecting semver violations (described below in more detail),
+	\item \texttt{arguments} -- optional, user-defined Trustfall constants for the query,
+	\item \texttt{error\_message} -- a longer and more technical information, telling the user
+	    about the exact semver violation that occured and what could have caused it,
+	\item \texttt{per\_result\_error\_template} -- the name of the item that broke semver and
+	    its exact position in the code.
+\end{itemize}
+
+Each query defines the filtering rules necessary to compare the baseline and current versions of
+a crate. Consider the following example:
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{lint-query-example.png}
+	\caption{The \texttt{enum\_missing} lint's query}
+	\label{fig:enum_missing_lint_query}
+\end{figure}
+The query above is part of the lint seen in figure \ref{fig:enum_missing_lint}. It contains
+elements such as:
+\begin{itemize}
+	\item \texttt{@tag} -- allows the value to be used elsewhere in the query by
+		tagging its name,
+	\item \texttt{@filter}, \texttt{@fold}, \texttt{@transform} -- some of the available Trustfall
+		directives that modify the sets of items processed by the query,
+	\item \texttt{@output} -- specifies which values are returned by the query,
+	\item \texttt{@optional} -- hides all of the underlying \texttt{@output}, requiring additional
+		execution flags to show it,
+	\item \texttt{... on Enum} -- \texttt{...} inlines the query to the specified kind of items,
+		in this case Enums,
+	\item \texttt{\$public}, \texttt{\$zero} -- \texttt{\$} refers to the argument with the same
+		name,
+	\item \texttt{\%path} -- \texttt{\%} refers to a tagged element with the same name.
+\end{itemize}
+Thus, during its execution, Trustfall successively:
+\begin{itemize}
+	\item collects all of the baseline crate's public Enums, tagging their paths,
+	\item collects all of the current crate's public Enums such that their path is present among
+		the baseline version's tagged paths,
+	\item counts the occurences of the filtered current Enums among the filtered baseline Enums,
+	\item filters the current Enums by their resulting count being zero,
+	\item returns the Enums that passed the last filtering.
+\end{itemize}
+Just like that, the query has returned all of the public Enums that were present in the baseline
+version of the crate, but got removed in the current version.
 
 \section{trustfall-rustdoc-adapter}
 The output generated by running rustdoc on a crate is a tree and can be in one of the two formats:
