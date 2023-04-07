@@ -573,7 +573,7 @@ of the same crate:
 	\item \textbf{current} -- the modified version of the baseline that is vulnerable to breaking semver,
 \end{itemize}
 the tool uses Trustfall as a layer of abstraction that remains constant regardless of changes in the underlying JSON representation format
-(functions, structs, enums, variants, etc.). To better visualize this concept, imagine a query
+(functions, structs, enums, variants, etc.). To better visualize this concept, one can imagine a query
 asking Trustfall to ,,find all public Enums from the baseline version that no longer exist in the
 current version of the crate''. This query never made any statements or assumptions about its data
 representation or format and works regardless. After that, the versions are compared using all of
