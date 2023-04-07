@@ -541,8 +541,8 @@ In order to check two versions of a crate for semver violations, the tool needs 
 for generating the data to be compared. This is achieved by using rustdoc (from the official
 Rust toolchain) to generate the documentation for Rust projects. However, the documentation itself
 often changes its format and thus is not stable nor organized enough to be directly used by
-cargo-semver-checks. For this reason, the tool uses Trustfall to access and query the output received from
-rustdoc.
+cargo-semver-checks. For this reason, the tool uses Trustfall to access and query the output
+received from rustdoc.
 
 Trustfall is a special query engine, designed to query any data source or a combination of data
 sources such as APIs, raw files (JSON, CSV, etc.), git version control, webpages and many more.
@@ -567,23 +567,24 @@ there are four repositories that we have been actively contributing to for the l
 
 \section{cargo-semver-checks}\label{r:section_cargo_semver_checks}
 
-The goal of cargo-semver-checks is to detect semver violations within Rust crates. Given two versions
-of the same crate:
+The goal of cargo-semver-checks is to detect semver violations within Rust crates. Given two
+versions of the same crate:
 \begin{itemize}
 	\item \textbf{baseline} -- the existing version that defines a public API,
-	\item \textbf{current} -- the modified version of the baseline that is vulnerable to breaking semver,
+	\item \textbf{current} -- the modified version of the baseline that is vulnerable to
+		breaking semver,
 \end{itemize}
-the tool uses Trustfall as a layer of abstraction that remains constant regardless of changes in the underlying JSON representation format
-(functions, structs, enums, variants, etc.) To better visualize this concept, one can imagine a query
-that asks Trustfall to ,,find all public Enums from the baseline version that no longer exist in the
-current version of the crate''. That kind of query never makes any statements or assumptions about its data
-representation or format.
+the tool uses Trustfall as a layer of abstraction that remains constant regardless of changes in
+the underlying JSON representation format (functions, structs, enums, variants, etc.) To better
+visualize this concept, one can imagine a query that asks Trustfall to ,,find all public Enums from
+the baseline version that no longer exist in the current version of the crate''. That kind of query
+never makes any statements or assumptions about its data representation or format.
 
-After that, the versions are compared using all of
-the implemented lints to find the breaking public API changes. They are the core component of
-the project and are carefully designed so that one break can only be reported by one, precise
-lint. This is especially important because we want the user to be provided with an extensive, coherent
-and clear information about the error they have made.
+After that, the versions are compared using all of the implemented lints to find the breaking
+public API changes. They are the core component of the project and are carefully designed so that
+one break can only be reported by one, precise lint. This is especially important because we want
+the user to be provided with an extensive, coherent and clear information about the error they
+have made.
 
 In cargo-semver-checks, each lint contains a single \texttt{SemverQuery} to execute, consisting of
 the following fields:
@@ -621,10 +622,12 @@ a crate. They contain elements such as:
 	\item \texttt{@filter}, \texttt{@fold}, \texttt{@transform} -- some of the available Trustfall
 		directives that modify the sets of items processed by the query,
 	\item \texttt{@output} -- specifies which values are returned by the query,
-	\item \texttt{@optional} -- edges marked optional are allowed to not exist, in which case \texttt{@output}
-		properties within become \texttt{null} instead of causing that result to be discarded,
-	\item \texttt{... on Enum} -- \texttt{...} narrows that location in the query to the specified kind of items
-		(in this case Enums), discarding all results that had other types of data in that location
+	\item \texttt{@optional} -- edges marked optional are allowed to not exist, in which case
+		\texttt{@output} properties within become \texttt{null} instead of causing that result
+		to be discarded,
+	\item \texttt{... on Enum} -- \texttt{...} narrows that location in the query to the specified
+		kind of items (in this case Enums), discarding all results that had other types of data
+		in that location
 	\item \texttt{\$public}, \texttt{\$zero} -- \texttt{\$} refers to the argument with the same
 		name,
 	\item \texttt{\%path} -- \texttt{\%} refers to a tagged element with the same name.
@@ -637,8 +640,8 @@ a crate. They contain elements such as:
 	\label{fig:enum_missing_lint_query}
 \end{figure}
 
-The query above is part of the lint seen in figure \ref{fig:enum_missing_lint}. During
-its execution, Trustfall successively:
+The query above is part of the lint seen in figure \ref{fig:enum_missing_lint}.
+During its execution, Trustfall successively:
 \begin{itemize}
 	\item collects all of the baseline crate's public Enums, tagging their paths,
 	\item collects all of the current crate's public Enums such that their path is present among
@@ -653,19 +656,18 @@ version of the crate, but got removed in the current version.
 \section{trustfall-rustdoc-adapter}
 The output generated by running rustdoc on a crate is a tree and can be in one of the two formats:
 \begin{itemize}
-	\item HTML -- the default option, formatted with CSS, designed for users to read
-		(however it is difficult to parse),
-	\item JSON -- convenient for further processing, but practically unreadable to humans
-		due to its complex structure and large size of up to a few hundred MB.
+	\item HTML -- the default option, formatted with CSS, designed for users to read (however it is
+		difficult to parse),
+	\item JSON -- convenient for further processing, but practically unreadable to humans due to its
+		complex structure and large size of up to a few hundred MB.
 \end{itemize}
-This makes the JSON format a~natural candidate for
-running Trustfall queries. However, it still has to be transformed into a~structure that is
-understandable for Trustfall, namely a~graph in which vertices are assigned types and
-type-dependent properties.
+This makes the JSON format a~natural candidate for running Trustfall queries. However, it still has
+to be transformed into a~structure that is understandable for Trustfall, namely a~graph in which
+vertices are assigned types and type-dependent properties.
 
-This is where trustfall-rustdoc-adapter comes in. It provides an interface for querying the rustdoc's
-output by associating JSON nodes with Trustfall vertices. To achieve this, the adapter implements
-the following methods:
+This is where trustfall-rustdoc-adapter comes in. It provides an interface for querying
+the rustdoc's output by associating JSON nodes with Trustfall vertices. To achieve this, the adapter
+implements the following methods:
 \begin{itemize}
 	\item \texttt{resolve\_starting\_vertices} -- returns an iterator over the starting vertices of
 		the graph (entry points for query executions),
@@ -677,32 +679,36 @@ These are used by the Trustfall engine to execute lint queries written in the Tr
 
 \section{trustfall-rustdoc}
 
-Rustdoc output format is under constant development and changes between Rust versions. Since
-the tool is supposed to be widely used, it is important to ensure that it
-works with the recent versions of Rust (and consequently with all recent versions of
-rustdoc). Therefore, the trustfall-rustdoc-adapter is developed on several different git
-branches, each of them handling a~specific rustdoc version.
+Rustdoc output format is under constant development and changes between Rust versions.
+Since the tool is supposed to be widely used, it is important to ensure that it works with
+the recent versions of Rust (and consequently with all recent versions of rustdoc).
+Therefore, the trustfall-rustdoc-adapter is developed on several different git branches,
+each of them handling a~specific rustdoc version.
 
-The trustfall-rustdoc brings them together in the form of a single tool. Given the path to the rustdoc JSON
-output, trustfall-rustdoc loads the file, detects which rustdoc version was used and chooses the
-corresponding trustfall-rustdoc-adapter branch to run the Trustfall queries.
+The trustfall-rustdoc brings them together in the form of a single tool. Given the path to
+the rustdoc JSON output, trustfall-rustdoc loads the file, detects which rustdoc version was used
+and chooses the corresponding trustfall-rustdoc-adapter branch to run the Trustfall queries.
 This provides a version-independent interface which is used by cargo-semver-checks.
 
 \section{cargo-semver-checks-action}
 
-Using cargo-semver-checks in a continuous integration workflow consists of three main steps: setting up the Rust toolchain,
-installing cargo-semver-checks, and finally -- running it on a~crate. The aim of the cargo-semver-checks-action is to simplify
-this process and make it a~single step, hiding the technical details from the user.
+Using cargo-semver-checks in a continuous integration workflow consists of three main steps:
+setting up the Rust toolchain, installing cargo-semver-checks, and finally -- running it on a~crate.
+The aim of the cargo-semver-checks-action is to simplify this process and make it a~single step,
+hiding the technical details from the user.
 
-The cargo-semver-checks-action is implemented as a~GitHub Action, which is a~way of creating a reusable GitHub workflow.
-It is hosted on a public repository and can be used in continuous integration by referencing its name and version
-in the workflow file. Besides being run with default parameters, the action can be configured by providing optional inputs
-(such as the name of the crate to check), which are passed to the CLI of the cargo-semver-checks binary.
+The cargo-semver-checks-action is implemented as a~GitHub Action, which is a~way of creating
+a reusable GitHub workflow. It is hosted on a public repository and can be used in continuous
+integration by referencing its name and version in the workflow file. Besides being run with default
+parameters, the action can be configured by providing optional inputs (such as the name of the crate
+to check), which are passed to the CLI of the cargo-semver-checks binary.
 
-The V1 version of the action was implemented as a bash script, which was a~quick, but difficult to maintain solution,
-which allowed the action to be run only on Linux hosts. This is why we implemented the V2 version of the action in a platform-independent way
-using TypeScript and Node.js, allowing it to be used on all runners supported by GitHub Actions. The differences
-between the V1 and V2 of the action are further discussed in \ref{r:section_continuous_integration_improvements}.
+The V1 version of the action was implemented as a bash script, which was a~quick, but difficult
+to maintain solution, which allowed the action to be run only on Linux hosts. This is why
+we implemented the V2 version of the action in a platform-independent way using TypeScript
+and Node.js, allowing it to be used on all runners supported by GitHub Actions.
+The differences between the V1 and V2 of the action are further discussed in
+\ref{r:section_continuous_integration_improvements}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %           Implementation            %
