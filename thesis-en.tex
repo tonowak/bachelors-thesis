@@ -576,7 +576,7 @@ the tool uses Trustfall as a layer of abstraction that remains constant regardle
 (functions, structs, enums, variants, etc.). To better visualize this concept, one can imagine a query
 asking Trustfall to ,,find all public Enums from the baseline version that no longer exist in the
 current version of the crate''. That kind of query never makes any statements or assumptions about its data
-representation or format and works regardless.
+representation or format.
 
 After that, the versions are compared using all of
 the implemented lints to find the breaking public API changes. They are the core component of
