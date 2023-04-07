@@ -628,8 +628,8 @@ elements such as:
 	\item \texttt{@output} -- specifies which values are returned by the query,
 	\item \texttt{@optional} -- edges marked optional are allowed to not exist, in which case \texttt{@output}
 		properties within become \texttt{null} instead of causing that result to be discarded,
-	\item \texttt{... on Enum} -- \texttt{...} inlines the query to the specified kind of items,
-		in this case Enums,
+	\item \texttt{... on Enum} -- \texttt{...} narrows that location in the query to the specified kind of items 
+		(in this case Enums), discarding all results that had other types of data in that location
 	\item \texttt{\$public}, \texttt{\$zero} -- \texttt{\$} refers to the argument with the same
 		name,
 	\item \texttt{\%path} -- \texttt{\%} refers to a tagged element with the same name.
