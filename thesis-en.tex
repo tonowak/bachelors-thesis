@@ -1,4 +1,5 @@
 \documentclass[licencjacka,en]{pracamgr}
+\usepackage{dirtytalk}
 \usepackage{hyperref}
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
@@ -123,7 +124,7 @@ With its first stable release in 2015, Rust is a relatively new programming lang
 puts a strong emphasis on type-safety, memory-safety, performance and concurrency. Unlike
 other memory-safe languages, Rust does not use reference counting nor a garbage collector.
 Instead it tracks the object lifetime of all the program's references during compilation,
-using its built-in mechanism named ``borrow checker''.
+using its built-in mechanism named \say{borrow checker}.
 
 Among many benefits and advantages of using Rust, there are three dominant features. Firstly,
 it provides the user with a great performance, both time- and memory-wise, allowing for
@@ -284,7 +285,7 @@ yanked, one of the main causes remains breaking semver.
 
 An abstract syntax tree represents the abstract syntactic structure of the text (often source code)
 in form of a tree, where every node denotes an occurence of some construct in it. The tree is
-called ``abstract'', because it omits some syntax details, such as parantheses or if statements,
+called \say{abstract}, because it omits some syntax details, such as parantheses or if statements,
 and focuses on structural or contextual details.
 
 % In most of the well-established programming languages, semver validation is incredibly difficult
@@ -464,8 +465,8 @@ false-positives.
 
 \section{Project usage}
 
-The basic functionality of the tool is to compare two versions of the code (the ,,current'' crate
-and the ,,baseline'' crate) and notify the user about the semver issues that were found when
+The basic functionality of the tool is to compare two versions of the code (the \say{current} crate
+and the \say{baseline} crate) and notify the user about the semver issues that were found when
 checking the two versions.
 
 One can run the tool by directly passing the path to the current crate and either getting the
@@ -576,8 +577,8 @@ versions of the same crate:
 \end{itemize}
 the tool uses Trustfall as a layer of abstraction that remains constant regardless of changes in
 the underlying JSON representation format (functions, structs, enums, variants, etc.) To better
-visualize this concept, one can imagine a query that asks Trustfall to ,,find all public Enums from
-the baseline version that no longer exist in the current version of the crate''. That kind of query
+visualize this concept, one can imagine a query that asks Trustfall to \say{Find all public Enums from
+the baseline version that no longer exist in the current version of the crate}. That kind of query
 never makes any statements or assumptions about its data representation or format.
 
 After that, the versions are compared using all of the implemented lints to find the breaking
@@ -718,7 +719,7 @@ The differences between the V1 and V2 of the action are further discussed in
 
 TODO:
 \begin{itemize}
-	\item change names to ,,why users care about this''
+	\item change names to \say{why users care about this}
 \end{itemize}
 
 \section{New lints}\label{r:section_new_lints}
@@ -763,7 +764,7 @@ TODO:
 	\item describe how our work might have impacted those results
 	\item show the comments of users on GitHub.
 		As one of the examples, give the maintainer of a big
-		library that created an issue ,,Make continuous integration runs faster''
+		library that created an issue \say{Make continuous integration runs faster}
 		and after learning about one of our PRs to make the continuous integration faster,
 		he was so excited that he wrote a comment with a tip in our PR.
 		Search also for other such examples in the PRs and issues.
