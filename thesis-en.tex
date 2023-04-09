@@ -946,14 +946,14 @@ and immediate contact with him through chat).
 	\item Tomasz and Michał:
 		\begin{itemize}
 			\item Added a new lint (trustfall query, test crates, tests) to
-				detect field removals from a struct variant in enums \cite{pr_new_lint_field_removals_struct_variant_enum}
-				and added a field in the adapter for the lint \cite{pr_added_field_structvariant}.
-			\item Added a new lint (trustfall query, test crates, tests) \cite{pr_add_function_parameters_semver_checks}
+				detect field removals from a struct variant in enums
+				and added a field in the adapter for the lint.
+			\item Added a new lint (trustfall query, test crates, tests)
 				to detect when function and method parameter count changes
-				and added the retrieval of function parameter names in the adapter \cite{pr_add_function_parameters}.
+				and added the retrieval of function parameter names in the adapter.
 			\item Fixed a bug where the rustdoc of the current and the baseline crates
-				were overwriting each other \cite{pr_rustdoc_overwriting},
-				which has been reported by a user \cite{issue_rustdoc_overwriting}.
+				were overwriting each other,
+				which has been reported by a user.
 		\end{itemize}
 
 	\item Mieszko \cite{responsibilities_mieszko}:
@@ -1016,18 +1016,15 @@ and immediate contact with him through chat).
 					\item inherent methods (reported only when one was both moved to
 						a public trait and marked with the attribute).
 				\end{itemize}
-
-\end{itemize}
+		\end{itemize}
 
 	\item Mieszko and Bartosz:
 		\begin{itemize}
 			\item Added a new lint (trustfall query, test crates, tests) to detect when an exhaustive
-				public enum has the \texttt{non\_exhaustive} attribute added \cite{pr_lint_enum_non_exhaustive}.
-
-			\item Designed and implemented a new adapter schema for handling attributes
-				\cite{pr_adapter_new_schema_for_attributes}.
+				public enum has the \texttt{non\_exhaustive} attribute added.
+			\item Designed and implemented a new adapter schema for handling attributes.
 				Updated all lints that check attributes to use the new schema, as well as added multiple
-				new test cases to the queries \cite{pr_new_schema_for_attributes}.
+				new test cases to the queries.
 		\end{itemize}
 \end{itemize}
 
