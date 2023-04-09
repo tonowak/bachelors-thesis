@@ -956,39 +956,31 @@ and immediate contact with him through chat).
 				which has been reported by a user \cite{issue_rustdoc_overwriting}.
 		\end{itemize}
 
-	\item Mieszko:
+	\item Mieszko \cite{responsibilities_mieszko}:
 		\begin{itemize}
 			\item Reported an incorrect behavior of the CLI which was choosing the latest release from the registry as
-				a baseline version even when it had been yanked \cite{issue_choosing_baseline}. Introduced a fix and
-				created a set of unit tests for choosing the baseline crate \cite{pr_choosing_baseline}.
+				a baseline version even when it had been yanked. Introduced a fix and
+				created a set of unit tests for choosing the baseline crate.
 
 			\item Reported a problem in release \texttt{v0.18.2} where the CLI was not looking for the baseline in the
-				registry as it was supposed to do \cite{issue_finding_registry_baseline}.
+				registry as it was supposed to do.
 
-			\item Reported a bug where the precompiled tool crashed on Windows machines \cite{issue_fail_on_windows}.
-				Added a CI job that checks for similar issues \cite{pr_fail_on_windows} \cite{pr_ci_windows_comment}.
+			\item Reported a bug where the precompiled tool crashed on Windows machines.
+				Added a CI job that checks for similar issues.
 
-			\item Developed a new version of \texttt{cargo-semver-checks-action} \cite{pr_action_v2}
-				\cite{pr_action_inputs_issues}, which consisted of:
+			\item Developed a new version of \texttt{cargo-semver-checks-action}, which consisted of:
 			\begin{itemize}
-				\item creating a test repository \cite{repo_action_tests} and using it to add a CI workflow that tests
-					the basic functionalities of the action \cite{pr_action_first_tests}, then further developing the
+				\item creating a test repository \cite{responsibilities_mieszko_action_tests} and using it to add a CI workflow that tests
+					the basic functionalities of the action, then further developing the
 					CI tests to cover all options added in the new version,
 				\item making use of \texttt{cargo-semver-checks} built-in baseline choosing logic, which fixed the
-					user-reported issue \cite{issue_action_builtin_logic},
+					user-reported issue,
 				\item adding support for running the action on Windows- and MacOs-based runners,
-				\item introducing input \texttt{manifest-path}, as requested by a user
-					\cite{issue_action_manifest_path},
-				\item introducing input \texttt{verbose}, as requested by a user \cite{issue_action_verbose},
-				\item using pre-build binaries to speed up the action, as requested by a user
-					\cite{issue_action_binaries},
-				% \item \textbf{TODO}: \textit{baseline caching, when I will finish it...},
+				\item introducing input \texttt{manifest-path}, as requested by a user,
+				\item introducing input \texttt{verbose}, as requested by a user,
+				\item using pre-build binaries to speed up the action, as requested by a user,
 				\item rewriting the documentation of the action.
 			\end{itemize}
-
-			% These two are not even worth mentioning...
-			% https://github.com/obi1kenobi/cargo-semver-checks/issues/390
-			% https://github.com/obi1kenobi/cargo-semver-checks-action/issues/24
 		\end{itemize}
 
 	\item Bartosz \cite{responsibilities_bartosz}:
@@ -1125,8 +1117,6 @@ TODO:
 \bibitem{pr_ci_windows_comment} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/407
 \bibitem{pr_action_v2} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks-action/pull/21
 \bibitem{pr_action_inputs_issues} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks-action/pull/25
-\bibitem{repo_action_tests} TODO \\
-https://github.com/mgr0dzicki/cargo-semver-action-ref-slice
 \bibitem{issue_action_builtin_logic} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks-action/issues/23
 \bibitem{issue_action_manifest_path} TODO \\
 https://github.com/obi1kenobi/cargo-semver-checks-action/issues/18
@@ -1137,6 +1127,12 @@ https://github.com/obi1kenobi/cargo-semver-checks-action/issues/8
 
 \bibitem{responsibilities_michal} GitHub (2023) \\
 	https://github.com/search?o=desc\&q=org\%3Aobi1kenobi+author\%3Astaniewzki\&s=updated\&type=Issues
+
+\bibitem{responsibilities_mieszko} GitHub (2023) \\
+	https://github.com/search?o=desc\&q=org\%3Aobi1kenobi+author\%3Amgr0dzicki\&s=updated\&type=Issues
+
+\bibitem{responsibilities_mieszko_action_tests} GitHub (2023) \\
+	https://github.com/mgr0dzicki/cargo-semver-action-ref-slice
 
 \bibitem{responsibilities_bartosz} GitHub (2023) \\
 	https://github.com/search?o=desc\&q=org\%3Aobi1kenobi+author\%3ASmolSir\&s=updated\&type=Issues
