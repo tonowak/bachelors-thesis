@@ -343,7 +343,7 @@ release v3.2.0 of a well-known crate maintained by the Rust team -- {\ttfamily c
 about it can be found in section \ref{r:section_real_life_semver_breaks}.
 
 The same issue almost happened (but has been prevented thanks to our tool) in another common
-library \texttt{rust-libp2p}, where it is clear from the conversation \cite{issue_libp2p} that
+library \texttt{rust-libp2p}, where it is clear from the conversation \cite{issue-libp2p} that
 the maintainers were not expecting their type to stop being \texttt{UnwindSafe} and were likely
 not even aware that their type was publicly \texttt{UnwindSafe} to start with.
 
@@ -357,7 +357,7 @@ so one semver break could result in tons of other broken crates.
 
 Debugging a cryptic compilation error that starts showing up one day,
 without any change to the code, can be frustrating. In fact, we have experienced it during our
-contributions (one of the tool's users opened a GitHub Issue \cite{issue_compiling_fails}), as one
+contributions (one of the tool's users opened a GitHub Issue \cite{issue-compiling-fails}), as one
 of our dependencies broke semver. This is a major problem, as it might drive the users to stop
 using such crate.
 
@@ -450,13 +450,13 @@ issue in more detail.
 
 There are already on-going plans to merge cargo-semver-checks into the official Rust development
 toolchain, which has been initiated by one of the developers working on cargo
-\cite{issue_merge_cargo}. That would make the tool available to all Rust programmers through
+\cite{issue-merge-cargo}. That would make the tool available to all Rust programmers through
 a cargo subcommand and would be a huge step towards reducing the number of package releases with
 semver issues.
 
 Because of those plans, the commandline interface of the project is similar to the interface of
 cargo's subcommands. Additionally, cargo developers take part in discussions about the design of
-the interface \cite{issue_cli_interface} or sometimes even review changes to the code or develop
+the interface \cite{issue-cli-interface} or sometimes even review changes to the code or develop
 new functionalities.
 
 cargo-semver-checks was the one tool chosen to be merged into cargo, mainly because it is the
@@ -831,29 +831,24 @@ and immediate contact with him through chat).
 \section{Responsibilities}
 
 \begin{itemize}
-	\item Tomasz \cite{responsibilities_tomasz}:
+	\item Tomasz \cite{responsibilities-tomasz}:
 		\begin{itemize}
 			\item Reported a bug with an incorrect path to the generated rustdoc when passing
 				a manifest path in the CLI.
-			\item Changed how the manifest of the baseline is built and added
-				selecting all features to baseline's manifest,
-				which resolved an issue reported by a user of the tool
-				where the current and baseline's rustdoc was generated with different features,
-				which resulted in false-positives.
-			\item Reported a bug where the tests failed on the newest version
-				of the compiler
+			\item Changed how the manifest of the baseline is built and added selecting all
+				features to baseline's manifest, which resolved an issue reported by a user of
+				the tool where the current and baseline's rustdoc was generated with different
+				features, which resulted in false-positives.
+			\item Reported a bug where the tests failed on the newest version of the compiler
 				and implemented a fix.
-			\item Renamed directories with queries and tests, thanks to which the
-				structure of the project is now clear, more intuitive
-				and updated \texttt{CONTRIBUTING.md}.
-			\item Replaced code duplication with a Rust macro and made adding new
-				lints easier.
-			\item Improved the tests,
-				which sped up the process of adding new lints.
+			\item Renamed directories with queries and tests, thanks to which the structure of
+				the project is now clear, more intuitive and updated \texttt{CONTRIBUTING.md}.
+			\item Replaced code duplication with a Rust macro and made adding new lints easier.
+			\item Improved the tests, which sped up the process of adding new lints.
 				More precisely:
 				\begin{itemize}
-					\item splitted each test into separate pairs of crates
-						(that are baseline and current crates for the tool),
+					\item splitted each test into separate pairs of crates (that are baseline
+						and current crates for the tool),
 					\item made it so that the tool runs each lint on all testing crates
 						(which has detected multiple new false-positives),
 					\item massively improved the readability and ease of adding new tests and lints,
@@ -862,115 +857,101 @@ and immediate contact with him through chat).
 			\item Made a change in the tests that runs the tool on crates that did not change
 				to detect possible false-positives.
 			\item Commited changes suggested by a new version of the Rust formatter.
-			\item Found and fixed a bug where the printed baseline version
-				was incorrect.
-			\item Added a new type of integration tests, which locally checks
-				how the tool behaves with given commandline arguments,
-				and implemented a test that checks whether a recent bug
-				(where the lint files were not present in the binary)
-				was fixed.
-			\item Diagnosed a problem where the tests stopped working,
-				fixed the adapter after a new rustdoc version which
-				stopped exporting inlined items of external crates
-				and created an issue for strengthening back a lint that was
-				affected by those changes.
-			\item Reported a problem where the user could be confused by the lack of
-				detailed information in the help messages of the tool.
+			\item Found and fixed a bug where the printed baseline version was incorrect.
+			\item Added a new type of integration tests, which locally checks how the tool behaves
+				with given commandline arguments, and implemented a test that checks whether
+				a recent bug (where the lint files were not present in the binary) was fixed.
+			\item Diagnosed a problem where the tests stopped working, fixed the adapter after
+				a new rustdoc version which stopped exporting inlined items of external crates
+				and created an issue for strengthening back a lint that was affected
+				by those changes.
+			\item Reported a problem where the user could be confused by the lack of detailed
+				information in the help messages of the tool.
 			\item Reported a problem where the output of the tool on the \texttt{bevy-audio} crate
 				seemed like it was producing a false positive.
 			\item Reported a bug where a lint's output was duplicated on the
 				\texttt{bevy-render} crate.
-			\item Added a feature to disable the usage of the vendored \texttt{OpenSSL}
-				because there were problems with it amongst users having
-				the Arch Linux desktop distribution.
-			\item Changed the way in which the rustdoc of a crate is generated
-				-- instead of directly running the rustdoc command on a local copy of the crate,
-				it is now ran on a temporary placeholder project,
-				which just has the checked crate as a dependency.
-				It solves a bug encountered by a user
-				where running the tool updates the \texttt{Cargo.lock} file,
-				and allows to easily specify the set of crate's features to run the rustdoc command on.
-				% The change was done by moving and splitting existing functions into smaller ones \cite{pr_placeholder_1},
-				% switching the baseline rustdoc generation to using the new placeholder project \cite{pr_placeholder_2},
-				% changing functions' arguments for better readability \cite{pr_placeholder_3},
-				% renaming files for the same reason \cite{pr_placeholder_4},
-				% chosing variable names that fit more nicely with the current code \cite{pr_placeholder_5}
-				% and finally switching to the new rustdoc generation logic \cite{pr_placeholder_6}.
-			\item Reported a bug where the tool failed to work when
-				generating rustdoc of a crate that only has yanked releases.
-			\item Reported a bug where the tool prints some internal data
-				while cheching the \texttt{clap} crate.
-			\item Found and fixed a bug where the CI job wrongly checked
-				the exit code in one of the integration tests.
+			\item Added a feature to disable the usage of the vendored \texttt{OpenSSL} because
+				there were problems with it amongst users having the Arch Linux desktop distribution.
+			\item Changed the way in which the rustdoc of a crate is generated -- instead of
+				directly running the rustdoc command on a local copy of the crate, it is now ran
+				on a temporary placeholder project, which just has the checked crate as
+				a dependency. It solves a bug encountered by a user where running the tool updates
+				the \texttt{Cargo.lock} file, and allows to easily specify the set of
+				crate's features to run the rustdoc command on.
+				% The change was done by moving and splitting existing functions into smaller ones,
+				% switching the baseline rustdoc generation to using the new placeholder project,
+				% changing functions' arguments for better readability, renaming files for the same
+				% reason, chosing variable names that fit more nicely with the current code
+				% and finally switching to the new rustdoc generation logic.
+			\item Reported a bug where the tool failed to work when generating rustdoc of a crate
+				that only has yanked releases.
+			\item Reported a bug where the tool prints some internal data while cheching
+				the \texttt{clap} crate.
+			\item Found and fixed a bug where the CI job wrongly checked the exit code in one
+				of the integration tests.
 			\item Added a lint in the CI for checking the rustdoc of the project.
 			\item Fixed a broken link which the users saw in the tool's output.
-			\item Reported a false-positive which was related to re-exporting types, values and macros
-				with the same names.
+			\item Reported a false-positive which was related to re-exporting types, values
+				and macros with the same names.
 			\item Fixed a user-encountered bug where implicit features due to target-specific
 				optional dependencies were not added in the current version.
-			\item Fixed a user-reported bug
-				where the rustdoc command's output wasn't showing up with colors.
-			\item Diagnosed a user-encountered compilation error which happened
-				because of changes in one of the tool's dependencies.
+			\item Fixed a user-reported bug where the rustdoc command's output wasn't showing up
+				with colors.
+			\item Diagnosed a user-encountered compilation error which happened because of changes
+				in one of the tool's dependencies.
 			\item Took part in the development of the library based on the existing tool's code.
 		\end{itemize}
 
-	\item Michał \cite{responsibilities_michal}:
+	\item Michał \cite{responsibilities-michal}:
 		\begin{itemize}
-			\item Added a new type of tests in the CI -- a regression test
-				that is checking the tool against a specific version of a user's crate,
-				to be certain that now the tool works and has
-				no false-positives on it.
-			\item Added a test that checks whether a field in the lints
-				is correctly initialized.
+			\item Added a new type of tests in the CI -- a regression test that is checking
+				the tool against a specific version of a user's crate, to be certain that now
+				the tool works and has no false-positives on it.
+			\item Added a test that checks whether a field in the lints is correctly initialized.
 			\item Added an integration test in the CI for specifying the package name.
-			\item Made a new release workflow in the CI that triggers when publishing
-				a new version of the tool and uploads the new binaries to GitHub releases,
-				thanks to which the GitHub Actions
-				(both provided by us and written by users for their own purposes) that were using the tool
-				can now just download the binary (instead of compiling it),
+			\item Made a new release workflow in the CI that triggers when publishing a new version
+				of the tool and uploads the new binaries to GitHub releases, thanks to which
+				the GitHub Actions (both provided by us and written by users for their own purposes)
+				that were using the tool can now just download the binary (instead of compiling it),
 				which makes the CI job much faster.
-			\item Added a new lint (trustfall query, test crates, tests)
-				to detect tuple structs that changed to plain structs.
-			\item Added a new lint (trustfall query, test crates, tests) that checks whether a trait
-				becomes or stops being unsafe and added an \texttt{unsafe} type
-				property to \texttt{Trait} in the schema and the adapter.
-			\item Added a \texttt{fields} edge to the \texttt{Variant} interface
-				in the schema and the adapter.
+			\item Added a new lint (trustfall query, test crates, tests) to detect tuple structs
+				that changed to plain structs.
+			\item Added a new lint (trustfall query, test crates, tests) that checks whether
+				a trait becomes or stops being unsafe and added an \texttt{unsafe} type property
+				to \texttt{Trait} in the schema and the adapter.
+			\item Added a \texttt{fields} edge to the \texttt{Variant} interface in the schema
+				and the adapter.
 		\end{itemize}
 
 	\item Tomasz and Michał:
 		\begin{itemize}
-			\item Added a new lint (trustfall query, test crates, tests) to
-				detect field removals from a struct variant in enums
-				and added a field in the adapter for the lint.
-			\item Added a new lint (trustfall query, test crates, tests)
-				to detect when function and method parameter count changes
-				and added the retrieval of function parameter names in the adapter.
+			\item Added a new lint (trustfall query, test crates, tests) to detect field removals
+				from a struct variant in enums and added a field in the adapter for the lint.
+			\item Added a new lint (trustfall query, test crates, tests) to detect when function
+				and method parameter count changes and added the retrieval of function parameter
+				names in the adapter.
 			\item Fixed a bug where the rustdoc of the current and the baseline crates
-				were overwriting each other,
-				which has been reported by a user.
+				were overwriting each other, which has been reported by a user.
 		\end{itemize}
 
-	\item Mieszko \cite{responsibilities_mieszko}:
+	\item Mieszko \cite{responsibilities-mieszko}:
 		\begin{itemize}
-			\item Reported an incorrect behavior of the CLI which was choosing the latest release from the registry as
-				a baseline version even when it had been yanked. Introduced a fix and
-				created a set of unit tests for choosing the baseline crate.
-
-			\item Reported a problem in release \texttt{v0.18.2} where the CLI was not looking for the baseline in the
-				registry as it was supposed to do.
-
+			\item Reported an incorrect behavior of the CLI which was choosing the latest release
+				from the registry as a baseline version even when it had been yanked.
+				Introduced a fix and created a set of unit tests for choosing the baseline crate.
+			\item Reported a problem in release \texttt{v0.18.2} where the CLI was not looking for
+				the baseline in the registry as it was supposed to do.
 			\item Reported a bug where the precompiled tool crashed on Windows machines.
 				Added a CI job that checks for similar issues.
-
 			\item Developed a new version of \texttt{cargo-semver-checks-action}, which consisted of:
 			\begin{itemize}
-				\item creating a test repository \cite{responsibilities_mieszko_action_tests} and using it to add a CI workflow that tests
-					the basic functionalities of the action, then further developing the
-					CI tests to cover all options added in the new version,
-				\item making use of \texttt{cargo-semver-checks} built-in baseline choosing logic, which fixed the
-					user-reported issue,
+				\item creating a test repository \cite{responsibilities-mieszko-action-tests}
+					and using it to add a CI workflow that tests the basic functionalities of
+					the action, then further developing the CI tests to cover all options added in
+					the new version,
+				\item making use of \texttt{cargo-semver-checks} built-in baseline choosing logic,
+					which fixed the user-reported issue,
 				\item adding support for running the action on Windows- and MacOs-based runners,
 				\item introducing input \texttt{manifest-path}, as requested by a user,
 				\item introducing input \texttt{verbose}, as requested by a user,
@@ -979,7 +960,7 @@ and immediate contact with him through chat).
 			\end{itemize}
 		\end{itemize}
 
-	\item Bartosz \cite{responsibilities_bartosz}:
+	\item Bartosz \cite{responsibilities-bartosz}:
 		\begin{itemize}
 			% \item \emph{SCRIBE!} \\
 			% This scribe was like no other, \\
@@ -997,10 +978,10 @@ and immediate contact with him through chat).
 			% No meeting was complete without his touch, \\
 			% A true master of the notetaking clutch. \\
 
-			\item Added several new lints (trustfall queries, test crates, tests)
-				to detect when different items have been marked with the \texttt{must\_use}
-				attribute. Writing separate lints for individual items allowed to provide more
-				detailed messages for the user, improved the code structure by creating smaller,
+			\item Added several new lints (trustfall queries, test crates, tests) to detect
+				when different items have been marked with the \texttt{must\_use} attribute.
+				Writing separate lints for individual items allowed to provide more detailed
+				messages for the user, improved the code structure by creating smaller,
 				more specialized files and made the final review process easier. The items that
 				undergo those checks are:
 				\begin{itemize}
@@ -1009,18 +990,18 @@ and immediate contact with him through chat).
 					\item traits,
 					\item functions,
 					\item methods,
-					\item inherent methods (reported only when one was both moved to
-						a public trait and marked with the attribute).
+					\item inherent methods (reported only when one was both moved to a public trait
+						and marked with the attribute).
 				\end{itemize}
 		\end{itemize}
 
 	\item Mieszko and Bartosz:
 		\begin{itemize}
-			\item Added a new lint (trustfall query, test crates, tests) to detect when an exhaustive
-				public enum has the \texttt{non\_exhaustive} attribute added.
+			\item Added a new lint (trustfall query, test crates, tests) to detect when
+				an exhaustive public enum has the \texttt{non\_exhaustive} attribute added.
 			\item Designed and implemented a new adapter schema for handling attributes.
-				Updated all lints that check attributes to use the new schema, as well as added multiple
-				new test cases to the queries.
+				Updated all lints that check attributes to use the new schema, as well as added
+				multiple new test cases to the queries.
 		\end{itemize}
 \end{itemize}
 
@@ -1105,14 +1086,14 @@ TODO:
 
 %%% section 2.1 links
 
-\bibitem{issue_libp2p} GitHub,
+\bibitem{issue-libp2p} GitHub,
 	\textit{rust-libp2p -- Pull Request \#3312} (2023) \\
 	\url{https://github.com/libp2p/rust-libp2p/pull/3312}
 
 
 %%% section 2.2 links
 
-\bibitem{issue_compiling_fails} GitHub,
+\bibitem{issue-compiling-fails} GitHub,
 	\textit{cargo-semver-checks -- Issue \#317} (2023) \\
 	\url{https://github.com/obi1kenobi/cargo-semver-checks/issues/317}
 
@@ -1145,11 +1126,11 @@ TODO:
 
 %%% section 3.2 links
 
-\bibitem{issue_merge_cargo} GitHub,
+\bibitem{issue-merge-cargo} GitHub,
 	\textit{cargo-semver-checks -- Issue \#61} (2023) \\
 	\url{https://github.com/obi1kenobi/cargo-semver-checks/issues/61}
 
-\bibitem{issue_cli_interface} GitHub,
+\bibitem{issue-cli-interface} GitHub,
 	\textit{cargo-semver-checks -- Issue \#86} (2023) \\
 	\url{https://github.com/obi1kenobi/cargo-semver-checks/issues/86}
 
@@ -1174,23 +1155,23 @@ TODO:
 
 %%% section 7.2 links
 
-\bibitem{responsibilities_tomasz} GitHub,
+\bibitem{responsibilities-tomasz} GitHub,
 	\textit{Contributions authored by Tomasz} (2023) \\
 	\url{https://github.com/search?o=desc&q=org%3Aobi1kenobi+author%3Atonowak&s=updated&type=Issues}
 
-\bibitem{responsibilities_michal} GitHub,
+\bibitem{responsibilities-michal} GitHub,
 	\textit{Contributions authored by Michał} (2023) \\
 	\url{https://github.com/search?o=desc&q=org%3Aobi1kenobi+author%3Astaniewzki&s=updated&type=Issues}
 
-\bibitem{responsibilities_mieszko} GitHub,
+\bibitem{responsibilities-mieszko} GitHub,
 	\textit{Contributions authored by Mieszko} (2023) \\
 	\url{https://github.com/search?o=desc&q=org%3Aobi1kenobi+author%3Amgr0dzicki&s=updated&type=Issues}
 
-\bibitem{responsibilities_mieszko_action_tests} GitHub,
+\bibitem{responsibilities-mieszko-action-tests} GitHub,
 	\textit{mgr0dzicki/cargo-semver-action-ref-slice} (2023) \\
 	\url{https://github.com/mgr0dzicki/cargo-semver-action-ref-slice}
 
-\bibitem{responsibilities_bartosz} GitHub,
+\bibitem{responsibilities-bartosz} GitHub,
 	\textit{Contributions authored by Bartosz} (2023) \\
 	\url{https://github.com/search?o=desc&q=org%3Aobi1kenobi+author%3ASmolSir&s=updated&type=Issues}
 
