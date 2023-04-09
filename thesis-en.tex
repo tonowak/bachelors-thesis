@@ -96,8 +96,8 @@ bugfixes and cargo by default will automatically use those newest releases. The 
 semantic versioning is explained in chapter \ref{r:chapter_definitions}.
 
 It turns out that it is not obvious which changes are backwards-compatible and which are not.
-There are numerous examples (listed in \ref{r:section_usageofsemver}) where experienced Rust
-developers made a mistake (due to insufficient knowledge about the language or by overlooking
+There are numerous examples (listed in section \ref{r:section_usageofsemver}) where experienced
+Rust developers made a mistake (due to insufficient knowledge about the language or by overlooking
 something) that changed the public API (Application Programming Interface) of a library in such
 a way that users' code stopped compiling.
 
@@ -460,8 +460,8 @@ the interface \cite{issue_cli_interface} or sometimes even review changes to the
 new functionalities.
 
 cargo-semver-checks was the one tool chosen to be merged into cargo, mainly because it is the
-easiest to maintain (as described in \ref{r:section_existing_semver_tools}) and does not report
-false-positives.
+easiest to maintain (as described in section \ref{r:section_existing_semver_tools}) and does not
+report false-positives.
 
 \section{Project usage}
 
@@ -708,7 +708,7 @@ The V1 version of the action was implemented as a bash script, which was a~quick
 to maintain solution, which allowed the action to be run only on Linux hosts. This is why
 we implemented the V2 version of the action in a platform-independent way using TypeScript
 and Node.js, allowing it to be used on all runners supported by GitHub Actions.
-The differences between the V1 and V2 of the action are further discussed in
+The differences between the V1 and V2 of the action are further discussed in section
 \ref{r:section_continuous_integration_improvements}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
