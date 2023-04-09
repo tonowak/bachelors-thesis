@@ -831,27 +831,25 @@ and immediate contact with him through chat).
 \section{Responsibilities}
 
 \begin{itemize}
-	\item Tomasz:
+	\item Tomasz \cite{responsibilities_tomasz}:
 		\begin{itemize}
 			\item Reported a bug with an incorrect path to the generated rustdoc when passing
-				a manifest path in the CLI \cite{issue_wrong_path_manifest_path}.
+				a manifest path in the CLI.
 			\item Changed how the manifest of the baseline is built and added
-				selecting all features to baseline's manifest \cite{pr_changed_how_manifest_baseline_built},
+				selecting all features to baseline's manifest,
 				which resolved an issue reported by a user of the tool
-				\cite{issue_baseline_rustdoc_from_registry_default_features}
 				where the current and baseline's rustdoc was generated with different features,
 				which resulted in false-positives.
 			\item Reported a bug where the tests failed on the newest version
-				of the compiler \cite{issue_tests_fail_on_nightly}
-				and implemented a fix \cite{pr_tests_fail_on_nightly}.
+				of the compiler
+				and implemented a fix.
 			\item Renamed directories with queries and tests, thanks to which the
 				structure of the project is now clear, more intuitive
-				\cite{pr_renamed_directories} \cite{pr_renamed_directories_2}
-				and updated \texttt{CONTRIBUTING.md} \cite{pr_renamed_directories_3}.
+				and updated \texttt{CONTRIBUTING.md}.
 			\item Replaced code duplication with a Rust macro and made adding new
-				lints easier \cite{pr_one_macro}.
-			\item Improved the tests \cite{pr_split_each_test},
-				which speeded up the process of adding new lints.
+				lints easier.
+			\item Improved the tests,
+				which sped up the process of adding new lints.
 				More precisely:
 				\begin{itemize}
 					\item splitted each test into separate pairs of crates
@@ -862,38 +860,36 @@ and immediate contact with him through chat).
 					\item improved the error messages when the test output didn't match.
 				\end{itemize}
 			\item Made a change in the tests that runs the tool on crates that did not change
-				to detect possible false-positives \cite{pr_run_lints_nonchanged_crates}.
-			\item Commited changes suggested by a new version of the Rust formatter \cite{pr_clippy_lint}.
+				to detect possible false-positives.
+			\item Commited changes suggested by a new version of the Rust formatter.
 			\item Found and fixed a bug where the printed baseline version
-				was incorrect \cite{pr_bugfix_printed_baseline}.
+				was incorrect.
 			\item Added a new type of integration tests, which locally checks
 				how the tool behaves with given commandline arguments,
 				and implemented a test that checks whether a recent bug
 				(where the lint files were not present in the binary)
-				was fixed \cite{pr_run_cargo_build}.
-			\item Diagnosed a problem where the tests stopped working \cite{issue_tests_fail_unknown},
+				was fixed.
+			\item Diagnosed a problem where the tests stopped working,
 				fixed the adapter after a new rustdoc version which
-				stopped exporting inlined items of external crates \cite{pr_rustdoc_trait_incompatibility}
+				stopped exporting inlined items of external crates
 				and created an issue for strengthening back a lint that was
-				affected by those changes \cite{issue_strengthen_back}.
+				affected by those changes.
 			\item Reported a problem where the user could be confused by the lack of
-				detailed information in the help messages of the tool \cite{issue_help_messages}.
+				detailed information in the help messages of the tool.
 			\item Reported a problem where the output of the tool on the \texttt{bevy-audio} crate
-				seemed like it was producing a false positive \cite{issue_bevy_audio}.
+				seemed like it was producing a false positive.
 			\item Reported a bug where a lint's output was duplicated on the
-				\texttt{bevy-render} crate \cite{issue_duplicated_failure}.
-			\item Added a feature to disable the usage of the vendored \texttt{OpenSSL} \cite{pr_openssl}
+				\texttt{bevy-render} crate.
+			\item Added a feature to disable the usage of the vendored \texttt{OpenSSL}
 				because there were problems with it amongst users having
-				the Arch Linux desktop distribution \cite{issue_openssl}.
+				the Arch Linux desktop distribution.
 			\item Changed the way in which the rustdoc of a crate is generated
 				-- instead of directly running the rustdoc command on a local copy of the crate,
 				it is now ran on a temporary placeholder project,
 				which just has the checked crate as a dependency.
-				It solves a bug encountered by a user \cite{issue_apple_bitflags}
+				It solves a bug encountered by a user
 				where running the tool updates the \texttt{Cargo.lock} file,
-				and allows to easily specify the set of crate's features to run the rustdoc command on
-				\cite{pr_placeholder_1} \cite{pr_placeholder_2} \cite{pr_placeholder_3}
-				\cite{pr_placeholder_4} \cite{pr_placeholder_5} \cite{pr_placeholder_6}.
+				and allows to easily specify the set of crate's features to run the rustdoc command on.
 				% The change was done by moving and splitting existing functions into smaller ones \cite{pr_placeholder_1},
 				% switching the baseline rustdoc generation to using the new placeholder project \cite{pr_placeholder_2},
 				% changing functions' arguments for better readability \cite{pr_placeholder_3},
@@ -901,22 +897,22 @@ and immediate contact with him through chat).
 				% chosing variable names that fit more nicely with the current code \cite{pr_placeholder_5}
 				% and finally switching to the new rustdoc generation logic \cite{pr_placeholder_6}.
 			\item Reported a bug where the tool failed to work when
-				generating rustdoc of a crate that only has yanked releases \cite{issue_fails_yanked}.
+				generating rustdoc of a crate that only has yanked releases.
 			\item Reported a bug where the tool prints some internal data
-				while cheching the \texttt{clap} crate \cite{issue_internal_data}.
+				while cheching the \texttt{clap} crate.
 			\item Found and fixed a bug where the CI job wrongly checked
-				the exit code in one of the integration tests \cite{pr_exit_code}.
-			\item Added a lint in the CI for checking the rustdoc of the project \cite{pr_ci_rustdoc}.
-			\item Fixed a broken link which the users saw in the tool's output \cite{pr_broken_link}.
+				the exit code in one of the integration tests.
+			\item Added a lint in the CI for checking the rustdoc of the project.
+			\item Fixed a broken link which the users saw in the tool's output.
 			\item Reported a false-positive which was related to re-exporting types, values and macros
-				with the same names \cite{issue_reexporting}.
+				with the same names.
 			\item Fixed a user-encountered bug where implicit features due to target-specific
-				optional dependencies were not added in the current version \cite{pr_false_positive_target_specific}.
-			\item Fixed a user-reported bug \cite{issue_color_always}
-				where the rustdoc command's output wasn't showing up with colors \cite{pr_color_always}.
+				optional dependencies were not added in the current version.
+			\item Fixed a user-reported bug
+				where the rustdoc command's output wasn't showing up with colors.
 			\item Diagnosed a user-encountered compilation error which happened
-				because of changes in one of the tool's dependencies \cite{issue_compiling_fails}.
-			\item Took part in the development of the library based on the existing tool's code \cite{pr_library}.
+				because of changes in one of the tool's dependencies.
+			\item Took part in the development of the library based on the existing tool's code.
 		\end{itemize}
 
 	\item Michał \cite{responsibilities_michal}:
@@ -1051,58 +1047,9 @@ TODO:
 
 % \bibitem[Bea65]{beaman} Juliusz Beaman, \textit{Morbidity of the Jolly
 %     function}, Mathematica Absurdica, 117 (1965) 338--9.
-\bibitem{issue_merge_cargo} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/61
-\bibitem{issue_cli_interface} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/86
-\bibitem{issue_compiling_fails} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/317
-\bibitem{issue_libp2p} TODO \\ https://github.com/libp2p/rust-libp2p/pull/3312
-\bibitem{pr_added_field_structvariant} TODO \\ https://github.com/obi1kenobi/trustfall-rustdoc-adapter/pull/3
-\bibitem{pr_new_lint_field_removals_struct_variant_enum} TODO \\ https://github.com/obi1kenobi/trustfall-rustdoc-adapter/pull/3
-\bibitem{issue_wrong_path_manifest_path} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/174
-\bibitem{pr_add_function_parameters} TODO \\ https://github.com/obi1kenobi/trustfall-rustdoc-adapter/pull/4
-\bibitem{pr_changed_how_manifest_baseline_built} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/173
-\bibitem{issue_baseline_rustdoc_from_registry_default_features} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/147
-\bibitem{pr_add_function_parameters_semver_checks} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/170
-\bibitem{issue_tests_fail_on_nightly} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/175
-\bibitem{pr_tests_fail_on_nightly} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/184
-\bibitem{pr_renamed_directories} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/195
-\bibitem{pr_renamed_directories_2} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/205
-\bibitem{pr_renamed_directories_3} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/216
-\bibitem{pr_one_macro} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/204
-\bibitem{pr_split_each_test} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/203
-\bibitem{pr_run_lints_nonchanged_crates} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/208
-\bibitem{pr_clippy_lint} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/244
-\bibitem{pr_bugfix_printed_baseline} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/248
-\bibitem{pr_run_cargo_build} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/246
-\bibitem{pr_rustdoc_trait_incompatibility} TODO \\ https://github.com/obi1kenobi/trustfall-rustdoc-adapter/pull/24
-\bibitem{issue_tests_fail_unknown} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/243
-\bibitem{issue_strengthen_back} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/256
-\bibitem{issue_help_messages} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/172
-\bibitem{issue_bevy_audio} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/274
-\bibitem{issue_duplicated_failure} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/277
-\bibitem{pr_rustdoc_overwriting} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/270
-\bibitem{issue_rustdoc_overwriting} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/309
-\bibitem{pr_openssl} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/324
-\bibitem{issue_openssl} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/272
-\bibitem{issue_apple_bitflags} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/167
-\bibitem{pr_placeholder_1} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/340
-\bibitem{pr_placeholder_2} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/341
-\bibitem{pr_placeholder_3} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/347
-\bibitem{pr_placeholder_4} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/348
-\bibitem{pr_placeholder_5} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/350
-\bibitem{pr_placeholder_6} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/351
-\bibitem{issue_fails_yanked} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/275
-\bibitem{issue_internal_data} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/342
-\bibitem{pr_exit_code} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/344
-\bibitem{pr_ci_rustdoc} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/352
-\bibitem{pr_broken_link} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/358
-\bibitem{issue_reexporting} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/343
-\bibitem{pr_false_positive_target_specific} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/375
-\bibitem{issue_color_always} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/326
-\bibitem{pr_color_always} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/360
-\bibitem{pr_library} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/314
-\bibitem{pr_lint_enum_non_exhaustive} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/155
-\bibitem{pr_new_schema_for_attributes} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/171
-\bibitem{pr_adapter_new_schema_for_attributes} TODO \\ https://github.com/obi1kenobi/trustfall-rustdoc-adapter/pull/5
+
+\bibitem{responsibilities_tomasz} GitHub (2023) \\
+	https://github.com/search?o=desc\&q=org\%3Aobi1kenobi+author\%3Atonowak\&s=updated\&type=Issues
 
 \bibitem{responsibilities_michal} GitHub (2023) \\
 	https://github.com/search?o=desc\&q=org\%3Aobi1kenobi+author\%3Astaniewzki\&s=updated\&type=Issues
