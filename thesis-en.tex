@@ -919,28 +919,28 @@ and immediate contact with him through chat).
 			\item Took part in the development of the library based on the existing tool's code \cite{pr_library}.
 		\end{itemize}
 
-	\item Michał:
+	\item Michał \cite{responsibilities_michal}:
 		\begin{itemize}
 			\item Added a new type of tests in the CI -- a regression test
 				that is checking the tool against a specific version of a user's crate,
 				to be certain that now the tool works and has
-				no false-positives on it \cite{pr_add_running_on_rust_libp2p}.
+				no false-positives on it.
 			\item Added a test that checks whether a field in the lints
-				is correctly initialized \cite{pr_add_error_template_instantiation}.
-			\item Added an integration test in the CI for specifying the package name \cite{pr_test_specifying_package_name}.
+				is correctly initialized.
+			\item Added an integration test in the CI for specifying the package name.
 			\item Made a new release workflow in the CI that triggers when publishing
 				a new version of the tool and uploads the new binaries to GitHub releases,
 				thanks to which the GitHub Actions
 				(both provided by us and written by users for their own purposes) that were using the tool
 				can now just download the binary (instead of compiling it),
-				which makes the CI job much faster \cite{pr_upload_binaries}.
+				which makes the CI job much faster.
 			\item Added a new lint (trustfall query, test crates, tests)
-				to detect tuple structs that changed to plain structs \cite{pr_lint_tuple_structs}.
+				to detect tuple structs that changed to plain structs.
 			\item Added a new lint (trustfall query, test crates, tests) that checks whether a trait
-				becomes or stops being unsafe \cite{pr_trait_unsafe} and added an \texttt{unsafe} type
-				property to \texttt{Trait} in the schema and the adapter \cite{pr_unsafe_parameter_trait}.
+				becomes or stops being unsafe and added an \texttt{unsafe} type
+				property to \texttt{Trait} in the schema and the adapter.
 			\item Added a \texttt{fields} edge to the \texttt{Variant} interface
-				in the schema and the adapter \cite{pr_add_fields_variant_interface}.
+				in the schema and the adapter.
 		\end{itemize}
 
 	\item Tomasz and Michał:
@@ -1072,29 +1072,21 @@ TODO:
 \bibitem{pr_add_function_parameters} TODO \\ https://github.com/obi1kenobi/trustfall-rustdoc-adapter/pull/4
 \bibitem{pr_changed_how_manifest_baseline_built} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/173
 \bibitem{issue_baseline_rustdoc_from_registry_default_features} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/147
-\bibitem{pr_add_running_on_rust_libp2p} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/180
 \bibitem{pr_add_function_parameters_semver_checks} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/170
 \bibitem{issue_tests_fail_on_nightly} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/175
 \bibitem{pr_tests_fail_on_nightly} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/184
-\bibitem{pr_add_error_template_instantiation} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/189
-\bibitem{pr_test_specifying_package_name} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/192
 \bibitem{pr_renamed_directories} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/195
 \bibitem{pr_renamed_directories_2} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/205
 \bibitem{pr_renamed_directories_3} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/216
 \bibitem{pr_one_macro} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/204
 \bibitem{pr_split_each_test} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/203
-\bibitem{pr_upload_binaries} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/208
 \bibitem{pr_run_lints_nonchanged_crates} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/208
 \bibitem{pr_clippy_lint} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/244
 \bibitem{pr_bugfix_printed_baseline} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/248
 \bibitem{pr_run_cargo_build} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/246
-\bibitem{pr_lint_tuple_structs} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/249
-\bibitem{pr_unsafe_parameter_trait} TODO \\ https://github.com/obi1kenobi/trustfall-rustdoc-adapter/pull/19
 \bibitem{pr_rustdoc_trait_incompatibility} TODO \\ https://github.com/obi1kenobi/trustfall-rustdoc-adapter/pull/24
 \bibitem{issue_tests_fail_unknown} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/243
 \bibitem{issue_strengthen_back} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/256
-\bibitem{pr_trait_unsafe} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/pull/252
-\bibitem{pr_add_fields_variant_interface} TODO \\ https://github.com/obi1kenobi/trustfall-rustdoc-adapter/pull/25
 \bibitem{issue_help_messages} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/172
 \bibitem{issue_bevy_audio} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/274
 \bibitem{issue_duplicated_failure} TODO \\ https://github.com/obi1kenobi/cargo-semver-checks/issues/277
@@ -1143,8 +1135,11 @@ https://github.com/obi1kenobi/cargo-semver-checks-action/issues/16
 \bibitem{issue_action_binaries} TODO \\
 https://github.com/obi1kenobi/cargo-semver-checks-action/issues/8
 
+\bibitem{responsibilities_michal} GitHub (2023) \\
+	https://github.com/search?o=desc\&q=org\%3Aobi1kenobi+author\%3Astaniewzki\&s=updated\&type=Issues
+
 \bibitem{responsibilities_bartosz} GitHub (2023) \\
-	https://github.com/search?q=org\%3Aobi1kenobi+author\%3ASmolSir&type=issues&s=updated&o=desc
+	https://github.com/search?o=desc\&q=org\%3Aobi1kenobi+author\%3ASmolSir\&s=updated\&type=Issues
 
 \bibitem{Rust-1} Rust Team,
 	\textit{Rust Programming Language} (2023) \\
