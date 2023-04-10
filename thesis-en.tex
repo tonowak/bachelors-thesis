@@ -96,10 +96,10 @@ bugfixes and cargo by default will automatically use those newest releases. The 
 semantic versioning is explained in chapter \ref{r:chapter_definitions}.
 
 It turns out that it is not obvious which changes are backwards-compatible and which are not.
-There are numerous examples (listed in section \ref{r:section_rust_semver_problems}) where experienced
-Rust developers made a mistake (due to insufficient knowledge about the language or by overlooking
-something) that changed the public API (Application Programming Interface) of a library in such
-a way that users' code stopped compiling.
+There are numerous examples (listed in section \ref{r:section_rust_semver_problems})
+where experienced Rust developers made a mistake (due to insufficient knowledge about the language
+or by overlooking something) that changed the public API (Application Programming Interface)
+of a library in such a way that users' code stopped compiling.
 
 The authors of this thesis present their work on a tool that detects and notifies about a subset of
 problems that make Rust libraries' public API non-backwards compatible, with the goal to make
@@ -577,9 +577,9 @@ versions of the same crate:
 \end{itemize}
 the tool uses Trustfall as a layer of abstraction that remains constant regardless of changes in
 the underlying JSON representation format (functions, structs, enums, variants, etc.) To better
-visualize this concept, one can imagine a query that asks Trustfall to \say{Find all public Enums from
-the baseline version that no longer exist in the current version of the crate}. That kind of query
-never makes any statements or assumptions about its data representation or format.
+visualize this concept, one can imagine a query that asks Trustfall to \say{Find all public Enums
+from the baseline version that no longer exist in the current version of the crate}. That kind
+of query never makes any statements or assumptions about its data representation or format.
 
 After that, the versions are compared using all of the implemented lints to find the breaking
 public API changes. They are the core component of the project and are carefully designed so that
