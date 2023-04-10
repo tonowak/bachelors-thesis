@@ -96,10 +96,10 @@ bugfixes and cargo by default will automatically use those newest releases. The 
 semantic versioning is explained in chapter \ref{r:chapter_definitions}.
 
 It turns out that it is not obvious which changes are backwards-compatible and which are not.
-There are numerous examples (listed in section \ref{r:section_usageofsemver}) where experienced
-Rust developers made a mistake (due to insufficient knowledge about the language or by overlooking
-something) that changed the public API (Application Programming Interface) of a library in such
-a way that users' code stopped compiling.
+There are numerous examples (listed in section \ref{r:section_rust_semver_problems})
+where experienced Rust developers made a mistake (due to insufficient knowledge about the language
+or by overlooking something) that changed the public API (Application Programming Interface)
+of a library in such a way that users' code stopped compiling.
 
 The authors of this thesis present their work on a tool that detects and notifies about a subset of
 problems that make Rust libraries' public API non-backwards compatible, with the goal to make
@@ -118,7 +118,7 @@ results and the project's impact on the Rust community.
 
 \chapter{Definitions}\label{r:chapter_definitions}
 
-\section{Rust language}
+\section{Rust language}\label{r:section_rust_language}
 
 With its first stable release in 2015, Rust is a relatively new programming language that
 puts a strong emphasis on type-safety, memory-safety, performance and concurrency. Unlike
@@ -145,7 +145,7 @@ language for writing the Linux kernel (with the primary being C). While there ha
 attempts to add other languages (f.e. C++ in 1997), Rust is the first one to successfully
 make it since the kernel's first release in 1991.
 
-\section{Rust's package manager and build system -- cargo}
+\section{Rust's package manager and build system -- cargo}\label{r:section_cargo}
 
 Cargo is the official package manager for Rust. It is responsible for compiling the user's
 packages, downloading their dependencies and uploading them to the selected package registry.
@@ -281,7 +281,7 @@ whenever the next version is released. The resolver ignores yanked package versi
 already present in the \texttt{Cargo.lock} file. While there are many reasons behind packages being
 yanked, one of the main causes remains breaking semver.
 
-\section{Abstract syntax tree (AST)}
+\section{Abstract syntax tree (AST)}\label{r:section_ast}
 
 An abstract syntax tree represents the abstract syntactic structure of the text (often source code)
 in form of a tree, where every node denotes an occurence of some construct in it. The tree is
@@ -304,16 +304,16 @@ and focuses on structural or contextual details.
 % \textit{rustdoc}, which exports all of the crate's public API into an accessible form (both human-
 % and machine-readable). Thanks to these, the semver validation problem seems particularily managable
 % in Rust, and there are some attempts addressing the issue already (mentioned in chapter
-% \ref{r:chapter_stateoftheart}).
+% \ref{r:chapter_state_of_the_art}).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %          State of the art           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{State of the art}\label{r:chapter_stateoftheart}
+\chapter{State of the art}\label{r:chapter_state_of_the_art}
 
-\section{Problems with using semver in Rust}\label{r:section_usageofsemver}
+\section{Problems with using semver in Rust}\label{r:section_rust_semver_problems}
 
 It might seem easy to maintain semver, but some violations are hard to notice
 when not actively searched for. Consider the following example:
@@ -347,7 +347,7 @@ library \texttt{rust-libp2p}, where it is clear from the conversation \cite{issu
 the maintainers were not expecting their type to stop being \texttt{UnwindSafe} and were likely
 not even aware that their type was publicly \texttt{UnwindSafe} to start with.
 
-\section{Consequences of breaking semver}
+\section{Consequences of breaking semver}\label{r:section_semver_breaking_consequences}
 
 When a maintainer publishes a new version of their crate that is breaking semver,
 it is causing a major inconvenience for the crate's users.
@@ -378,7 +378,7 @@ Some of popular Rust crates with millions of downloads happened to break semver:
     \item multiple {\ttfamily block-buffer} versions accidentally broke their MSRV contract
 		\cite{block-buffer-issue}
     \item and many more. We have developed a script that scans all releases for semver breaks we
-		can detect. The results are covered in section \ref{r:section_scanning_script}
+		can detect. The results are covered in section \ref{r:section_script_evaluation}
 \end{itemize}
 
 Those were examples of popular crates with experienced maintainers, but the problem is even more
@@ -421,7 +421,7 @@ keeping up with rustdoc API changes, which seems to be about as low effort as it
 
 \chapter{Vision}\label{r:chapter_vision}
 
-\section{Project purpose}
+\section{Project purpose}\label{r:section_project_purpose}
 
 We have taken part in the development of \texttt{cargo-semver-checks} -- a tool meant to detect
 semver breaks of a Rust project before publishing its new version to the registry. The main goal
@@ -446,7 +446,7 @@ including the line of code in which each one was found, both short and long desc
 triggered lint and, if possible, reference links to the Rust documentation describing the semver
 issue in more detail.
 
-\section{Plans to merge the tool into cargo}
+\section{Plans to merge the tool into cargo}\label{r:section_merge_into_cargo_plans}
 
 There are already on-going plans to merge cargo-semver-checks into the official Rust development
 toolchain, which has been initiated by one of the developers working on cargo
@@ -463,7 +463,7 @@ cargo-semver-checks was the one tool chosen to be merged into cargo, mainly beca
 easiest to maintain (as described in section \ref{r:section_existing_semver_tools}) and does not
 report false-positives.
 
-\section{Project usage}
+\section{Project usage}\label{r:section_project_usage}
 
 The basic functionality of the tool is to compare two versions of the code (the \say{current} crate
 and the \say{baseline} crate) and notify the user about the semver issues that were found when
@@ -476,7 +476,7 @@ Because a large portion of libraries are currently developed using GitHub, we ar
 a continuous integration job via GitHub Actions to automatically ensure that a Pull Request
 satisfies semver.
 
-\subsection{Running locally}
+\subsection{Running locally}\label{r:subsection_running_locally}
 
 The tool can be used on a local copy of the project (for example, just before releasing its new
 version to the registry through \texttt{cargo publish}) by passing the path to its manifest.
@@ -488,7 +488,7 @@ the baseline project is located.
 Additionally, it is possible to check all crates in a workspace (which is a collection of crates)
 one by one by passing the path to the manifest that defines the workspace.
 
-\subsection{Usage in continuous integration}
+\subsection{Usage in continuous integration}\label{r:subsection_usage_in_ci}
 
 Seeing that GitHub is the most popular internet hosting service for version control amongst the
 Rust libraries developers, one of the goals of the project is to implement a GitHub Action that
@@ -506,7 +506,7 @@ There are two reasons as to why this continuous integration job is beneficial fo
 \end{itemize}
 
 
-\section{Project baseline}
+\section{Project baseline}\label{r:section_project_baseline}
 
 Before our contributions, the project was already partially functional, but it had numerous issues
 which often prevented the community from adopting the tool into their workflow:
@@ -577,9 +577,9 @@ versions of the same crate:
 \end{itemize}
 the tool uses Trustfall as a layer of abstraction that remains constant regardless of changes in
 the underlying JSON representation format (functions, structs, enums, variants, etc.) To better
-visualize this concept, one can imagine a query that asks Trustfall to \say{Find all public Enums from
-the baseline version that no longer exist in the current version of the crate}. That kind of query
-never makes any statements or assumptions about its data representation or format.
+visualize this concept, one can imagine a query that asks Trustfall to \say{Find all public Enums
+from the baseline version that no longer exist in the current version of the crate}. That kind
+of query never makes any statements or assumptions about its data representation or format.
 
 After that, the versions are compared using all of the implemented lints to find the breaking
 public API changes. They are the core component of the project and are carefully designed so that
@@ -654,7 +654,7 @@ During its execution, Trustfall successively:
 Just like that, the query has returned all of the public Enums that were present in the baseline
 version of the crate, but got removed in the current version.
 
-\section{trustfall-rustdoc-adapter}
+\section{trustfall-rustdoc-adapter}\label{r:section_trustfall_rustdoc_adapter}
 The output generated by running rustdoc on a crate is a tree and can be in one of the two formats:
 \begin{itemize}
 	\item HTML -- the default option, formatted with CSS, designed for users to read (however it is
@@ -678,7 +678,7 @@ implements the following methods:
 \end{itemize}
 These are used by the Trustfall engine to execute lint queries written in the Trustfall language.
 
-\section{trustfall-rustdoc}
+\section{trustfall-rustdoc}\label{r:section_trustfall_rustdoc}
 
 Rustdoc output format is under constant development and changes between Rust versions.
 Since the tool is supposed to be widely used, it is important to ensure that it works with
@@ -691,7 +691,7 @@ the rustdoc JSON output, trustfall-rustdoc loads the file, detects which rustdoc
 and chooses the corresponding trustfall-rustdoc-adapter branch to run the Trustfall queries.
 This provides a version-independent interface which is used by cargo-semver-checks.
 
-\section{cargo-semver-checks-action}
+\section{cargo-semver-checks-action}\label{r:section_cargo_semver_checks_action}
 
 Using cargo-semver-checks in a continuous integration workflow consists of three main steps:
 setting up the Rust toolchain, installing cargo-semver-checks, and finally -- running it on a~crate.
@@ -726,15 +726,15 @@ TODO:
 
 <Here write a list about the new lints we've written>
 
-\section{Test suite}
+\section{Test suite}\label{r:section_test_suite}
 
 <Here write a list about the improvements in the testing suite>
 
-\section{Command line interface}
+\section{Command line interface}\label{r:section_cli}
 
 <Here write a list about changes that made the command line interface better>
 
-\section{Bugfixes}
+\section{Bugfixes}\label{r:section_bugfixes}
 
 <Here write a list about found and fixed bugs>
 
@@ -742,11 +742,11 @@ TODO:
 
 <Here write a list about the V2 of the continuous integration>
 
-\section{Script}
+\section{Script}\label{r:section_script_implementation}
 
 <Here write about the script that searches all existing releases for detected semver breaks>
 
-\section{Healthier codebase}
+\section{Healthier codebase}\label{r:section_healthier_codebase}
 
 <Here write a list of changes that made the codebase better>
 
@@ -755,7 +755,7 @@ TODO:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Evaluation}\label{r:chapter_evaluation}
 
-\section{Steady increase in tool's popularity}
+\section{Steady increase in tool's popularity}\label{r:section_popularity_increase}
 
 TODO:
 \begin{itemize}
@@ -771,7 +771,7 @@ TODO:
 	\item list the maintainers of big libraries that started using the tool during our development
 \end{itemize}
 
-\section{Script} \label{r:section_scanning_script}
+\section{Script}\label{r:section_script_evaluation}
 
 TODO:
 \begin{itemize}
@@ -780,7 +780,7 @@ TODO:
 	\item describe how our new lints can make an impact on the community based on the found semver breaks from the script
 \end{itemize}
 
-\section{Future-proofing}
+\section{Future-proofing}\label{r:section_future_proofing}
 
 TODO:
 \begin{itemize}
@@ -794,7 +794,7 @@ TODO:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Team}\label{r:chapter_team}
 
-\section{Used methodology}
+\section{Used methodology}\label{r:section_used_methodology}
 
 The project's functionalities and goals can be split into independent improvements, hence our
 contributions were mostly composed of multiple smaller changes. The usual workflow of writing
@@ -828,7 +828,7 @@ Additionally, we held weekly meetings with the four of us to discuss the progres
 contributions (we did not need to have regular meeting with our mentor, because we had constant
 and immediate contact with him through chat).
 
-\section{Responsibilities}
+\section{Responsibilities}\label{r:section_responsibilities}
 
 \begin{itemize}
 	\item Tomasz \cite{responsibilities-tomasz}:
@@ -1023,7 +1023,7 @@ TODO:
 
 \appendix
 
-\begin{thebibliography}{99}\label{r:chapter_bibliography}
+\begin{thebibliography}{99}
 \addcontentsline{toc}{chapter}{Bibliography}
 
 %%% template
@@ -1182,7 +1182,7 @@ TODO:
 %             Attachments             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter*{Attachments}\label{r:chapter_attachments}
+\chapter*{Attachments}
 \addcontentsline{toc}{chapter}{Attachments}
 
 \section*{Source code structure}
