@@ -726,9 +726,59 @@ TODO:
 
 <Here write a list about the new lints we've written>
 
-\section{Test suite}\label{r:section_test_suite}
+\section{Better test suite with integration tests}\label{r:section_test_suite}
 
-<Here write a list about the improvements in the testing suite>
+Before our contributions, each lint had its own testcase consisting of
+a Rust sourcecode that can be compiled in two ways (which produces
+\say{current} and \say{baseline} codes) and a file containing the Trustfall query results
+for this sourcecode and lint.
+We have replaced this system with a new one that contains numerous \say{crate pairs}
+(two separate directories called \say{current} and \say{baseline} crates with their own
+manifests and source codes) and Trustfall query results for each lint over all of the
+available crate pairs. This has brought numerous benefits:
+\begin{itemize}
+	\item because each lint is now checked on all the crate pairs,
+		the lints are also ran on codes meant to test other lints,
+		which found multiple false-positives
+		(e.g. that a similar error was reported by two different lints
+		when it should have been reported by only one of them),
+	\item the manifests of the baseline and current crates can be different,
+		which will allow writing tests for lints checking the manifests
+		(such lints are not yet implemented, but it is one of the future goals
+		of the project),
+	\item the tests became much more readable, which helped us to catch some bugs
+		-- previously each test sourcecode had a lot of branch conditions
+		(e.g. when it was being compiled as a \say{current} code
+		the code introduced an item, but on \say{baseline} it was being removed),
+		which made it too easy to make a mistake.
+\end{itemize}
+Funnily enough, because those tests also are good at testing the JSON rustdocs
+(they check a variety of rustdocs and a lot of different kinds of items),
+we have more extensive JSON rustdoc tests than the ones made by the
+Rust team responsible for developing rustdoc,
+and thus they decided to adapt our tests in their testsuite
+(by running the tool's tests on their newest versions of rustdocs) \cite{issue-rustdoc-our-tests}.
+
+We also wrote a new kind of tests to be sure that we fixed some bugs
+which we have found or which have been reported by users of the tool.
+Such tests were made by writing a GitHub workflow job (which triggers on each
+commit and Pull Request) that downloads the tool and the user's git repository,
+runs the tool just like the user did to trigger the bug
+and checks that the bug is no longer present.
+Thanks to that, we can be sure that the user that reported the bug
+won't experience this bug ever again.
+Just writing that kind of tests helped us in catching other bugs
+-- we tried to write tests that run the tool in different ways
+with different commandline arguments and the tool was wrongly handling some arguments.
+
+While those integration tests were better suited to be written as a GitHub workflow job
+(simply because cloning a user's git repo takes time and requires internet connection,
+thus they are not suitable as locally run tests),
+we also had integration tests that we wanted to run locally, alongside the crate pair tests.
+For example, we had a bug where our work on developing the crate pair tests somehow
+stopped including the lints in the produced binary (and that bug almost went to production).
+To be sure that this bug won't happen anymore, we wrote an integration test that
+locally executes the produced binary and checks whether its output is correct.
 
 \section{Command line interface}\label{r:section_cli}
 
@@ -1151,6 +1201,12 @@ TODO:
 % \bibitem{cargo-semver-checks} GitHub,
 % 	\textit{cargo-semver-checks} (2023) \\
 % 	\url{https://github.com/obi1kenobi/cargo-semver-checks}
+
+%%% section 5.5 link
+
+\bibitem{issue-rustdoc-our-tests} GitHub,
+	\textit{Rust -- Issue \#110815} (2023) \\
+	\url{https://github.com/rust-lang/rust/issues/110815}
 
 
 %%% section 7.2 links
