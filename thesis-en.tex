@@ -2,6 +2,7 @@
 \usepackage{dirtytalk}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{longtable}
 \graphicspath{ {./images/} }
 
 \autor{Tomasz Nowak}{429575}
@@ -1193,6 +1194,1330 @@ TODO:
 \section*{Tests}
 
 <Here describe the tests (and possibly how to run them) of the included CD>
+
+\chapter*{Appendix A: list of found semver breaks on popular crates}
+\addcontentsline{toc}{chapter}{Appendix A: list of found semver breaks on popular crates}
+
+{\footnotesize
+
+	\begin{longtable}{|p{1.8cm}|p{1.8cm}|p{2.7cm}|p{9cm}|}
+		\hline
+
+syn & from 1.0.78\newline to 1.0.79 & method\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & syn::ReturnType::parse now takes 1 parameters instead of 2\newline syn::TypeTraitObject::parse now takes 1 parameters instead of 2
+\hline
+syn & from 1.0.38\newline to 1.0.39 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & syn::ExprUnsafe no longer Sync\newline syn::ExprUnsafe no longer Send\newline syn::ExprAssignOp no longer Sync\newline (... and more)
+\hline
+syn & from 1.0.38\newline to 1.0.39 & derive\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & syn::ExprMacro no longer derives Clone\newline syn::ExprGroup no longer derives Clone\newline syn::ExprAssign no longer derives Clone\newline (... and more)
+\hline
+syn & from 0.14.2\newline to 0.14.3 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & syn::ExprField no longer Sync\newline syn::ExprField no longer Send
+\hline
+syn & from 0.12.10\newline to 0.12.11 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & syn::ExprParen no longer Sync\newline syn::ExprParen no longer Send
+\hline
+libc & from 0.2.86\newline to 0.2.87 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & libc::statx field stx\allowbreak\_mnt\allowbreak\_id
+\hline
+libc & from 0.2.86\newline to 0.2.87 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_private\allowbreak\_field & libc::statx field \allowbreak\_\allowbreak\_statx\allowbreak\_pad3
+\hline
+libc & from 0.2.86\newline to 0.2.87 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & libc::statx field \allowbreak\_\allowbreak\_statx\allowbreak\_pad1\newline libc::statx field \allowbreak\_\allowbreak\_statx\allowbreak\_pad2
+\hline
+libc & from 0.2.29\newline to 0.2.30 & function\allowbreak\_missing & libc::forkpty\newline libc::initgroups
+\hline
+log & from 0.3.8\newline to 0.3.9 & derive\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & log::LogLevelFilter no longer derives Hash\newline log::LogRecord no longer derives Debug\newline log::LogLevel no longer derives Hash\newline (... and more)
+\hline
+time & from 0.2.7\newline to 0.2.8 & struct\allowbreak\_missing & time::PreciseTime\newline time::SteadyTime
+\hline
+time & from 0.2.2\newline to 0.2.4 & derive\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & time::ParseError no longer derives Copy
+\hline
+time & from 0.2.0\newline to 0.2.1 & inherent\allowbreak\_method\allowbreak\_const\allowbreak\_removed & time::Duration::sign
+\hline
+base64 & from 0.12.1\newline to 0.12.2 & enum\allowbreak\_variant\allowbreak\_added & base64::CharacterSet::BinHex
+\hline
+base64 & from 0.12.0\newline to 0.12.1 & enum\allowbreak\_variant\allowbreak\_added & base64::CharacterSet::Bcrypt
+\hline
+base64 & from 0.9.0\newline to 0.9.1 & enum\allowbreak\_variant\allowbreak\_added & base64::CharacterSet::Crypt
+\hline
+once\allowbreak\_cell & from 0.1.3\newline to 0.1.4 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & (hidden) once\allowbreak\_cell::sync::Lazy no longer RefUnwindSafe\newline once\allowbreak\_cell::sync::OnceCell no longer RefUnwindSafe
+\hline
+clap & from 3.1.18\newline to 3.2.0 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & clap::OsValues no longer UnwindSafe\newline clap::OsValues no longer RefUnwindSafe\newline clap::Arg no longer UnwindSafe\newline (... and more)
+\hline
+clap & from 3.0.1\newline to 3.0.2 & inherent\allowbreak\_method\allowbreak\_must\allowbreak\_use\allowbreak\_added & clap::PossibleValue::help\newline clap::PossibleValue::hide\newline clap::PossibleValue::alias\newline (... and more)
+\hline
+clap & from 2.32.0\newline to 2.33.0 & enum\allowbreak\_variant\allowbreak\_added & clap::AppSettings::DisableHelpFlags
+\hline
+clap & from 2.31.2\newline to 2.32.0 & enum\allowbreak\_variant\allowbreak\_added & clap::ArgSettings::HiddenShortHelp\newline clap::ArgSettings::HiddenLongHelp\newline clap::Shell::Elvish\newline (... and more)
+\hline
+clap & from 2.29.2\newline to 2.29.3 & enum\allowbreak\_variant\allowbreak\_added & clap::AppSettings::AllArgsOverrideSelf
+\hline
+clap & from 2.28.0\newline to 2.29.0 & enum\allowbreak\_variant\allowbreak\_added & clap::ArgSettings::HideEnvValues
+\hline
+clap & from 2.27.1\newline to 2.28.0 & enum\allowbreak\_variant\allowbreak\_added & clap::ArgSettings::CaseInsensitive
+\hline
+clap & from 2.21.3\newline to 2.22.0 & enum\allowbreak\_variant\allowbreak\_added & clap::ArgSettings::HideDefaultValue
+\hline
+bytes & from 0.4.0\newline to 0.4.1 & trait\allowbreak\_missing & bytes::Source
+\hline
+crossbeam-utils & from 0.6.0\newline to 0.6.1 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & crossbeam\allowbreak\_utils::thread::Scope no longer UnwindSafe
+\hline
+ppv-lite86 & from 0.2.9\newline to 0.2.10 & struct\allowbreak\_missing & ppv\allowbreak\_lite86::generic::u64x2\allowbreak\_generic\newline ppv\allowbreak\_lite86::generic::GenericMachine\newline ppv\allowbreak\_lite86::generic::G1\newline (... and more)
+\hline
+ppv-lite86 & from 0.2.7\newline to 0.2.8 & struct\allowbreak\_missing & ppv\allowbreak\_lite86::x86\allowbreak\_64::SseMachine\newline ppv\allowbreak\_lite86::x86\allowbreak\_64::YesNI\newline ppv\allowbreak\_lite86::x86\allowbreak\_64::NoA1\newline (... and more)
+\hline
+ppv-lite86 & from 0.2.2\newline to 0.2.3 & struct\allowbreak\_missing & ppv\allowbreak\_lite86::x86\allowbreak\_64::Machine86
+\hline
+tokio & from 0.1.1\newline to 0.1.3 & struct\allowbreak\_missing & tokio::reactor::SetDefaultError\newline tokio::reactor::PollEvented\newline tokio::reactor::Turn\newline (... and more)
+\hline
+tokio & from 0.1.1\newline to 0.1.2 & struct\allowbreak\_missing & tokio::reactor::Turn\newline tokio::reactor::PollEvented\newline tokio::reactor::Reactor\newline (... and more)
+\hline
+futures & from 0.1.8\newline to 0.1.31 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & futures::stream::FuturesUnordered no longer RefUnwindSafe\newline futures::stream::FuturesUnordered no longer UnwindSafe\newline futures::future::Shared no longer RefUnwindSafe\newline (... and more)
+\hline
+futures & from 0.1.13\newline to 0.1.14 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & futures::stream::FuturesUnordered no longer UnwindSafe\newline futures::stream::FuturesUnordered no longer RefUnwindSafe\newline futures::stream::BufferUnordered no longer UnwindSafe\newline (... and more)
+\hline
+futures & from 0.1.12\newline to 0.1.13 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & futures::future::Shared no longer UnwindSafe\newline futures::future::Shared no longer RefUnwindSafe
+\hline
+futures & from 0.1.10\newline to 0.1.11 & inherent\allowbreak\_method\allowbreak\_missing & futures::unsync::oneshot::Sender::complete
+\hline
+chrono & from 0.4.22\newline to 0.4.23 & enum\allowbreak\_variant\allowbreak\_added & chrono::format::Fixed::TimezoneOffsetDoubleColon\newline chrono::format::Fixed::TimezoneOffsetTripleColon
+\hline
+chrono & from 0.4.0\newline to 0.4.1 & struct\allowbreak\_missing & chrono::naive::TsSeconds
+\hline
+miniz\allowbreak\_oxide & from 0.3.0\newline to 0.3.1 & enum\allowbreak\_repr\allowbreak\_int\allowbreak\_removed & miniz\allowbreak\_oxide::deflate::core::TDEFLFlush
+\hline
+miniz\allowbreak\_oxide & from 0.3.0\newline to 0.3.1 & struct\allowbreak\_repr\allowbreak\_c\allowbreak\_removed & miniz\allowbreak\_oxide::inflate::core::DecompressorOxide
+\hline
+rustc\allowbreak\_version & from 0.3.0\newline to 0.3.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & rustc\allowbreak\_version::VersionMeta field llvm\allowbreak\_version
+\hline
+rustc\allowbreak\_version & from 0.3.0\newline to 0.3.1 & enum\allowbreak\_variant\allowbreak\_added & rustc\allowbreak\_version::Error::CommandError\newline rustc\allowbreak\_version::Error::LlvmVersionError
+\hline
+unicode-bidi & from 0.2.5\newline to 0.2.6 & function\allowbreak\_missing & unicode\allowbreak\_bidi::tables::bidi\allowbreak\_class
+\hline
+anyhow & from 1.0.55\newline to 1.0.56 & inherent\allowbreak\_method\allowbreak\_must\allowbreak\_use\allowbreak\_added & anyhow::Error::new\newline anyhow::Error::msg\newline anyhow::Error::context\newline (... and more)
+\hline
+pkg-config & from 0.3.14\newline to 0.3.15 & function\allowbreak\_missing & pkg\allowbreak\_config::target\allowbreak\_supported
+\hline
+pkg-config & from 0.3.11\newline to 0.3.12 & enum\allowbreak\_variant\allowbreak\_missing & pkg\allowbreak\_config::Error::MSVC
+\hline
+env\allowbreak\_logger & from 0.8.3\newline to 0.8.4 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & env\allowbreak\_logger::Target no longer Sync\newline env\allowbreak\_logger::Target no longer UnwindSafe\newline env\allowbreak\_logger::Target no longer RefUnwindSafe\newline (... and more)
+\hline
+env\allowbreak\_logger & from 0.8.3\newline to 0.8.4 & derive\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & env\allowbreak\_logger::Target no longer derives Clone\newline env\allowbreak\_logger::Target no longer derives Copy\newline env\allowbreak\_logger::Target no longer derives Eq\newline (... and more)
+\hline
+env\allowbreak\_logger & from 0.8.3\newline to 0.8.4 & enum\allowbreak\_marked\allowbreak\_non\allowbreak\_exhaustive & env\allowbreak\_logger::Target\newline env\allowbreak\_logger::fmt::Target
+\hline
+hyper & from 0.12.12\newline to 0.12.13 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & hyper::client::connect::Connected no longer UnwindSafe\newline hyper::client::connect::Connected no longer RefUnwindSafe
+\hline
+hyper & from 0.11.19\newline to 0.11.20 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & hyper::server::AddrIncoming no longer Sync\newline hyper::server::AddrIncoming no longer Send
+\hline
+hyper & from 0.11.18\newline to 0.11.19 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & hyper::error::Canceled no longer UnwindSafe\newline hyper::error::Canceled no longer RefUnwindSafe
+\hline
+tokio-util & from 0.7.1\newline to 0.7.2 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & tokio\allowbreak\_util::sync::WaitForCancellationFuture no longer UnwindSafe\newline tokio\allowbreak\_util::sync::WaitForCancellationFuture no longer RefUnwindSafe
+\hline
+tokio-util & from 0.6.9\newline to 0.6.10 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & tokio\allowbreak\_util::sync::WaitForCancellationFuture no longer UnwindSafe\newline tokio\allowbreak\_util::sync::WaitForCancellationFuture no longer RefUnwindSafe
+\hline
+futures-util & from 0.3.21\newline to 0.3.22 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & futures\allowbreak\_util::future::TryJoinAll no longer UnwindSafe\newline futures\allowbreak\_util::future::TryJoinAll no longer RefUnwindSafe\newline futures\allowbreak\_util::\allowbreak\_\allowbreak\_private::future::TryJoinAll no longer UnwindSafe\newline (... and more)
+\hline
+futures-util & from 0.3.16\newline to 0.3.17 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & futures\allowbreak\_util::future::JoinAll no longer UnwindSafe\newline futures\allowbreak\_util::future::JoinAll no longer RefUnwindSafe\newline futures\allowbreak\_util::\allowbreak\_\allowbreak\_private::future::JoinAll no longer UnwindSafe\newline (... and more)
+\hline
+crossbeam-epoch & from 0.4.0\newline to 0.4.1 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & crossbeam\allowbreak\_epoch::Handle no longer Send
+\hline
+crossbeam-epoch & from 0.4.0\newline to 0.4.1 & inherent\allowbreak\_method\allowbreak\_missing & crossbeam\allowbreak\_epoch::Collector::handle
+\hline
+crossbeam-channel & from 0.2.5\newline to 0.2.6 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & crossbeam\allowbreak\_channel::internal::select::Select no longer Sync\newline crossbeam\allowbreak\_channel::internal::select::Select no longer UnwindSafe\newline crossbeam\allowbreak\_channel::internal::select::Select no longer Send\newline (... and more)
+\hline
+crossbeam-channel & from 0.2.5\newline to 0.2.6 & derive\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & crossbeam\allowbreak\_channel::internal::select::Select no longer derives Clone\newline crossbeam\allowbreak\_channel::internal::select::Select no longer derives Copy\newline crossbeam\allowbreak\_channel::internal::select::Select no longer derives PartialEq\newline (... and more)
+\hline
+crossbeam-channel & from 0.2.5\newline to 0.2.6 & enum\allowbreak\_missing & crossbeam\allowbreak\_channel::internal::select::Select
+\hline
+crossbeam-channel & from 0.2.5\newline to 0.2.6 & function\allowbreak\_missing & crossbeam\allowbreak\_channel::internal::context::current\allowbreak\_thread\allowbreak\_id\newline crossbeam\allowbreak\_channel::internal::context::with\allowbreak\_current
+\hline
+crossbeam-channel & from 0.2.5\newline to 0.2.6 & inherent\allowbreak\_method\allowbreak\_missing & crossbeam\allowbreak\_channel::internal::context::Context::new\newline crossbeam\allowbreak\_channel::internal::context::Context::reset\newline crossbeam\allowbreak\_channel::internal::utils::Backoff::step\newline (... and more)
+\hline
+crossbeam-channel & from 0.2.4\newline to 0.2.5 & function\allowbreak\_missing & crossbeam\allowbreak\_channel::internal::context::current\allowbreak\_reset\newline crossbeam\allowbreak\_channel::internal::context::current\allowbreak\_selected\newline crossbeam\allowbreak\_channel::internal::context::current\newline (... and more)
+\hline
+crossbeam-channel & from 0.2.4\newline to 0.2.5 & method\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & crossbeam\allowbreak\_channel::internal::waker::SyncWaker::register now takes 3 parameters instead of 2\newline crossbeam\allowbreak\_channel::internal::waker::Waker::register now takes 3 parameters instead of 2\newline crossbeam\allowbreak\_channel::internal::waker::Waker::register\allowbreak\_with\allowbreak\_packet now takes 4 parameters instead of 3\newline (... and more)
+\hline
+crossbeam-channel & from 0.2.4\newline to 0.2.5 & trait\allowbreak\_missing & crossbeam\allowbreak\_channel::internal::codegen::RecvArgument\newline crossbeam\allowbreak\_channel::internal::codegen::SendArgument
+\hline
+nom & from 4.1.1\newline to 4.2.0 & enum\allowbreak\_variant\allowbreak\_added & nom::ErrorKind::TooLarge\newline nom::ErrorKind::Many0Count\newline nom::ErrorKind::Many1Count\newline (... and more)
+\hline
+nom & from 4.1.1\newline to 4.2.0 & function\allowbreak\_missing & nom::be\allowbreak\_i128\newline nom::be\allowbreak\_u128\newline nom::le\allowbreak\_u128\newline (... and more)
+\hline
+nom & from 4.0.0\newline to 4.1.0 & enum\allowbreak\_variant\allowbreak\_added & nom::ErrorKind::ParseTo
+\hline
+nom & from 2.1.0\newline to 2.2.0 & enum\allowbreak\_variant\allowbreak\_added & nom::ErrorKind::TakeTill1\newline nom::Err::TakeTill1\newline nom::simple\allowbreak\_errors::Err::TakeTill1\newline (... and more)
+\hline
+h2 & from 0.2.6\newline to 0.2.7 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & h2::server::Handshake no longer UnwindSafe\newline h2::server::Handshake no longer RefUnwindSafe
+\hline
+nix & from 0.22.0\newline to 0.22.1 & inherent\allowbreak\_method\allowbreak\_const\allowbreak\_removed & nix::kmod::DeleteModuleFlags::from\allowbreak\_bits\newline nix::fcntl::SealFlag::from\allowbreak\_bits\newline nix::net::if\allowbreak\_::InterfaceFlags::from\allowbreak\_bits\newline (... and more)
+\hline
+nix & from 0.22.0\newline to 0.22.1 & inherent\allowbreak\_method\allowbreak\_missing & nix::sys::epoll::EpollFlags::intersection\newline nix::sys::epoll::EpollFlags::union\newline nix::sys::epoll::EpollFlags::difference\newline (... and more)
+\hline
+nix & from 0.21.0\newline to 0.21.1 & inherent\allowbreak\_method\allowbreak\_const\allowbreak\_removed & nix::sys::timerfd::TimerFlags::from\allowbreak\_bits\newline nix::sys::termios::InputFlags::from\allowbreak\_bits\newline nix::kmod::DeleteModuleFlags::from\allowbreak\_bits\newline (... and more)
+\hline
+nix & from 0.21.0\newline to 0.21.1 & inherent\allowbreak\_method\allowbreak\_missing & nix::sys::stat::Mode::intersection\newline nix::sys::stat::Mode::union\newline nix::sys::stat::Mode::difference\newline (... and more)
+\hline
+nix & from 0.20.0\newline to 0.20.1 & inherent\allowbreak\_method\allowbreak\_const\allowbreak\_removed & nix::mount::MntFlags::from\allowbreak\_bits\newline nix::poll::PollFlags::from\allowbreak\_bits\newline nix::sys::termios::ControlFlags::from\allowbreak\_bits\newline (... and more)
+\hline
+nix & from 0.20.0\newline to 0.20.1 & inherent\allowbreak\_method\allowbreak\_missing & nix::fcntl::AtFlags::intersection\newline nix::fcntl::AtFlags::union\newline nix::fcntl::AtFlags::difference\newline (... and more)
+\hline
+semver-parser & from 0.10.0\newline to 0.10.1 & enum\allowbreak\_missing & semver\allowbreak\_parser::Rule
+\hline
+ahash & from 0.4.0\newline to 0.4.1 & trait\allowbreak\_missing & ahash::HasherExt
+\hline
+try-lock & from 0.2.3\newline to 0.2.4 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & try\allowbreak\_lock::Locked no longer Sync\newline try\allowbreak\_lock::Locked no longer Send
+\hline
+spin & from 0.5.1\newline to 0.5.2 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & spin::RwLockWriteGuard no longer Sync\newline spin::RwLockWriteGuard no longer Send\newline spin::RwLockReadGuard no longer Sync\newline (... and more)
+\hline
+gimli & from 0.16.0\newline to 0.16.1 & enum\allowbreak\_variant\allowbreak\_added & gimli::Error::NotFdePointer\newline gimli::CallFrameInstruction::ArgsSize
+\hline
+reqwest & from 0.11.0\newline to 0.11.1 & inherent\allowbreak\_method\allowbreak\_missing & reqwest::ClientBuilder::identity
+\hline
+synstructure & from 0.10.0\newline to 0.10.1 & method\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & synstructure::Structure::add\allowbreak\_trait\allowbreak\_bounds now takes 4 parameters instead of 3
+\hline
+rustls & from 0.20.6\newline to 0.20.7 & enum\allowbreak\_variant\allowbreak\_added & rustls::ProtocolVersion::DTLSv1\allowbreak\_3
+\hline
+rustls & from 0.20.2\newline to 0.20.3 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & rustls::internal::msgs::persist::ServerSessionValue field creation\allowbreak\_time\allowbreak\_sec\newline rustls::internal::msgs::persist::ServerSessionValue field age\allowbreak\_obfuscation\allowbreak\_offset
+\hline
+rustls & from 0.20.2\newline to 0.20.3 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_private\allowbreak\_field & rustls::internal::msgs::persist::ServerSessionValue field freshness
+\hline
+rustls & from 0.20.2\newline to 0.20.3 & enum\allowbreak\_variant\allowbreak\_added & rustls::internal::msgs::enums::ProtocolVersion::DTLSv1\allowbreak\_0\newline rustls::internal::msgs::enums::ProtocolVersion::DTLSv1\allowbreak\_2\newline rustls::ProtocolVersion::DTLSv1\allowbreak\_0\newline (... and more)
+\hline
+ipnet & from 0.26.2\newline to 0.26.3 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & ipnet::IpNetIter field start\newline ipnet::IpNetIter field end\newline ipnet::IpAddrIter field start\newline (... and more)
+\hline
+ipnet & from 0.24.2\newline to 0.24.3 & inherent\allowbreak\_method\allowbreak\_missing & ipnet::Ipv4Net::iter\allowbreak\_subnets\newline ipnet::Ipv6Net::iter\allowbreak\_subnets
+\hline
+ipnet & from 0.16.1\newline to 0.16.2 & function\allowbreak\_missing & ipnet::ipv6\allowbreak\_addr\allowbreak\_from\allowbreak\_emu128\newline ipnet::ipv6\allowbreak\_addr\allowbreak\_into\allowbreak\_emu128
+\hline
+ipnet & from 0.15.2\newline to 0.15.3 & function\allowbreak\_missing & ipnet::aggregate\allowbreak\_ipv4\allowbreak\_networks\newline ipnet::aggregate\allowbreak\_ipv6\allowbreak\_networks
+\hline
+ring & from 0.16.15\newline to 0.16.16 & inherent\allowbreak\_method\allowbreak\_missing & ring::error::KeyRejected::description\allowbreak\_
+\hline
+ring & from 0.14.4\newline to 0.14.5 & function\allowbreak\_missing & ring::test::from\allowbreak\_file\newline ring::test::ring\allowbreak\_src\allowbreak\_path
+\hline
+petgraph & from 0.5.0\newline to 0.5.1 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & petgraph::dot::Dot no longer RefUnwindSafe\newline petgraph::dot::Dot no longer UnwindSafe\newline petgraph::dot::Dot no longer Sync\newline (... and more)
+\hline
+darling\allowbreak\_core & from 0.8.3\newline to 0.8.4 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & darling\allowbreak\_core::codegen::Variant field allow\allowbreak\_unknown\allowbreak\_fields\newline darling\allowbreak\_core::codegen::TraitImpl field allow\allowbreak\_unknown\allowbreak\_fields\newline darling\allowbreak\_core::options::Core field allow\allowbreak\_unknown\allowbreak\_fields\newline (... and more)
+\hline
+darling\allowbreak\_core & from 0.8.3\newline to 0.8.4 & tuple\allowbreak\_struct\allowbreak\_to\allowbreak\_plain\allowbreak\_struct & darling\allowbreak\_core::codegen::FieldsGen
+\hline
+darling\allowbreak\_core & from 0.8.1\newline to 0.8.2 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & darling\allowbreak\_core::error::IntoIter no longer Sync\newline darling\allowbreak\_core::error::IntoIter no longer Send\newline darling\allowbreak\_core::Error no longer Sync\newline (... and more)
+\hline
+darling\allowbreak\_core & from 0.1.4\newline to 0.1.5 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & darling\allowbreak\_core::options::InputField field multiple\newline darling\allowbreak\_core::codegen::Field field multiple
+\hline
+darling\allowbreak\_core & from 0.1.4\newline to 0.1.5 & inherent\allowbreak\_method\allowbreak\_missing & darling\allowbreak\_core::codegen::Field::as\allowbreak\_applicator
+\hline
+darling\allowbreak\_core & from 0.1.3\newline to 0.1.4 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & darling\allowbreak\_core::codegen::FromVariantImpl field supports\newline darling\allowbreak\_core::options::Core field bound\newline darling\allowbreak\_core::options::InputField field ident\newline (... and more)
+\hline
+darling\allowbreak\_core & from 0.1.3\newline to 0.1.4 & enum\allowbreak\_missing & darling\allowbreak\_core::util::VariantData\newline darling\allowbreak\_core::util::Body
+\hline
+darling\allowbreak\_core & from 0.1.3\newline to 0.1.4 & inherent\allowbreak\_method\allowbreak\_missing & darling\allowbreak\_core::options::Core::new
+\hline
+darling\allowbreak\_core & from 0.1.3\newline to 0.1.4 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & darling\allowbreak\_core::codegen::Field field name\allowbreak\_in\allowbreak\_struct\newline darling\allowbreak\_core::options::InputField field target\allowbreak\_name\newline darling\allowbreak\_core::codegen::FromFieldImpl field body\newline (... and more)
+\hline
+darling\allowbreak\_core & from 0.1.2\newline to 0.1.3 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & darling\allowbreak\_core::codegen::FromDeriveInputImpl field body\newline darling\allowbreak\_core::options::FromVariantOptions field data
+\hline
+darling\allowbreak\_core & from 0.1.2\newline to 0.1.3 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & darling\allowbreak\_core::options::FromVariantOptions field body
+\hline
+tracing-subscriber & from 0.3.1\newline to 0.3.2 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & tracing\allowbreak\_subscriber::fmt::FmtContext no longer Sync\newline tracing\allowbreak\_subscriber::fmt::FmtContext no longer UnwindSafe\newline tracing\allowbreak\_subscriber::fmt::FmtContext no longer Send\newline (... and more)
+\hline
+tracing-subscriber & from 0.2.1\newline to 0.2.2 & unit\allowbreak\_struct\allowbreak\_changed\allowbreak\_kind & tracing\allowbreak\_subscriber::fmt::format::Json
+\hline
+hermit-abi & from 0.2.4\newline to 0.2.5 & struct\allowbreak\_missing & hermit\allowbreak\_abi::mutex::Mutex
+\hline
+siphasher & from 0.2.1\newline to 0.2.2 & inherent\allowbreak\_method\allowbreak\_missing & siphasher::sip128::Hash128::into\allowbreak\_bytes
+\hline
+wasm-bindgen & from 0.2.82\newline to 0.2.83 & struct\allowbreak\_missing & wasm\allowbreak\_bindgen::convert::WasmOptionalU32\newline wasm\allowbreak\_bindgen::convert::WasmOptionalF64\newline wasm\allowbreak\_bindgen::convert::WasmOptionalF32\newline (... and more)
+\hline
+wasm-bindgen & from 0.2.47\newline to 0.2.48 & struct\allowbreak\_missing & wasm\allowbreak\_bindgen::convert::GlobalStack
+\hline
+wasm-bindgen & from 0.2.47\newline to 0.2.48 & trait\allowbreak\_missing & wasm\allowbreak\_bindgen::convert::Stack
+\hline
+wasm-bindgen & from 0.2.45\newline to 0.2.46 & function\allowbreak\_unsafe\allowbreak\_added & wasm\allowbreak\_bindgen::\allowbreak\_\allowbreak\_rt::\allowbreak\_\allowbreak\_wbindgen\allowbreak\_realloc
+\hline
+wasm-bindgen & from 0.2.25\newline to 0.2.26 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & wasm\allowbreak\_bindgen::closure::Closure no longer Sync\newline wasm\allowbreak\_bindgen::closure::Closure no longer Send\newline wasm\allowbreak\_bindgen::prelude::Closure no longer Sync\newline (... and more)
+\hline
+wasm-bindgen-backend & from 0.2.83\newline to 0.2.84 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Program field linked\allowbreak\_modules
+\hline
+wasm-bindgen-backend & from 0.2.82\newline to 0.2.83 & enum\allowbreak\_variant\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportModule::None
+\hline
+wasm-bindgen-backend & from 0.2.81\newline to 0.2.82 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Function field variadic
+\hline
+wasm-bindgen-backend & from 0.2.75\newline to 0.2.76 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportType field no\allowbreak\_deref
+\hline
+wasm-bindgen-backend & from 0.2.74\newline to 0.2.75 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::StructField field getter\allowbreak\_with\allowbreak\_clone
+\hline
+wasm-bindgen-backend & from 0.2.68\newline to 0.2.69 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::StructField field rust\allowbreak\_name\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::StructField field js\allowbreak\_name
+\hline
+wasm-bindgen-backend & from 0.2.68\newline to 0.2.69 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::StructField field name
+\hline
+wasm-bindgen-backend & from 0.2.60\newline to 0.2.61 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Enum field rust\allowbreak\_name\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Enum field js\allowbreak\_name\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Variant field comments\newline (... and more)
+\hline
+wasm-bindgen-backend & from 0.2.60\newline to 0.2.61 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Enum field name
+\hline
+wasm-bindgen-backend & from 0.2.58\newline to 0.2.59 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Function field generate\allowbreak\_typescript\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Enum field generate\allowbreak\_typescript\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportType field typescript\allowbreak\_type\newline (... and more)
+\hline
+wasm-bindgen-backend & from 0.2.58\newline to 0.2.59 & enum\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::defined::ImportedTypeKind\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ConstValue
+\hline
+wasm-bindgen-backend & from 0.2.58\newline to 0.2.59 & struct\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Const\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Dictionary\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::DictionaryField\newline (... and more)
+\hline
+wasm-bindgen-backend & from 0.2.58\newline to 0.2.59 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Program field consts\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Program field dictionaries
+\hline
+wasm-bindgen-backend & from 0.2.58\newline to 0.2.59 & trait\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::defined::ImportedTypeDefinitions\newline wasm\allowbreak\_bindgen\allowbreak\_backend::defined::ImportedTypeReferences\newline wasm\allowbreak\_bindgen\allowbreak\_backend::defined::ImportedTypes\newline (... and more)
+\hline
+wasm-bindgen-backend & from 0.2.55\newline to 0.2.56 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Struct field is\allowbreak\_inspectable
+\hline
+wasm-bindgen-backend & from 0.2.50\newline to 0.2.51 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Function field async
+\hline
+wasm-bindgen-backend & from 0.2.48\newline to 0.2.49 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportFunction field assert\allowbreak\_no\allowbreak\_shim
+\hline
+wasm-bindgen-backend & from 0.2.45\newline to 0.2.46 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::DictionaryField field doc\allowbreak\_comment\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Dictionary field ctor\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Dictionary field doc\allowbreak\_comment\newline (... and more)
+\hline
+wasm-bindgen-backend & from 0.2.43\newline to 0.2.44 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Export field method\allowbreak\_kind
+\hline
+wasm-bindgen-backend & from 0.2.43\newline to 0.2.44 & inherent\allowbreak\_method\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportFunction::infer\allowbreak\_getter\allowbreak\_property\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportFunction::infer\allowbreak\_setter\allowbreak\_property
+\hline
+wasm-bindgen-backend & from 0.2.43\newline to 0.2.44 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Export field is\allowbreak\_constructor
+\hline
+wasm-bindgen-backend & from 0.2.42\newline to 0.2.43 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportType field is\allowbreak\_type\allowbreak\_of
+\hline
+wasm-bindgen-backend & from 0.2.39\newline to 0.2.40 & enum\allowbreak\_variant\allowbreak\_added & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportModule::RawNamed
+\hline
+wasm-bindgen-backend & from 0.2.38\newline to 0.2.39 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Program field inline\allowbreak\_js
+\hline
+wasm-bindgen-backend & from 0.2.33\newline to 0.2.34 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Enum field hole
+\hline
+wasm-bindgen-backend & from 0.2.30\newline to 0.2.31 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::DictionaryField field rust\allowbreak\_name\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::DictionaryField field js\allowbreak\_name
+\hline
+wasm-bindgen-backend & from 0.2.30\newline to 0.2.31 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::DictionaryField field name
+\hline
+wasm-bindgen-backend & from 0.2.28\newline to 0.2.29 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Export field start\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Program field typescript\allowbreak\_custom\allowbreak\_sections
+\hline
+wasm-bindgen-backend & from 0.2.27\newline to 0.2.28 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Export field rust\allowbreak\_class\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Export field js\allowbreak\_class\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Struct field rust\allowbreak\_name\newline (... and more)
+\hline
+wasm-bindgen-backend & from 0.2.27\newline to 0.2.28 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Struct field name\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Export field class
+\hline
+wasm-bindgen-backend & from 0.2.23\newline to 0.2.24 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportType field vendor\allowbreak\_prefixes
+\hline
+wasm-bindgen-backend & from 0.2.22\newline to 0.2.23 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Export field is\allowbreak\_constructor\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Function field name\allowbreak\_span\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Function field renamed\allowbreak\_via\allowbreak\_js\allowbreak\_name\newline (... and more)
+\hline
+wasm-bindgen-backend & from 0.2.22\newline to 0.2.23 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Export field constructor
+\hline
+wasm-bindgen-backend & from 0.2.21\newline to 0.2.22 & enum\allowbreak\_variant\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportFunctionKind::ScopedMethod
+\hline
+wasm-bindgen-backend & from 0.2.21\newline to 0.2.22 & struct\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Module
+\hline
+wasm-bindgen-backend & from 0.2.21\newline to 0.2.22 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Program field modules
+\hline
+wasm-bindgen-backend & from 0.2.19\newline to 0.2.20 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportFunction field variadic
+\hline
+wasm-bindgen-backend & from 0.2.19\newline to 0.2.20 & enum\allowbreak\_variant\allowbreak\_added & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportFunctionKind::ScopedMethod
+\hline
+wasm-bindgen-backend & from 0.2.13\newline to 0.2.14 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportEnum field rust\allowbreak\_attrs
+\hline
+wasm-bindgen-backend & from 0.2.12\newline to 0.2.13 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Export field rust\allowbreak\_name
+\hline
+wasm-bindgen-backend & from 0.2.11\newline to 0.2.12 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportFunction field js\allowbreak\_ret\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportFunction field catch\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportFunction field structural\newline (... and more)
+\hline
+wasm-bindgen-backend & from 0.2.11\newline to 0.2.12 & enum\allowbreak\_struct\allowbreak\_variant\allowbreak\_field\allowbreak\_added & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportFunctionKind::Method field kind
+\hline
+wasm-bindgen-backend & from 0.2.11\newline to 0.2.12 & enum\allowbreak\_variant\allowbreak\_added & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportKind::Enum
+\hline
+wasm-bindgen-backend & from 0.2.11\newline to 0.2.12 & enum\allowbreak\_variant\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::ImportFunctionKind::JsConstructor
+\hline
+wasm-bindgen-backend & from 0.2.11\newline to 0.2.12 & function\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::extract\allowbreak\_path\allowbreak\_ident
+\hline
+wasm-bindgen-backend & from 0.2.11\newline to 0.2.12 & method\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Function::from now takes 1 parameters instead of 2
+\hline
+wasm-bindgen-backend & from 0.2.11\newline to 0.2.12 & struct\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::BindgenAttrs
+\hline
+wasm-bindgen-backend & from 0.2.11\newline to 0.2.12 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_backend::ast::StructField field opts\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Function field opts\newline wasm\allowbreak\_bindgen\allowbreak\_backend::ast::Function field rust\allowbreak\_decl\newline (... and more)
+\hline
+wasm-bindgen-shared & from 0.2.25\newline to 0.2.26 & enum\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_shared::OperationKind\newline wasm\allowbreak\_bindgen\allowbreak\_shared::MethodKind\newline wasm\allowbreak\_bindgen\allowbreak\_shared::ImportKind\newline (... and more)
+\hline
+wasm-bindgen-shared & from 0.2.25\newline to 0.2.26 & struct\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_shared::Import\newline wasm\allowbreak\_bindgen\allowbreak\_shared::Enum\newline wasm\allowbreak\_bindgen\allowbreak\_shared::ImportType\newline (... and more)
+\hline
+wasm-bindgen-shared & from 0.2.23\newline to 0.2.24 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_shared::ImportType field vendor\allowbreak\_prefixes
+\hline
+wasm-bindgen-shared & from 0.2.22\newline to 0.2.23 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_shared::Export field is\allowbreak\_constructor
+\hline
+wasm-bindgen-shared & from 0.2.22\newline to 0.2.23 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_shared::Export field constructor
+\hline
+wasm-bindgen-shared & from 0.2.19\newline to 0.2.20 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_shared::ImportFunction field variadic
+\hline
+wasm-bindgen-shared & from 0.2.15\newline to 0.2.16 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_shared::ImportType field name\newline wasm\allowbreak\_bindgen\allowbreak\_shared::ImportType field instanceof\allowbreak\_shim
+\hline
+wasm-bindgen-shared & from 0.2.15\newline to 0.2.16 & enum\allowbreak\_variant\allowbreak\_added & wasm\allowbreak\_bindgen\allowbreak\_shared::OperationKind::IndexingGetter\newline wasm\allowbreak\_bindgen\allowbreak\_shared::OperationKind::IndexingSetter\newline wasm\allowbreak\_bindgen\allowbreak\_shared::OperationKind::IndexingDeleter\newline (... and more)
+\hline
+wasm-bindgen-shared & from 0.2.15\newline to 0.2.16 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_shared::Import field version
+\hline
+wasm-bindgen-shared & from 0.2.11\newline to 0.2.12 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_shared::Export field consumed\newline wasm\allowbreak\_bindgen\allowbreak\_shared::Export field comments\newline wasm\allowbreak\_bindgen\allowbreak\_shared::Struct field comments\newline (... and more)
+\hline
+wasm-bindgen-shared & from 0.2.11\newline to 0.2.12 & enum\allowbreak\_variant\allowbreak\_added & wasm\allowbreak\_bindgen\allowbreak\_shared::ImportKind::Enum
+\hline
+wasm-bindgen-shared & from 0.2.11\newline to 0.2.12 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_shared::ImportFunction field js\allowbreak\_new\newline wasm\allowbreak\_bindgen\allowbreak\_shared::ImportFunction field getter\newline wasm\allowbreak\_bindgen\allowbreak\_shared::ImportFunction field setter\newline (... and more)
+\hline
+wasm-bindgen-shared & from 0.2.5\newline to 0.2.6 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_shared::Import field version\newline wasm\allowbreak\_bindgen\allowbreak\_shared::StructField field readonly
+\hline
+wasm-bindgen-shared & from 0.2.2\newline to 0.2.3 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & wasm\allowbreak\_bindgen\allowbreak\_shared::Program field structs\newline wasm\allowbreak\_bindgen\allowbreak\_shared::Export field constructor
+\hline
+wasm-bindgen-shared & from 0.2.2\newline to 0.2.3 & function\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_shared::name\allowbreak\_to\allowbreak\_descriptor
+\hline
+wasm-bindgen-shared & from 0.2.2\newline to 0.2.3 & struct\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_shared::CustomTypeName
+\hline
+wasm-bindgen-shared & from 0.2.2\newline to 0.2.3 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & wasm\allowbreak\_bindgen\allowbreak\_shared::Program field custom\allowbreak\_type\allowbreak\_names\newline wasm\allowbreak\_bindgen\allowbreak\_shared::Function field arguments\newline wasm\allowbreak\_bindgen\allowbreak\_shared::Function field ret\newline (... and more)
+\hline
+wasm-bindgen-macro-support & from 0.2.28\newline to 0.2.29 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & wasm\allowbreak\_bindgen\allowbreak\_macro\allowbreak\_support::BindgenAttrs no longer RefUnwindSafe
+\hline
+js-sys & from 0.3.25\newline to 0.3.26 & function\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & js\allowbreak\_sys::Atomics::notify now takes 2 parameters instead of 3
+\hline
+dirs-sys & from 0.3.1\newline to 0.3.2 & function\allowbreak\_missing & dirs\allowbreak\_sys::user\allowbreak\_dirs\newline dirs\allowbreak\_sys::user\allowbreak\_dir
+\hline
+prost-types & from 0.2.0\newline to 0.2.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & prost\allowbreak\_types::descriptor\allowbreak\_proto::ExtensionRange field options\newline prost\allowbreak\_types::FileOptions field php\allowbreak\_generic\allowbreak\_services\newline prost\allowbreak\_types::FileOptions field php\allowbreak\_namespace\newline (... and more)
+\hline
+term & from 0.4.5\newline to 0.4.6 & function\allowbreak\_missing & term::terminfo::parser::compiled::msys\allowbreak\_terminfo
+\hline
+vcpkg & from 0.2.10\newline to 0.2.11 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & vcpkg::Library field vcpkg\allowbreak\_triplet
+\hline
+vcpkg & from 0.2.7\newline to 0.2.8 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & vcpkg::Library field found\allowbreak\_names
+\hline
+vcpkg & from 0.2.6\newline to 0.2.7 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & vcpkg::Library field ports
+\hline
+vcpkg & from 0.2.3\newline to 0.2.4 & inherent\allowbreak\_method\allowbreak\_missing & vcpkg::Library::new
+\hline
+vcpkg & from 0.2.1\newline to 0.2.2 & enum\allowbreak\_variant\allowbreak\_missing & vcpkg::Error::EnvNoPkgConfig
+\hline
+vcpkg & from 0.1.3\newline to 0.1.4 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & vcpkg::Library field dll\allowbreak\_paths
+\hline
+vcpkg & from 0.1.3\newline to 0.1.4 & function\allowbreak\_missing & vcpkg::probe\allowbreak\_library
+\hline
+vcpkg & from 0.1.2\newline to 0.1.3 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & vcpkg::Library field found\allowbreak\_libs
+\hline
+console & from 0.9.1\newline to 0.9.2 & enum\allowbreak\_variant\allowbreak\_added & console::TermFamily::Dummy
+\hline
+console & from 0.7.0\newline to 0.7.1 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & console::Term no longer UnwindSafe
+\hline
+prost-build & from 0.2.0\newline to 0.2.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & prost\allowbreak\_build::Service field package
+\hline
+zstd-sys & from 2.0.6\newline to 2.0.7 & enum\allowbreak\_variant\allowbreak\_added & zstd\allowbreak\_sys::ZSTD\allowbreak\_dParameter::ZSTD\allowbreak\_d\allowbreak\_experimentalParam5\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_c\allowbreak\_experimentalParam16\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_c\allowbreak\_experimentalParam17\newline (... and more)
+\hline
+zstd-sys & from 1.5.0\newline to 1.6.0 & enum\allowbreak\_variant\allowbreak\_added & zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_c\allowbreak\_experimentalParam13\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_c\allowbreak\_experimentalParam14\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_c\allowbreak\_experimentalParam15\newline (... and more)
+\hline
+zstd-sys & from 1.4.19\newline to 1.4.20 & enum\allowbreak\_variant\allowbreak\_added & zstd\allowbreak\_sys::ZSTD\allowbreak\_dParameter::ZSTD\allowbreak\_d\allowbreak\_experimentalParam4
+\hline
+zstd-sys & from 1.4.17\newline to 1.4.18 & enum\allowbreak\_variant\allowbreak\_added & zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_c\allowbreak\_experimentalParam8\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_c\allowbreak\_experimentalParam9\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_c\allowbreak\_experimentalParam10\newline (... and more)
+\hline
+zstd-sys & from 1.4.15\newline to 1.4.16 & enum\allowbreak\_variant\allowbreak\_added & zstd\allowbreak\_sys::ZSTD\allowbreak\_dParameter::ZSTD\allowbreak\_d\allowbreak\_experimentalParam2
+\hline
+zstd-sys & from 1.4.14\newline to 1.4.15 & enum\allowbreak\_variant\allowbreak\_added & zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_c\allowbreak\_experimentalParam7
+\hline
+zstd-sys & from 1.4.10\newline to 1.4.11 & enum\allowbreak\_variant\allowbreak\_added & zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_c\allowbreak\_experimentalParam6
+\hline
+zstd-sys & from 1.4.8\newline to 1.4.10 & enum\allowbreak\_missing & zstd\allowbreak\_sys::ZSTD\allowbreak\_nextInputType\allowbreak\_e\newline zstd\allowbreak\_sys::ZSTDMT\allowbreak\_parameter\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_dictAttachPref\allowbreak\_e\newline (... and more)
+\hline
+zstd-sys & from 1.4.8\newline to 1.4.10 & enum\allowbreak\_variant\allowbreak\_added & zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_c\allowbreak\_experimentalParam5
+\hline
+zstd-sys & from 1.4.8\newline to 1.4.10 & function\allowbreak\_missing & zstd\allowbreak\_sys::ZSTDMT\allowbreak\_resetCStream\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_checkCParams\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_nextSrcSizeToDecompress\newline (... and more)
+\hline
+zstd-sys & from 1.4.8\newline to 1.4.10 & struct\allowbreak\_missing & zstd\allowbreak\_sys::ZSTD\allowbreak\_frameHeader\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_frameParameters\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_frameProgression\newline (... and more)
+\hline
+zstd-sys & from 1.4.6\newline to 1.4.7 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & zstd\allowbreak\_sys::ZSTD\allowbreak\_compressionParameters field minMatch
+\hline
+zstd-sys & from 1.4.6\newline to 1.4.7 & enum\allowbreak\_missing & zstd\allowbreak\_sys::ZSTD\allowbreak\_DStreamParameter\allowbreak\_e
+\hline
+zstd-sys & from 1.4.6\newline to 1.4.7 & enum\allowbreak\_variant\allowbreak\_added & zstd\allowbreak\_sys::ZSTD\allowbreak\_strategy::ZSTD\allowbreak\_btultra2\newline zstd\allowbreak\_sys::ZSTDMT\allowbreak\_parameter::ZSTDMT\allowbreak\_p\allowbreak\_overlapLog\newline zstd\allowbreak\_sys::ZSTDMT\allowbreak\_parameter::ZSTDMT\allowbreak\_p\allowbreak\_rsyncable\newline (... and more)
+\hline
+zstd-sys & from 1.4.6\newline to 1.4.7 & enum\allowbreak\_variant\allowbreak\_missing & zstd\allowbreak\_sys::ZSTDMT\allowbreak\_parameter::ZSTDMT\allowbreak\_p\allowbreak\_overlapSectionLog\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_p\allowbreak\_format\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_p\allowbreak\_compressionLevel\newline (... and more)
+\hline
+zstd-sys & from 1.4.6\newline to 1.4.7 & function\allowbreak\_missing & zstd\allowbreak\_sys::ZSTD\allowbreak\_compress\allowbreak\_generic\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_setDStreamParameter\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_decompress\allowbreak\_generic\allowbreak\_simpleArgs\newline (... and more)
+\hline
+zstd-sys & from 1.4.6\newline to 1.4.7 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & zstd\allowbreak\_sys::ZSTD\allowbreak\_compressionParameters field searchLength
+\hline
+zstd-sys & from 1.4.4\newline to 1.4.5 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & zstd\allowbreak\_sys::ZSTD\allowbreak\_frameProgression field flushed\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_frameProgression field currentJobID\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_frameProgression field nbActiveWorkers\newline (... and more)
+\hline
+zstd-sys & from 1.4.3\newline to 1.4.4 & function\allowbreak\_missing & zstd\allowbreak\_sys::ZSTDMT\allowbreak\_getNbWorkers
+\hline
+zstd-sys & from 1.4.2\newline to 1.4.3 & enum\allowbreak\_missing & zstd\allowbreak\_sys::ZSTD\allowbreak\_frameType\allowbreak\_e\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_dictMode\allowbreak\_e\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_DStreamParameter\allowbreak\_e\newline (... and more)
+\hline
+zstd-sys & from 1.4.2\newline to 1.4.3 & function\allowbreak\_missing & zstd\allowbreak\_sys::ZSTD\allowbreak\_initCCtxParams\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_resetCCtxParams\newline zstd\allowbreak\_sys::ZSTDMT\allowbreak\_initializeCCtxParameters\newline (... and more)
+\hline
+zstd-sys & from 1.3.2\newline to 1.4.0 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & zstd\allowbreak\_sys::ZSTD\allowbreak\_frameHeader field blockSizeMax\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_frameHeader field frameType\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_frameHeader field headerSize\newline (... and more)
+\hline
+zstd-sys & from 1.3.2\newline to 1.4.0 & enum\allowbreak\_missing & zstd\allowbreak\_sys::ZSTD\allowbreak\_CCtxParameter\newline zstd\allowbreak\_sys::ZSDTMT\allowbreak\_parameter
+\hline
+zstd-sys & from 1.3.2\newline to 1.4.0 & enum\allowbreak\_variant\allowbreak\_added & zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_p\allowbreak\_format\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_p\allowbreak\_enableLongDistanceMatching\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_p\allowbreak\_ldmHashLog\newline (... and more)
+\hline
+zstd-sys & from 1.3.2\newline to 1.4.0 & enum\allowbreak\_variant\allowbreak\_missing & zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_p\allowbreak\_dictMode\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_cParameter::ZSTD\allowbreak\_p\allowbreak\_refDictContent
+\hline
+zstd-sys & from 1.3.2\newline to 1.4.0 & function\allowbreak\_missing & zstd\allowbreak\_sys::ZSTD\allowbreak\_estimateCCtxSize\allowbreak\_advanced\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_estimateCStreamSize\allowbreak\_advanced\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_setCCtxParameter\newline (... and more)
+\hline
+zstd-sys & from 1.3.0\newline to 1.3.1 & enum\allowbreak\_variant\allowbreak\_added & zstd\allowbreak\_sys::ZSTD\allowbreak\_strategy::ZSTD\allowbreak\_btultra
+\hline
+zstd-sys & from 1.3.0\newline to 1.3.1 & enum\allowbreak\_variant\allowbreak\_missing & zstd\allowbreak\_sys::ZSTD\allowbreak\_strategy::ZSTD\allowbreak\_btopt2
+\hline
+zstd-sys & from 1.3.0\newline to 1.3.1 & function\allowbreak\_missing & zstd\allowbreak\_sys::ZSTD\allowbreak\_getBlockSizeMax\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_getFrameParams
+\hline
+zstd-sys & from 1.3.0\newline to 1.3.1 & struct\allowbreak\_missing & zstd\allowbreak\_sys::ZSTD\allowbreak\_CStream\allowbreak\_s\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_DStream\allowbreak\_s\newline zstd\allowbreak\_sys::ZSTD\allowbreak\_frameParams\newline (... and more)
+\hline
+zstd-sys & from 1.1.4\newline to 1.2.0 & struct\allowbreak\_missing & zstd\allowbreak\_sys::max\allowbreak\_align\allowbreak\_t
+\hline
+zstd-safe & from 4.0.0\newline to 4.1.0 & enum\allowbreak\_missing & zstd\allowbreak\_safe::FrameFormat
+\hline
+zstd-safe & from 2.0.3\newline to 2.0.4 & function\allowbreak\_missing & zstd\allowbreak\_safe::max\allowbreak\_clevel
+\hline
+dashmap & from 4.0.0\newline to 4.0.1 & inherent\allowbreak\_method\allowbreak\_unsafe\allowbreak\_added & dashmap::lock::RwLock::get
+\hline
+security-framework-sys & from 2.1.1\newline to 2.2.0 & function\allowbreak\_missing & security\allowbreak\_framework\allowbreak\_sys::trust::SecTrustEvaluateWithError
+\hline
+security-framework-sys & from 2.0.0\newline to 2.1.0 & function\allowbreak\_missing & security\allowbreak\_framework\allowbreak\_sys::item::SecItemCopyMatching
+\hline
+security-framework-sys & from 0.3.2\newline to 0.3.3 & function\allowbreak\_missing & security\allowbreak\_framework\allowbreak\_sys::trust\allowbreak\_settings::SecTrustSettingsCopyTrustSettings\newline security\allowbreak\_framework\allowbreak\_sys::trust\allowbreak\_settings::SecTrustSettingsCopyCertificates
+\hline
+pest\allowbreak\_meta & from 2.5.3\newline to 2.5.4 & enum\allowbreak\_variant\allowbreak\_added & pest\allowbreak\_meta::parser::Rule::line\allowbreak\_comment\newline pest\allowbreak\_meta::parser::Rule::space\newline pest\allowbreak\_meta::parser::Rule::grammar\allowbreak\_doc\newline (... and more)
+\hline
+pest\allowbreak\_meta & from 2.1.3\newline to 2.3.0 & function\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & pest\allowbreak\_meta::validator::validate\allowbreak\_rust\allowbreak\_keywords now takes 1 parameters instead of 2\newline pest\allowbreak\_meta::validator::validate\allowbreak\_undefined now takes 2 parameters instead of 3\newline pest\allowbreak\_meta::validator::validate\allowbreak\_pest\allowbreak\_keywords now takes 1 parameters instead of 2\newline (... and more)
+\hline
+pest\allowbreak\_meta & from 2.0.3\newline to 2.1.0 & enum\allowbreak\_variant\allowbreak\_added & pest\allowbreak\_meta::optimizer::OptimizedExpr::PeekSlice\newline pest\allowbreak\_meta::parser::Rule::opening\allowbreak\_brack\newline pest\allowbreak\_meta::parser::Rule::closing\allowbreak\_brack\newline (... and more)
+\hline
+pest\allowbreak\_meta & from 2.0.1\newline to 2.0.3 & enum\allowbreak\_variant\allowbreak\_added & pest\allowbreak\_meta::parser::Rule::EOI\newline pest\allowbreak\_meta::parser::Rule::WHITESPACE\newline pest\allowbreak\_meta::parser::Rule::COMMENT\newline (... and more)
+\hline
+pest\allowbreak\_meta & from 2.0.1\newline to 2.0.3 & enum\allowbreak\_variant\allowbreak\_missing & pest\allowbreak\_meta::parser::Rule::whitespace\newline pest\allowbreak\_meta::parser::Rule::comment
+\hline
+standback & from 0.2.9\newline to 0.2.10 & trait\allowbreak\_missing & standback::Integer\newline standback::Float\newline standback::Sealed\newline (... and more)
+\hline
+criterion & from 0.2.5\newline to 0.2.7 & function\allowbreak\_missing & criterion::init\allowbreak\_logging
+\hline
+redox\allowbreak\_users & from 0.4.0\newline to 0.4.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_private\allowbreak\_field & redox\allowbreak\_users::auth::Full field hash
+\hline
+redox\allowbreak\_users & from 0.4.0\newline to 0.4.1 & enum\allowbreak\_missing & redox\allowbreak\_users::UsersError
+\hline
+redox\allowbreak\_users & from 0.4.0\newline to 0.4.1 & method\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & redox\allowbreak\_users::AllUsers::add\allowbreak\_user now takes 2 parameters instead of 7\newline redox\allowbreak\_users::AllGroups::add\allowbreak\_group now takes 2 parameters instead of 4
+\hline
+colored & from 1.5.3\newline to 1.6.0 & enum\allowbreak\_variant\allowbreak\_added & colored::Color::BrightBlack\newline colored::Color::BrightRed\newline colored::Color::BrightGreen\newline (... and more)
+\hline
+libm & from 0.1.1\newline to 0.1.2 & function\allowbreak\_missing & libm::with\allowbreak\_set\allowbreak\_high\allowbreak\_word\newline libm::get\allowbreak\_high\allowbreak\_word\newline libm::with\allowbreak\_set\allowbreak\_low\allowbreak\_word\newline (... and more)
+\hline
+parking & from 1.0.1\newline to 1.0.2 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & parking::Parker no longer RefUnwindSafe
+\hline
+serde\allowbreak\_bytes & from 0.11.8\newline to 0.11.9 & struct\allowbreak\_repr\allowbreak\_c\allowbreak\_removed & serde\allowbreak\_bytes::Bytes
+\hline
+plotters & from 0.2.11\newline to 0.2.12 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & plotters::element::BitMapElement no longer UnwindSafe\newline plotters::prelude::BitMapElement no longer UnwindSafe
+\hline
+plotters & from 0.2.11\newline to 0.2.12 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & plotters::style::TextStyle field pos\newline plotters::prelude::TextStyle field pos
+\hline
+plotters & from 0.2.10\newline to 0.2.11 & method\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & plotters::style::FontDesc::new now takes 3 parameters instead of 2\newline plotters::prelude::FontDesc::new now takes 3 parameters instead of 2
+\hline
+plotters & from 0.2.10\newline to 0.2.11 & trait\allowbreak\_missing & plotters::coord::ReversableRanged
+\hline
+plotters & from 0.2.7\newline to 0.2.8 & trait\allowbreak\_missing & plotters::coord::DescreteRanged
+\hline
+plotters & from 0.2.5\newline to 0.2.6 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & plotters::style::ShapeStyle field stroke\allowbreak\_width\newline plotters::prelude::ShapeStyle field stroke\allowbreak\_width
+\hline
+plotters & from 0.2.2\newline to 0.2.3 & struct\allowbreak\_missing & plotters::style::Yellow\newline plotters::prelude::Yellow\newline plotters::style::Black\newline (... and more)
+\hline
+plotters & from 0.2.1\newline to 0.2.2 & inherent\allowbreak\_method\allowbreak\_missing & plotters::prelude::BitMapBackend::in\allowbreak\_memory\newline plotters::prelude::BitMapBackend::try\allowbreak\_into\allowbreak\_buffer\newline plotters::drawing::BitMapBackend::in\allowbreak\_memory\newline (... and more)
+\hline
+plotters & from 0.1.13\newline to 0.1.14 & struct\allowbreak\_missing & plotters::prelude::OwnedText\newline plotters::element::OwnedText
+\hline
+plotters & from 0.1.13\newline to 0.1.14 & trait\allowbreak\_missing & plotters::style::Mixable\newline plotters::prelude::Mixable
+\hline
+plotters & from 0.1.3\newline to 0.1.4 & struct\allowbreak\_missing & plotters::prelude::Plattle100\newline plotters::style::Plattle100\newline plotters::prelude::Plattle9999\newline (... and more)
+\hline
+plotters & from 0.1.3\newline to 0.1.4 & trait\allowbreak\_missing & plotters::prelude::Plattle\newline plotters::style::Plattle
+\hline
+plotters & from 0.1.2\newline to 0.1.3 & enum\allowbreak\_missing & plotters::drawing::coord::MeshLine
+\hline
+plotters & from 0.1.2\newline to 0.1.3 & struct\allowbreak\_missing & plotters::drawing::coord::RangedCoordi64\newline plotters::drawing::coord::RangedCoord\newline plotters::drawing::coord::Shift\newline (... and more)
+\hline
+plotters & from 0.1.2\newline to 0.1.3 & trait\allowbreak\_missing & plotters::drawing::coord::Ranged\newline plotters::drawing::coord::CoordTranslate
+\hline
+plotters & from 0.1.0\newline to 0.1.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & plotters::style::ShapeStyle field filled
+\hline
+plotters & from 0.1.0\newline to 0.1.1 & struct\allowbreak\_missing & plotters::ChartContext\newline plotters::ChartBuilder
+\hline
+protobuf & from 2.5.0\newline to 2.6.0 & enum\allowbreak\_variant\allowbreak\_added & protobuf::error::WireError::TruncatedMessage
+\hline
+protobuf & from 1.7.4\newline to 1.7.5 & enum\allowbreak\_variant\allowbreak\_added & protobuf::error::WireError::TruncatedMessage
+\hline
+protobuf & from 1.6.0\newline to 1.7.1 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & protobuf::plugin::CodeGeneratorResponse no longer RefUnwindSafe\newline protobuf::descriptor::DescriptorProto\allowbreak\_ExtensionRange no longer RefUnwindSafe\newline protobuf::well\allowbreak\_known\allowbreak\_types::Option no longer RefUnwindSafe\newline (... and more)
+\hline
+protobuf & from 1.6.0\newline to 1.7.1 & enum\allowbreak\_variant\allowbreak\_added & protobuf::reflect::ReflectFieldRef::RepeatedOld
+\hline
+protobuf & from 1.6.0\newline to 1.7.1 & enum\allowbreak\_variant\allowbreak\_missing & protobuf::error::WireError::OverRecursionLimit
+\hline
+protobuf & from 1.6.0\newline to 1.7.1 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & protobuf::well\allowbreak\_known\allowbreak\_types::Value field kind
+\hline
+protobuf & from 1.5.1\newline to 1.6.0 & enum\allowbreak\_missing & protobuf::code\allowbreak\_writer::Visibility
+\hline
+protobuf & from 1.5.1\newline to 1.6.0 & enum\allowbreak\_variant\allowbreak\_added & protobuf::error::WireError::OverRecursionLimit
+\hline
+protobuf & from 1.5.1\newline to 1.6.0 & enum\allowbreak\_variant\allowbreak\_missing & protobuf::reflect::ReflectFieldRef::RepeatedOld
+\hline
+protobuf & from 1.5.1\newline to 1.6.0 & struct\allowbreak\_missing & protobuf::code\allowbreak\_writer::CodeWriter\newline protobuf::repeated::RepeatedField\newline protobuf::singular::SingularPtrField\newline (... and more)
+\hline
+protobuf & from 1.5.1\newline to 1.6.0 & trait\allowbreak\_missing & protobuf::core::Message\newline protobuf::core::ProtobufEnum\newline protobuf::clear::Clear\newline (... and more)
+\hline
+protobuf & from 1.4.5\newline to 1.5.0 & function\allowbreak\_missing & protobuf::code\allowbreak\_writer::CodeWriter::error\allowbreak\_unexpected\allowbreak\_wire\allowbreak\_type\newline protobuf::code\allowbreak\_writer::CodeWriter::assert\allowbreak\_wire\allowbreak\_type
+\hline
+protobuf & from 1.4.5\newline to 1.5.0 & inherent\allowbreak\_method\allowbreak\_missing & protobuf::code\allowbreak\_writer::CodeWriter::error\allowbreak\_unexpected\allowbreak\_wire\allowbreak\_type\newline protobuf::code\allowbreak\_writer::CodeWriter::assert\allowbreak\_wire\allowbreak\_type
+\hline
+protobuf & from 1.2.2\newline to 1.3.0 & enum\allowbreak\_variant\allowbreak\_added & protobuf::ProtobufError::Utf8\newline protobuf::error::ProtobufError::Utf8
+\hline
+protobuf & from 1.2.2\newline to 1.3.0 & function\allowbreak\_missing & protobuf::descriptorx::OneofVariantWithContext::field\allowbreak\_name
+\hline
+protobuf & from 1.2.2\newline to 1.3.0 & inherent\allowbreak\_method\allowbreak\_missing & protobuf::descriptorx::OneofVariantWithContext::field\allowbreak\_name
+\hline
+tonic & from 0.6.1\newline to 0.6.2 & struct\allowbreak\_missing & tonic::transport::Identity
+\hline
+git2 & from 0.13.6\newline to 0.13.8 & enum\allowbreak\_variant\allowbreak\_added & git2::ErrorCode::MergeConflict\newline git2::ErrorCode::HashsumMismatch\newline git2::ErrorCode::IndexDirty\newline (... and more)
+\hline
+git2 & from 0.13.0\newline to 0.13.1 & enum\allowbreak\_variant\allowbreak\_added & git2::ErrorClass::Http
+\hline
+git2 & from 0.6.6\newline to 0.6.7 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & git2::ReferenceNames no longer UnwindSafe
+\hline
+libgit2-sys & from 0.12.22\newline to 0.12.23 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & libgit2\allowbreak\_sys::git\allowbreak\_remote\allowbreak\_callbacks field remote\allowbreak\_ready\newline libgit2\allowbreak\_sys::git\allowbreak\_rebase\allowbreak\_options field commit\allowbreak\_create\allowbreak\_cb\newline libgit2\allowbreak\_sys::git\allowbreak\_odb\allowbreak\_backend field writemidx\newline (... and more)
+\hline
+libgit2-sys & from 0.12.14\newline to 0.12.15 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & libgit2\allowbreak\_sys::git\allowbreak\_cert\allowbreak\_hostkey no longer Sync\newline libgit2\allowbreak\_sys::git\allowbreak\_cert\allowbreak\_hostkey no longer Send
+\hline
+libgit2-sys & from 0.12.14\newline to 0.12.15 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & libgit2\allowbreak\_sys::git\allowbreak\_cert\allowbreak\_hostkey field raw\allowbreak\_type\newline libgit2\allowbreak\_sys::git\allowbreak\_cert\allowbreak\_hostkey field hostkey\newline libgit2\allowbreak\_sys::git\allowbreak\_cert\allowbreak\_hostkey field hostkey\allowbreak\_len\newline (... and more)
+\hline
+libgit2-sys & from 0.8.1\newline to 0.8.2 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & libgit2\allowbreak\_sys::git\allowbreak\_remote\allowbreak\_callbacks field resolve\allowbreak\_url
+\hline
+libgit2-sys & from 0.7.2\newline to 0.7.3 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & libgit2\allowbreak\_sys::git\allowbreak\_config\allowbreak\_entry field include\allowbreak\_depth
+\hline
+trust-dns-proto & from 0.20.0\newline to 0.20.1 & enum\allowbreak\_variant\allowbreak\_added & trust\allowbreak\_dns\allowbreak\_proto::rr::record\allowbreak\_type::RecordType::HINFO\newline trust\allowbreak\_dns\allowbreak\_proto::rr::record\allowbreak\_type::RecordType::HTTPS\newline trust\allowbreak\_dns\allowbreak\_proto::rr::record\allowbreak\_type::RecordType::SVCB\newline (... and more)
+\hline
+trust-dns-proto & from 0.20.0\newline to 0.20.1 & function\allowbreak\_missing & trust\allowbreak\_dns\allowbreak\_proto::serialize::binary::BinDecoder::read\allowbreak\_character\allowbreak\_data\allowbreak\_max
+\hline
+trust-dns-proto & from 0.20.0\newline to 0.20.1 & inherent\allowbreak\_method\allowbreak\_missing & trust\allowbreak\_dns\allowbreak\_proto::serialize::binary::BinDecoder::read\allowbreak\_character\allowbreak\_data\allowbreak\_max
+\hline
+trust-dns-proto & from 0.19.6\newline to 0.19.7 & struct\allowbreak\_missing & trust\allowbreak\_dns\allowbreak\_proto::error::ENABLE\allowbreak\_BACKTRACE
+\hline
+trust-dns-proto & from 0.7.1\newline to 0.7.2 & enum\allowbreak\_variant\allowbreak\_added & trust\allowbreak\_dns\allowbreak\_proto::rr::RData::ANAME\newline trust\allowbreak\_dns\allowbreak\_proto::rr::RData::NAPTR\newline trust\allowbreak\_dns\allowbreak\_proto::rr::record\allowbreak\_data::RData::ANAME\newline (... and more)
+\hline
+trust-dns-proto & from 0.4.1\newline to 0.4.2 & enum\allowbreak\_variant\allowbreak\_added & trust\allowbreak\_dns\allowbreak\_proto::error::ProtoErrorKind::PointerNotPriorToLabel
+\hline
+trust-dns-proto & from 0.3.2\newline to 0.3.3 & enum\allowbreak\_variant\allowbreak\_missing & trust\allowbreak\_dns\allowbreak\_proto::error::ProtoErrorKind::MaxBufferSizeExceeded
+\hline
+trust-dns-proto & from 0.3.2\newline to 0.3.3 & function\allowbreak\_missing & trust\allowbreak\_dns\allowbreak\_proto::serialize::binary::BinEncoder::set\allowbreak\_max\allowbreak\_size
+\hline
+trust-dns-proto & from 0.3.1\newline to 0.3.2 & enum\allowbreak\_variant\allowbreak\_added & trust\allowbreak\_dns\allowbreak\_proto::error::ProtoErrorKind::MaxBufferSizeExceeded
+\hline
+async-io & from 0.1.9\newline to 0.1.10 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & async\allowbreak\_io::parking::Parker no longer Sync\newline async\allowbreak\_io::parking::Parker no longer RefUnwindSafe
+\hline
+fs\allowbreak\_extra & from 1.1.0\newline to 1.2.0 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & fs\allowbreak\_extra::dir::CopyOptions field content\allowbreak\_only
+\hline
+fs\allowbreak\_extra & from 1.0.0\newline to 1.1.0 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & fs\allowbreak\_extra::dir::CopyOptions field copy\allowbreak\_inside\newline fs\allowbreak\_extra::dir::CopyOptions field depth
+\hline
+tokio-timer & from 0.2.3\newline to 0.2.4 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & tokio\allowbreak\_timer::timer::SystemNow no longer UnwindSafe\newline tokio\allowbreak\_timer::timer::SystemNow no longer RefUnwindSafe
+\hline
+ignore & from 0.4.14\newline to 0.4.15 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & ignore::WalkParallel no longer UnwindSafe\newline ignore::WalkParallel no longer RefUnwindSafe
+\hline
+futures-timer & from 1.0.1\newline to 1.0.2 & method\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & futures\allowbreak\_timer::Delay::when now takes 1 parameters instead of 2
+\hline
+predicates & from 0.5.0\newline to 0.5.1 & derive\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & predicates::str::TrimPredicate no longer derives Copy\newline predicates::str::Utf8Predicate no longer derives Copy
+\hline
+png & from 0.16.4\newline to 0.16.5 & enum\allowbreak\_variant\allowbreak\_added & png::Decoded::ImageDataFlushed
+\hline
+prometheus & from 0.4.0\newline to 0.4.1 & struct\allowbreak\_missing & prometheus::Desc\newline prometheus::MetricVec
+\hline
+prometheus & from 0.4.0\newline to 0.4.1 & trait\allowbreak\_missing & prometheus::Collector
+\hline
+prometheus & from 0.3.11\newline to 0.3.12 & inherent\allowbreak\_method\allowbreak\_missing & prometheus::local::LocalCounter::new
+\hline
+prometheus & from 0.3.3\newline to 0.3.4 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & prometheus::Registry no longer UnwindSafe\newline prometheus::Registry no longer RefUnwindSafe
+\hline
+tokio-threadpool & from 0.1.9\newline to 0.1.10 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & tokio\allowbreak\_threadpool::park::DefaultPark no longer Sync
+\hline
+tokio-threadpool & from 0.1.1\newline to 0.1.2 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & tokio\allowbreak\_threadpool::Builder no longer Sync\newline tokio\allowbreak\_threadpool::Builder no longer Send
+\hline
+async-std & from 1.6.4\newline to 1.6.5 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & async\allowbreak\_std::os::unix::net::Incoming no longer UnwindSafe\newline async\allowbreak\_std::os::unix::net::Incoming no longer RefUnwindSafe\newline async\allowbreak\_std::net::Incoming no longer UnwindSafe\newline (... and more)
+\hline
+async-std & from 1.3.0\newline to 1.4.0 & struct\allowbreak\_missing & async\allowbreak\_std::stream::stream::StepBy\newline async\allowbreak\_std::stream::stream::Fuse\newline async\allowbreak\_std::stream::stream::Zip\newline (... and more)
+\hline
+async-std & from 1.3.0\newline to 1.4.0 & trait\allowbreak\_missing & async\allowbreak\_std::stream::stream::StreamExt
+\hline
+async-std & from 0.99.11\newline to 0.99.12 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & async\allowbreak\_std::task::JoinHandle no longer UnwindSafe
+\hline
+curl-sys & from 0.4.59\newline to 0.4.60 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & curl\allowbreak\_sys::curl\allowbreak\_version\allowbreak\_info\allowbreak\_data field feature\allowbreak\_names
+\hline
+curl-sys & from 0.4.43\newline to 0.4.44 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & curl\allowbreak\_sys::curl\allowbreak\_version\allowbreak\_info\allowbreak\_data field gsasl\allowbreak\_version
+\hline
+curl-sys & from 0.4.39\newline to 0.4.40 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & curl\allowbreak\_sys::curl\allowbreak\_version\allowbreak\_info\allowbreak\_data field hyper\allowbreak\_version
+\hline
+curl-sys & from 0.4.36\newline to 0.4.37 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & curl\allowbreak\_sys::curl\allowbreak\_version\allowbreak\_info\allowbreak\_data field zstd\allowbreak\_ver\allowbreak\_num\newline curl\allowbreak\_sys::curl\allowbreak\_version\allowbreak\_info\allowbreak\_data field zstd\allowbreak\_version
+\hline
+curl-sys & from 0.4.30\newline to 0.4.31 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & curl\allowbreak\_sys::curl\allowbreak\_version\allowbreak\_info\allowbreak\_data field cainfo\newline curl\allowbreak\_sys::curl\allowbreak\_version\allowbreak\_info\allowbreak\_data field capath
+\hline
+curl-sys & from 0.4.21\newline to 0.4.22 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & curl\allowbreak\_sys::curl\allowbreak\_version\allowbreak\_info\allowbreak\_data field nghttp2\allowbreak\_ver\allowbreak\_num\newline curl\allowbreak\_sys::curl\allowbreak\_version\allowbreak\_info\allowbreak\_data field nghttp2\allowbreak\_version\newline curl\allowbreak\_sys::curl\allowbreak\_version\allowbreak\_info\allowbreak\_data field quic\allowbreak\_version\newline (... and more)
+\hline
+curl-sys & from 0.4.5\newline to 0.4.6 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & curl\allowbreak\_sys::curl\allowbreak\_version\allowbreak\_info\allowbreak\_data field brotli\allowbreak\_ver\allowbreak\_num\newline curl\allowbreak\_sys::curl\allowbreak\_version\allowbreak\_info\allowbreak\_data field brotli\allowbreak\_version
+\hline
+pulldown-cmark & from 0.1.0\newline to 0.1.2 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & pulldown\allowbreak\_cmark::Parser no longer Sync\newline pulldown\allowbreak\_cmark::Parser no longer UnwindSafe\newline pulldown\allowbreak\_cmark::Parser no longer Send\newline (... and more)
+\hline
+image & from 0.24.5\newline to 0.24.6 & enum\allowbreak\_variant\allowbreak\_added & image::flat::Error::ChannelCountMismatch
+\hline
+image & from 0.24.1\newline to 0.24.2 & inherent\allowbreak\_method\allowbreak\_missing & image::codecs::webp::vp8::Frame::fill\allowbreak\_rgb
+\hline
+image & from 0.23.10\newline to 0.23.11 & enum\allowbreak\_missing & image::png::FilterType\newline image::png::CompressionType
+\hline
+image & from 0.23.2\newline to 0.23.3 & trait\allowbreak\_missing & image::ConvertBuffer
+\hline
+hkdf & from 0.12.0\newline to 0.12.1 & struct\allowbreak\_missing & hkdf::InvalidPrkLength\newline hkdf::InvalidLength
+\hline
+config & from 0.7.0\newline to 0.7.1 & enum\allowbreak\_variant\allowbreak\_added & config::FileFormat::Hjson
+\hline
+pyo3 & from 0.14.3\newline to 0.14.4 & function\allowbreak\_unsafe\allowbreak\_added & pyo3::ffi::PyASCIIObject::kind\newline pyo3::types::PyString::data\newline pyo3::types::PyUnicode::data\newline (... and more)
+\hline
+pyo3 & from 0.14.3\newline to 0.14.4 & inherent\allowbreak\_method\allowbreak\_unsafe\allowbreak\_added & pyo3::ffi::PyASCIIObject::interned\newline pyo3::ffi::PyASCIIObject::kind\newline pyo3::ffi::PyASCIIObject::compact\newline (... and more)
+\hline
+pyo3 & from 0.14.2\newline to 0.14.3 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & pyo3::ffi::PyStatus field \allowbreak\_type
+\hline
+pyo3 & from 0.14.2\newline to 0.14.3 & derive\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & pyo3::ffi::PyThreadState no longer derives Copy\newline pyo3::ffi::PyThreadState no longer derives Clone
+\hline
+pyo3 & from 0.13.1\newline to 0.13.2 & function\allowbreak\_missing & pyo3::ffi::PyFunction\allowbreak\_Code
+\hline
+pyo3 & from 0.13.0\newline to 0.13.1 & function\allowbreak\_missing & pyo3::ffi::PyOS\allowbreak\_InitInterrupts\newline pyo3::ffi::PyGen\allowbreak\_NeedsFinalizing\newline pyo3::ffi::frameobject::PyFrame\allowbreak\_GetLineNumber\newline (... and more)
+\hline
+codespan-reporting & from 0.11.0\newline to 0.11.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & codespan\allowbreak\_reporting::term::Chars field snippet\allowbreak\_start
+\hline
+codespan-reporting & from 0.11.0\newline to 0.11.1 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & codespan\allowbreak\_reporting::term::Chars field source\allowbreak\_border\allowbreak\_top\allowbreak\_left\newline codespan\allowbreak\_reporting::term::Chars field source\allowbreak\_border\allowbreak\_top
+\hline
+codespan-reporting & from 0.9.3\newline to 0.9.4 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & codespan\allowbreak\_reporting::term::Chars field pointer\allowbreak\_left
+\hline
+codespan-reporting & from 0.9.3\newline to 0.9.4 & inherent\allowbreak\_method\allowbreak\_missing & codespan\allowbreak\_reporting::term::Chars::single\allowbreak\_caret\allowbreak\_char\newline codespan\allowbreak\_reporting::term::Chars::multi\allowbreak\_caret\allowbreak\_char\allowbreak\_start\newline codespan\allowbreak\_reporting::term::Chars::multi\allowbreak\_caret\allowbreak\_char\allowbreak\_end\newline (... and more)
+\hline
+codespan-reporting & from 0.9.1\newline to 0.9.2 & method\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & codespan\allowbreak\_reporting::term::Styles::label now takes 3 parameters instead of 2
+\hline
+codespan-reporting & from 0.1.3\newline to 0.1.4 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & codespan\allowbreak\_reporting::Diagnostic field code
+\hline
+der & from 0.6.0\newline to 0.6.1 & inherent\allowbreak\_method\allowbreak\_missing & der::asn1::PrintableStringRef::as\allowbreak\_str\newline der::asn1::PrintableStringRef::as\allowbreak\_bytes\newline der::asn1::PrintableStringRef::len\newline (... and more)
+\hline
+ctrlc & from 3.1.0\newline to 3.1.1 & enum\allowbreak\_variant\allowbreak\_added & ctrlc::Error::NoSuchSignal
+\hline
+ctrlc & from 3.0.2\newline to 3.0.3 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & ctrlc::Error no longer UnwindSafe\newline ctrlc::Error no longer RefUnwindSafe
+\hline
+ctrlc & from 3.0.2\newline to 3.0.3 & enum\allowbreak\_variant\allowbreak\_added & ctrlc::Error::System
+\hline
+ctrlc & from 3.0.2\newline to 3.0.3 & enum\allowbreak\_variant\allowbreak\_missing & ctrlc::Error::Init\newline ctrlc::Error::SetHandler
+\hline
+libsqlite3-sys & from 0.17.2\newline to 0.17.3 & enum\allowbreak\_marked\allowbreak\_non\allowbreak\_exhaustive & libsqlite3\allowbreak\_sys::Limit\newline libsqlite3\allowbreak\_sys::ErrorCode
+\hline
+handlebars & from 4.2.2\newline to 4.3.0 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & handlebars::template::DecoratorTemplate field indent
+\hline
+handlebars & from 2.0.0\newline to 2.0.1 & enum\allowbreak\_variant\allowbreak\_added & handlebars::ScopedJson::BlockContext
+\hline
+fuchsia-zircon & from 0.2.0\newline to 0.2.1 & enum\allowbreak\_variant\allowbreak\_added & fuchsia\allowbreak\_zircon::Status::\allowbreak\_\allowbreak\_Nonexhaustive
+\hline
+pyo3-macros-backend & from 0.16.2\newline to 0.16.3 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & pyo3\allowbreak\_macros\allowbreak\_backend::PyClassArgs field options
+\hline
+pyo3-macros-backend & from 0.16.2\newline to 0.16.3 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & pyo3\allowbreak\_macros\allowbreak\_backend::PyClassArgs field freelist\newline pyo3\allowbreak\_macros\allowbreak\_backend::PyClassArgs field name\newline pyo3\allowbreak\_macros\allowbreak\_backend::PyClassArgs field base\newline (... and more)
+\hline
+opentelemetry & from 0.1.3\newline to 0.1.4 & enum\allowbreak\_variant\allowbreak\_added & opentelemetry::api::trace::sampler::Sampler::Parent\newline opentelemetry::api::Sampler::Parent
+\hline
+opentelemetry & from 0.1.1\newline to 0.1.2 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & opentelemetry::sdk::trace::provider::Provider no longer UnwindSafe\newline opentelemetry::sdk::trace::provider::Provider no longer RefUnwindSafe\newline opentelemetry::sdk::Provider no longer UnwindSafe\newline (... and more)
+\hline
+opentelemetry & from 0.1.1\newline to 0.1.2 & function\allowbreak\_missing & opentelemetry::global::global\allowbreak\_tracer\newline opentelemetry::global::set\allowbreak\_tracer
+\hline
+opentelemetry & from 0.1.1\newline to 0.1.2 & inherent\allowbreak\_method\allowbreak\_missing & opentelemetry::sdk::trace::provider::Provider::new\newline opentelemetry::sdk::Provider::new
+\hline
+opentelemetry & from 0.1.1\newline to 0.1.2 & struct\allowbreak\_missing & opentelemetry::global::GlobalTracer
+\hline
+opentelemetry & from 0.1.1\newline to 0.1.2 & trait\allowbreak\_missing & opentelemetry::global::BoxedTracer
+\hline
+opentelemetry & from 0.1.0\newline to 0.1.1 & enum\allowbreak\_missing & opentelemetry::core::Value\newline opentelemetry::Value
+\hline
+opentelemetry & from 0.1.0\newline to 0.1.1 & function\allowbreak\_missing & opentelemetry::global::get\allowbreak\_current\allowbreak\_tracer
+\hline
+opentelemetry & from 0.1.0\newline to 0.1.1 & method\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & opentelemetry::api::trace::span\allowbreak\_context::SpanContext::new now takes 4 parameters instead of 3\newline opentelemetry::api::SpanContext::new now takes 4 parameters instead of 3
+\hline
+opentelemetry & from 0.1.0\newline to 0.1.1 & struct\allowbreak\_missing & opentelemetry::sdk::trace::Span\newline opentelemetry::core::Key\newline opentelemetry::Key\newline (... and more)
+\hline
+opentelemetry & from 0.1.0\newline to 0.1.1 & trait\allowbreak\_missing & opentelemetry::api::metrics::CounterHandle\newline opentelemetry::api::metrics::MeasureHandle\newline opentelemetry::api::metrics::Gauge\newline (... and more)
+\hline
+axum & from 0.1.1\newline to 0.1.2 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & axum::extract::rejection::MissingExtension no longer UnwindSafe\newline axum::extract::rejection::MissingExtension no longer RefUnwindSafe\newline axum::prelude::extract::rejection::MissingExtension no longer UnwindSafe\newline (... and more)
+\hline
+actix-web & from 0.7.8\newline to 0.7.11 & struct\allowbreak\_missing & actix\allowbreak\_web::server::PauseServer\newline actix\allowbreak\_web::server::StopServer\newline actix\allowbreak\_web::server::Token\newline (... and more)
+\hline
+actix-web & from 0.7.3\newline to 0.7.4 & enum\allowbreak\_tuple\allowbreak\_variant\allowbreak\_field\allowbreak\_missing & DispositionParam::Filename field 1\newline DispositionParam::Filename field 2
+\hline
+actix-web & from 0.7.3\newline to 0.7.4 & enum\allowbreak\_variant\allowbreak\_added & actix\allowbreak\_web::http::header::DispositionType::FormData\newline actix\allowbreak\_web::http::header::DispositionParam::Name\newline actix\allowbreak\_web::http::header::DispositionParam::FilenameExt\newline (... and more)
+\hline
+actix-web & from 0.7.3\newline to 0.7.4 & enum\allowbreak\_variant\allowbreak\_missing & actix\allowbreak\_web::http::header::DispositionParam::Ext
+\hline
+erased-serde & from 0.3.22\newline to 0.3.23 & function\allowbreak\_missing & erased\allowbreak\_serde::private::require\allowbreak\_erased\allowbreak\_serialize\allowbreak\_impl
+\hline
+urlencoding & from 1.1.1\newline to 1.2.0 & enum\allowbreak\_missing & urlencoding::FromUrlEncodingError
+\hline
+pkcs8 & from 0.5.2\newline to 0.5.3 & struct\allowbreak\_missing & pkcs8::EncryptedPrivateKeyInfo
+\hline
+wasmparser & from 0.51.3\newline to 0.51.4 & inherent\allowbreak\_method\allowbreak\_missing & wasmparser::ValidatingParser::current\allowbreak\_poisiton
+\hline
+wasmparser & from 0.39.0\newline to 0.39.1 & enum\allowbreak\_variant\allowbreak\_missing & wasmparser::SectionContent::Name\newline wasmparser::SectionContent::Producers\newline wasmparser::SectionContent::Linking\newline (... and more)
+\hline
+wasmparser & from 0.32.0\newline to 0.32.1 & enum\allowbreak\_variant\allowbreak\_added & wasmparser::Operator::V8x16Shuffle1\newline wasmparser::Operator::V8x16Shuffle2Imm
+\hline
+wasmparser & from 0.4.0\newline to 0.4.3 & enum\allowbreak\_variant\allowbreak\_added & wasmparser::ParserState::TypeSectionEntry\newline wasmparser::ParserState::FunctionSectionEntry
+\hline
+wasmparser & from 0.4.0\newline to 0.4.3 & enum\allowbreak\_variant\allowbreak\_missing & wasmparser::ParserState::TypeSectionEnty\newline wasmparser::ParserState::FunctionSectionEnty\newline wasmparser::ParserState::GlobalSectionEntry\newline (... and more)
+\hline
+wasmparser & from 0.4.0\newline to 0.4.3 & inherent\allowbreak\_method\allowbreak\_missing & wasmparser::Parser::skip\allowbreak\_section\newline wasmparser::Parser::skip\allowbreak\_function\allowbreak\_body
+\hline
+wasmparser & from 0.2.0\newline to 0.2.1 & enum\allowbreak\_variant\allowbreak\_added & wasmparser::ParserState::RelocSectionHeader\newline wasmparser::ParserState::RelocSectionEntry\newline wasmparser::CustomSectionKind::Reloc\newline (... and more)
+\hline
+actix-utils & from 0.2.0\newline to 0.2.1 & struct\allowbreak\_missing & actix\allowbreak\_utils::inflight::InFlightResponseFuture\newline actix\allowbreak\_utils::timeout::TimeoutFut
+\hline
+brotli-decompressor & from 2.0.2\newline to 2.0.3 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & brotli\allowbreak\_decompressor::BrotliState field mtf\allowbreak\_or\allowbreak\_error\allowbreak\_string\newline brotli\allowbreak\_decompressor::reader::BrotliState field mtf\allowbreak\_or\allowbreak\_error\allowbreak\_string\newline brotli\allowbreak\_decompressor::writer::BrotliState field mtf\allowbreak\_or\allowbreak\_error\allowbreak\_string\newline (... and more)
+\hline
+brotli-decompressor & from 1.4.0\newline to 1.5.0 & inherent\allowbreak\_method\allowbreak\_unsafe\allowbreak\_added & brotli\allowbreak\_decompressor::ffi::alloc\allowbreak\_util::SubclassableAllocator::new
+\hline
+brotli-decompressor & from 1.3.1\newline to 1.4.0 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & brotli\allowbreak\_decompressor::BrotliState field should\allowbreak\_wrap\allowbreak\_ringbuffer\newline brotli\allowbreak\_decompressor::BrotliState field error\allowbreak\_code\newline brotli\allowbreak\_decompressor::reader::BrotliState field should\allowbreak\_wrap\allowbreak\_ringbuffer\newline (... and more)
+\hline
+brotli-decompressor & from 1.2.1\newline to 1.3.0 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & brotli\allowbreak\_decompressor::HuffmanTreeGroup field max\allowbreak\_symbol\newline brotli\allowbreak\_decompressor::reader::HuffmanTreeGroup field max\allowbreak\_symbol\newline brotli\allowbreak\_decompressor::writer::HuffmanTreeGroup field max\allowbreak\_symbol\newline (... and more)
+\hline
+base-x & from 0.2.4\newline to 0.2.5 & function\allowbreak\_missing & base\allowbreak\_x::encoder::AsciiEncoder::encode\newline base\allowbreak\_x::AsciiEncoder::encode\newline base\allowbreak\_x::decoder::Utf8Decoder::decode\newline (... and more)
+\hline
+base-x & from 0.2.4\newline to 0.2.5 & struct\allowbreak\_missing & base\allowbreak\_x::encoder::Utf8Encoder\newline base\allowbreak\_x::Utf8Encoder\newline base\allowbreak\_x::decoder::AsciiDecoder\newline (... and more)
+\hline
+base-x & from 0.2.1\newline to 0.2.2 & trait\allowbreak\_missing & base\allowbreak\_x::CharLookup
+\hline
+brotli & from 3.3.0\newline to 3.3.1 & struct\allowbreak\_missing & brotli::enc::backward\allowbreak\_references::H9Sub
+\hline
+brotli & from 3.1.3\newline to 3.1.4 & enum\allowbreak\_variant\allowbreak\_added & brotli::enc::backward\allowbreak\_references::UnionHasher::H5q5\newline brotli::enc::UnionHasher::H5q5
+\hline
+brotli & from 3.1.3\newline to 3.1.4 & struct\allowbreak\_missing & brotli::enc::backward\allowbreak\_references::H9
+\hline
+brotli & from 3.1.1\newline to 3.1.2 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & brotli::enc::backward\allowbreak\_references::H6Sub field hash\allowbreak\_shift\allowbreak\_\newline brotli::enc::backward\allowbreak\_references::H6Sub field bucket\allowbreak\_size\allowbreak\_\newline brotli::enc::backward\allowbreak\_references::H6Sub field block\allowbreak\_mask\allowbreak\_\newline (... and more)
+\hline
+brotli & from 3.1.1\newline to 3.1.2 & enum\allowbreak\_tuple\allowbreak\_variant\allowbreak\_field\allowbreak\_added & brotli::enc::threading::InternalSendAlloc::A field 1
+\hline
+brotli & from 3.1.1\newline to 3.1.2 & enum\allowbreak\_variant\allowbreak\_added & brotli::enc::encode::BrotliEncoderParameter::BROTLI\allowbreak\_PARAM\allowbreak\_FAVOR\allowbreak\_EFFICIENCY\newline brotli::enc::backward\allowbreak\_references::UnionHasher::H5q7
+\hline
+brotli & from 3.1.1\newline to 3.1.2 & enum\allowbreak\_variant\allowbreak\_missing & brotli::enc::encode::BrotliEncoderParameter::UNUSED171
+\hline
+brotli & from 3.1.1\newline to 3.1.2 & function\allowbreak\_missing & brotli::enc::static\allowbreak\_dict::SlowFindMatchLengthWithLimit
+\hline
+brotli & from 3.0.1\newline to 3.0.2 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & brotli::enc::static\allowbreak\_dict\allowbreak\_lut::DictWord field l\newline brotli::enc::static\allowbreak\_dict\allowbreak\_lut::DictWord field t\newline brotli::enc::static\allowbreak\_dict\allowbreak\_lut::DictWord field i\newline (... and more)
+\hline
+brotli & from 3.0.1\newline to 3.0.2 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & brotli::enc::static\allowbreak\_dict\allowbreak\_lut::DictWord field len\newline brotli::enc::static\allowbreak\_dict\allowbreak\_lut::DictWord field transform\newline brotli::enc::static\allowbreak\_dict\allowbreak\_lut::DictWord field idx\newline (... and more)
+\hline
+brotli & from 2.3.0\newline to 2.4.0 & tuple\allowbreak\_struct\allowbreak\_to\allowbreak\_plain\allowbreak\_struct & brotli::enc::input\allowbreak\_pair::InputReferenceMut\newline brotli::enc::input\allowbreak\_pair::InputReference\newline brotli::InputReference\newline (... and more)
+\hline
+brotli & from 2.2.1\newline to 2.3.0 & enum\allowbreak\_variant\allowbreak\_added & brotli::enc::prior\allowbreak\_eval::WhichPrior::FAST\allowbreak\_CM
+\hline
+brotli & from 2.0.1\newline to 2.1.0 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & brotli::enc::backward\allowbreak\_references::BrotliEncoderParams field large\allowbreak\_window\newline brotli::enc::backward\allowbreak\_references::BrotliEncoderParams field avoid\allowbreak\_distance\allowbreak\_prefix\allowbreak\_search\newline brotli::enc::BrotliEncoderParams field large\allowbreak\_window\newline (... and more)
+\hline
+brotli & from 2.0.1\newline to 2.1.0 & enum\allowbreak\_variant\allowbreak\_added & brotli::enc::encode::BrotliEncoderParameter::BROTLI\allowbreak\_PARAM\allowbreak\_LARGE\allowbreak\_WINDOW\newline brotli::enc::encode::BrotliEncoderParameter::BROTLI\allowbreak\_PARAM\allowbreak\_AVOID\allowbreak\_DISTANCE\allowbreak\_PREFIX\allowbreak\_SEARCH
+\hline
+brotli & from 2.0.0\newline to 2.0.1 & enum\allowbreak\_variant\allowbreak\_added & brotli::enc::backward\allowbreak\_references::BrotliEncoderMode::BROTLI\allowbreak\_FORCE\allowbreak\_LSB\allowbreak\_PRIOR\newline brotli::enc::backward\allowbreak\_references::BrotliEncoderMode::BROTLI\allowbreak\_FORCE\allowbreak\_MSB\allowbreak\_PRIOR\newline brotli::enc::backward\allowbreak\_references::BrotliEncoderMode::BROTLI\allowbreak\_FORCE\allowbreak\_UTF8\allowbreak\_PRIOR\newline (... and more)
+\hline
+brotli & from 1.1.4\newline to 1.2.0 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & brotli::enc::backward\allowbreak\_references::BrotliEncoderParams field cdf\allowbreak\_adaptation\allowbreak\_detection\newline brotli::enc::BrotliEncoderParams field cdf\allowbreak\_adaptation\allowbreak\_detection\newline brotli::enc::interface::PredictionModeContextMap field predmode\allowbreak\_speed\allowbreak\_and\allowbreak\_distance\allowbreak\_context\allowbreak\_map\newline (... and more)
+\hline
+brotli & from 1.1.4\newline to 1.2.0 & enum\allowbreak\_variant\allowbreak\_added & brotli::enc::encode::BrotliEncoderParameter::BROTLI\allowbreak\_PARAM\allowbreak\_CDF\allowbreak\_ADAPTATION\allowbreak\_DETECTION
+\hline
+brotli & from 1.1.4\newline to 1.2.0 & struct\allowbreak\_missing & brotli::enc::brotli\allowbreak\_bit\allowbreak\_stream::InputReference
+\hline
+brotli & from 1.1.3\newline to 1.1.4 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & brotli::enc::backward\allowbreak\_references::H9 field h9\allowbreak\_opts\newline brotli::enc::backward\allowbreak\_references::AdvHasher field h9\allowbreak\_opts\newline brotli::enc::backward\allowbreak\_references::BasicHasher field h9\allowbreak\_opts\newline (... and more)
+\hline
+brotli & from 1.1.3\newline to 1.1.4 & enum\allowbreak\_variant\allowbreak\_added & brotli::enc::encode::BrotliEncoderParameter::BROTLI\allowbreak\_PARAM\allowbreak\_LITERAL\allowbreak\_BYTE\allowbreak\_SCORE
+\hline
+actix-service & from 1.0.4\newline to 1.0.5 & struct\allowbreak\_missing & actix\allowbreak\_service::dev::AndThenApplyFnFactory\newline actix\allowbreak\_service::dev::AndThenApplyFn\newline actix\allowbreak\_service::dev::ApplyConfigService\newline (... and more)
+\hline
+actix-service & from 0.3.3\newline to 0.3.4 & struct\allowbreak\_missing & actix\allowbreak\_service::ApplyConfig\newline actix\allowbreak\_service::ApplyNewService\newline actix\allowbreak\_service::Apply\newline (... and more)
+\hline
+actix-service & from 0.3.2\newline to 0.3.3 & struct\allowbreak\_missing & actix\allowbreak\_service::AndThenTransform
+\hline
+actix-service & from 0.3.0\newline to 0.3.1 & struct\allowbreak\_missing & actix\allowbreak\_service::FnNewTransform
+\hline
+actix-service & from 0.3.0\newline to 0.3.1 & trait\allowbreak\_missing & actix\allowbreak\_service::IntoNewTransform\newline actix\allowbreak\_service::NewTransform
+\hline
+actix-service & from 0.2.0\newline to 0.2.1 & struct\allowbreak\_missing & actix\allowbreak\_service::AndThenApplyNewService\newline actix\allowbreak\_service::AndThenApply
+\hline
+async-compression & from 0.3.2\newline to 0.3.3 & enum\allowbreak\_marked\allowbreak\_non\allowbreak\_exhaustive & async\allowbreak\_compression::Level
+\hline
+sysinfo & from 0.15.3\newline to 0.15.4 & enum\allowbreak\_variant\allowbreak\_added & sysinfo::DiskType::Removable
+\hline
+sysinfo & from 0.10.2\newline to 0.10.3 & derive\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & sysinfo::Process no longer derives Clone
+\hline
+sysinfo & from 0.2.3\newline to 0.2.5 & inherent\allowbreak\_method\allowbreak\_missing & sysinfo::Component::get\allowbreak\_components
+\hline
+derive\allowbreak\_builder\allowbreak\_core & from 0.10.1\newline to 0.10.2 & struct\allowbreak\_missing & derive\allowbreak\_builder\allowbreak\_core::UninitializedFieldError
+\hline
+derive\allowbreak\_builder\allowbreak\_core & from 0.1.6\newline to 0.1.7 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & derive\allowbreak\_builder\allowbreak\_core::Builder field pattern\newline derive\allowbreak\_builder\allowbreak\_core::Builder field bindings
+\hline
+derive\allowbreak\_builder\allowbreak\_core & from 0.1.5\newline to 0.1.6 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & derive\allowbreak\_builder\allowbreak\_core::BuildMethod field validate\allowbreak\_fn
+\hline
+derive\allowbreak\_builder\allowbreak\_core & from 0.1.4\newline to 0.1.5 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & derive\allowbreak\_builder\allowbreak\_core::Builder field derives\newline derive\allowbreak\_builder\allowbreak\_core::BuilderField field field\allowbreak\_visibility
+\hline
+derive\allowbreak\_builder\allowbreak\_core & from 0.1.4\newline to 0.1.5 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & derive\allowbreak\_builder\allowbreak\_core::BuilderField field setter\allowbreak\_visibility
+\hline
+derive\allowbreak\_builder\allowbreak\_core & from 0.1.3\newline to 0.1.4 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & derive\allowbreak\_builder\allowbreak\_core::Setter field try\allowbreak\_setter
+\hline
+derive\allowbreak\_builder\allowbreak\_core & from 0.1.1\newline to 0.1.2 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & derive\allowbreak\_builder\allowbreak\_core::Initializer field bindings\newline derive\allowbreak\_builder\allowbreak\_core::BuilderField field bindings\newline derive\allowbreak\_builder\allowbreak\_core::Setter field bindings\newline (... and more)
+\hline
+derive\allowbreak\_builder\allowbreak\_core & from 0.1.1\newline to 0.1.2 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & derive\allowbreak\_builder\allowbreak\_core::BuildMethod field no\allowbreak\_std
+\hline
+derive\allowbreak\_builder\allowbreak\_core & from 0.1.0\newline to 0.1.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & derive\allowbreak\_builder\allowbreak\_core::Initializer field default\allowbreak\_value\newline derive\allowbreak\_builder\allowbreak\_core::Initializer field use\allowbreak\_default\allowbreak\_struct\newline derive\allowbreak\_builder\allowbreak\_core::BuildMethod field default\allowbreak\_struct\newline (... and more)
+\hline
+derive\allowbreak\_builder\allowbreak\_core & from 0.1.0\newline to 0.1.1 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & derive\allowbreak\_builder\allowbreak\_core::Initializer field explicit\allowbreak\_default
+\hline
+publicsuffix & from 1.5.4\newline to 1.5.6 & trait\allowbreak\_missing & publicsuffix::errors::ResultExt
+\hline
+multipart & from 0.15.1\newline to 0.15.2 & function\allowbreak\_missing & multipart::mock::log\allowbreak\_on\allowbreak\_panic
+\hline
+crossterm & from 0.5.0\newline to 0.5.1 & inherent\allowbreak\_method\allowbreak\_missing & crossterm::terminal::Terminal::on\allowbreak\_screen\newline crossterm::TerminalInput::on\allowbreak\_screen\newline crossterm::input::TerminalInput::on\allowbreak\_screen\newline (... and more)
+\hline
+crossterm & from 0.5.0\newline to 0.5.1 & struct\allowbreak\_missing & crossterm::terminal::terminal::Terminal\newline crossterm::styledobject::StyledObject\newline crossterm::styledobject::DisplayableObject\newline (... and more)
+\hline
+crossterm & from 0.4.1\newline to 0.4.2 & inherent\allowbreak\_method\allowbreak\_missing & crossterm::TerminalOutput::as\allowbreak\_any\newline crossterm::TerminalOutput::as\allowbreak\_any\newline crossterm::TerminalOutput::as\allowbreak\_any\newline (... and more)
+\hline
+crossterm & from 0.2.0\newline to 0.2.1 & enum\allowbreak\_missing & crossterm::crossterm\allowbreak\_style::Attribute\newline crossterm::crossterm\allowbreak\_style::Color\newline crossterm::crossterm\allowbreak\_terminal::ClearType\newline (... and more)
+\hline
+crossterm & from 0.2.0\newline to 0.2.1 & function\allowbreak\_missing & crossterm::crossterm\allowbreak\_cursor::get\newline crossterm::crossterm\allowbreak\_terminal::get\newline crossterm::crossterm\allowbreak\_style::paint\newline (... and more)
+\hline
+crossterm & from 0.2.0\newline to 0.2.1 & struct\allowbreak\_missing & crossterm::crossterm\allowbreak\_terminal::Terminal\newline crossterm::crossterm\allowbreak\_style::TerminalColor\newline crossterm::crossterm\allowbreak\_style::ObjectStyle\newline (... and more)
+\hline
+simple\allowbreak\_asn1 & from 0.5.2\newline to 0.5.3 & enum\allowbreak\_variant\allowbreak\_added & simple\allowbreak\_asn1::ASN1DecodeErr::Overflow
+\hline
+chrono-tz & from 0.8.0\newline to 0.8.1 & enum\allowbreak\_variant\allowbreak\_added & chrono\allowbreak\_tz::Tz::America\allowbreak\_\allowbreak\_Ciudad\allowbreak\_Juarez
+\hline
+chrono-tz & from 0.6.0\newline to 0.6.1 & enum\allowbreak\_variant\allowbreak\_added & chrono\allowbreak\_tz::Tz::Pacific\allowbreak\_\allowbreak\_Kanton
+\hline
+chrono-tz & from 0.5.1\newline to 0.5.2 & enum\allowbreak\_variant\allowbreak\_added & chrono\allowbreak\_tz::Tz::America\allowbreak\_\allowbreak\_Nuuk
+\hline
+chrono-tz & from 0.5.0\newline to 0.5.1 & enum\allowbreak\_variant\allowbreak\_added & chrono\allowbreak\_tz::Tz::Asia\allowbreak\_\allowbreak\_Qostanay
+\hline
+chrono-tz & from 0.3.0\newline to 0.3.1 & enum\allowbreak\_variant\allowbreak\_added & chrono\allowbreak\_tz::Tz::America\allowbreak\_\allowbreak\_Punta\allowbreak\_Arenas
+\hline
+warp & from 0.1.9\newline to 0.1.10 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & warp::filters::log::Info no longer Sync\newline warp::filters::log::Info no longer UnwindSafe\newline warp::filters::log::Info no longer Send\newline (... and more)
+\hline
+warp & from 0.1.2\newline to 0.1.3 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & warp::reject::Rejection no longer UnwindSafe\newline warp::reject::Rejection no longer RefUnwindSafe
+\hline
+bs58 & from 0.2.1\newline to 0.2.2 & enum\allowbreak\_variant\allowbreak\_added & bs58::decode::DecodeError::\allowbreak\_\allowbreak\_NonExhaustive
+\hline
+rust\allowbreak\_decimal & from 1.22.0\newline to 1.23.0 & enum\allowbreak\_variant\allowbreak\_added & rust\allowbreak\_decimal::Error::ConversionTo
+\hline
+rust\allowbreak\_decimal & from 1.21.0\newline to 1.22.0 & enum\allowbreak\_variant\allowbreak\_added & rust\allowbreak\_decimal::Error::Underflow
+\hline
+rust\allowbreak\_decimal & from 1.16.0\newline to 1.17.0 & inherent\allowbreak\_method\allowbreak\_const\allowbreak\_removed & rust\allowbreak\_decimal::Decimal::deserialize\newline rust\allowbreak\_decimal::prelude::Decimal::deserialize
+\hline
+rust\allowbreak\_decimal & from 1.12.2\newline to 1.12.3 & inherent\allowbreak\_method\allowbreak\_must\allowbreak\_use\allowbreak\_added & rust\allowbreak\_decimal::Decimal::new\newline rust\allowbreak\_decimal::Decimal::from\allowbreak\_i128\allowbreak\_with\allowbreak\_scale\newline rust\allowbreak\_decimal::Decimal::from\allowbreak\_parts\newline (... and more)
+\hline
+rust\allowbreak\_decimal & from 1.10.3\newline to 1.11.0 & enum\allowbreak\_variant\allowbreak\_added & rust\allowbreak\_decimal::RoundingStrategy::MidpointNearestEven\newline rust\allowbreak\_decimal::RoundingStrategy::MidpointAwayFromZero\newline rust\allowbreak\_decimal::RoundingStrategy::MidpointTowardZero\newline (... and more)
+\hline
+rust\allowbreak\_decimal & from 1.10.3\newline to 1.11.0 & inherent\allowbreak\_method\allowbreak\_missing & rust\allowbreak\_decimal::Decimal::exp\newline rust\allowbreak\_decimal::Decimal::exp\allowbreak\_with\allowbreak\_tolerance\newline rust\allowbreak\_decimal::Decimal::powi\newline (... and more)
+\hline
+rust\allowbreak\_decimal & from 1.4.1\newline to 1.5.0 & enum\allowbreak\_variant\allowbreak\_added & rust\allowbreak\_decimal::RoundingStrategy::RoundDown\newline rust\allowbreak\_decimal::RoundingStrategy::RoundUp
+\hline
+copyless & from 0.1.0\newline to 0.1.1 & struct\allowbreak\_missing & copyless::Allocation
+\hline
+bytesize & from 0.2.1\newline to 0.2.2 & method\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & bytesize::ByteSize::to\allowbreak\_string now takes 1 parameters instead of 2
+\hline
+slog-term & from 2.6.0\newline to 2.7.0 & function\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & slog\allowbreak\_term::print\allowbreak\_msg\allowbreak\_header now takes 4 parameters instead of 3
+\hline
+tiff & from 0.8.0\newline to 0.8.1 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & tiff::TiffFormatError no longer UnwindSafe\newline tiff::TiffFormatError no longer RefUnwindSafe
+\hline
+tiff & from 0.7.2\newline to 0.7.3 & enum\allowbreak\_variant\allowbreak\_added & tiff::tags::Predictor::FloatingPoint\newline tiff::TiffUnsupportedError::FloatingPointPredictor\newline tiff::UsageError::InvalidChunkIndex\newline (... and more)
+\hline
+ureq & from 2.4.0\newline to 2.5.0 & enum\allowbreak\_variant\allowbreak\_added & ureq::ErrorKind::InsecureRequestHttpsOnly
+\hline
+ureq & from 1.5.1\newline to 1.5.2 & function\allowbreak\_missing & ureq::connect
+\hline
+ureq & from 1.4.1\newline to 1.5.0 & enum\allowbreak\_variant\allowbreak\_missing & ureq::Error::BadStatusRead
+\hline
+ureq & from 1.0.0\newline to 1.1.0 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & ureq::Request no longer UnwindSafe\newline ureq::Request no longer RefUnwindSafe
+\hline
+ureq & from 0.11.2\newline to 0.11.3 & enum\allowbreak\_variant\allowbreak\_added & ureq::Error::BadStatusRead
+\hline
+ureq & from 0.7.0\newline to 0.7.1 & enum\allowbreak\_variant\allowbreak\_missing & ureq::Error::Tls\newline ureq::Error::TlsHandshake
+\hline
+secp256k1 & from 0.22.0\newline to 0.22.2 & enum\allowbreak\_variant\allowbreak\_added & secp256k1::Error::InvalidSharedSecret
+\hline
+secp256k1 & from 0.21.2\newline to 0.21.3 & enum\allowbreak\_variant\allowbreak\_added & secp256k1::Error::InvalidParityValue
+\hline
+jsonwebtoken & from 8.1.1\newline to 8.2.0 & enum\allowbreak\_variant\allowbreak\_added & jsonwebtoken::jwk::EllipticCurve::Ed25519
+\hline
+nu-ansi-term & from 0.45.0\newline to 0.45.1 & enum\allowbreak\_variant\allowbreak\_added & nu\allowbreak\_ansi\allowbreak\_term::Color::Default
+\hline
+humansize & from 2.0.0\newline to 2.1.0 & struct\allowbreak\_missing & humansize::Formatter\newline humansize::IFormatter
+\hline
+humansize & from 1.0.2\newline to 1.1.0 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & humansize::file\allowbreak\_size\allowbreak\_opts::FileSizeOpts field allow\allowbreak\_negative
+\hline
+serde\allowbreak\_qs & from 0.10.0\newline to 0.10.1 & struct\allowbreak\_missing & serde\allowbreak\_qs::QsSerializer
+\hline
+serde\allowbreak\_qs & from 0.8.0\newline to 0.8.1 & enum\allowbreak\_variant\allowbreak\_missing & serde\allowbreak\_qs::Error::Decoding
+\hline
+byte-slice-cast & from 0.3.3\newline to 0.3.4 & enum\allowbreak\_variant\allowbreak\_added & byte\allowbreak\_slice\allowbreak\_cast::Error::CapacityMismatch
+\hline
+libflate & from 0.1.13\newline to 0.1.25 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & libflate::gzip::ExtraField field subfields
+\hline
+libflate & from 0.1.13\newline to 0.1.25 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & libflate::gzip::ExtraField field id\newline libflate::gzip::ExtraField field data
+\hline
+bitmaps & from 3.1.0\newline to 3.2.0 & struct\allowbreak\_missing & bitmaps::BitsImpl
+\hline
+lexical & from 2.1.0\newline to 2.2.0 & trait\allowbreak\_missing & lexical::FromBytes\newline lexical::FromBytesLossy\newline lexical::ToBytes\newline (... and more)
+\hline
+der-parser & from 5.1.0\newline to 5.1.1 & enum\allowbreak\_variant\allowbreak\_added & der\allowbreak\_parser::error::BerError::IntegerNegative
+\hline
+der-parser & from 4.0.2\newline to 4.1.0 & function\allowbreak\_missing & der\allowbreak\_parser::ber::xor\allowbreak\_option
+\hline
+der-parser & from 1.1.0\newline to 1.1.1 & enum\allowbreak\_variant\allowbreak\_added & der\allowbreak\_parser::DerTag::RelativeOid\newline der\allowbreak\_parser::DerObjectContent::RelativeOID
+\hline
+der-parser & from 1.1.0\newline to 1.1.1 & enum\allowbreak\_variant\allowbreak\_missing & der\allowbreak\_parser::DerTag::RdvOid
+\hline
+der-parser & from 0.5.3\newline to 0.5.4 & enum\allowbreak\_variant\allowbreak\_added & der\allowbreak\_parser::DerError::Unsupported
+\hline
+der-parser & from 0.5.0\newline to 0.5.1 & enum\allowbreak\_variant\allowbreak\_added & der\allowbreak\_parser::DerTag::GeneralString\newline der\allowbreak\_parser::DerObjectContent::GeneralString
+\hline
+der-parser & from 0.4.3\newline to 0.4.4 & enum\allowbreak\_variant\allowbreak\_added & der\allowbreak\_parser::DerError::InvalidTag\newline der\allowbreak\_parser::DerError::InvalidLength
+\hline
+der-parser & from 0.4.0\newline to 0.4.1 & enum\allowbreak\_variant\allowbreak\_added & der\allowbreak\_parser::DerTag::T61String\newline der\allowbreak\_parser::DerTag::BmpString\newline der\allowbreak\_parser::DerObjectContent::T61String\newline (... and more)
+\hline
+der-parser & from 0.3.4\newline to 0.3.5 & enum\allowbreak\_missing & der\allowbreak\_parser::der::DerTag\newline der\allowbreak\_parser::der::DerObjectContent
+\hline
+der-parser & from 0.3.4\newline to 0.3.5 & function\allowbreak\_missing & der\allowbreak\_parser::der::parse\allowbreak\_der\allowbreak\_printablestring\newline der\allowbreak\_parser::der::der\allowbreak\_read\allowbreak\_element\allowbreak\_content\allowbreak\_as\newline der\allowbreak\_parser::der::parse\allowbreak\_der\allowbreak\_sequence\newline (... and more)
+\hline
+der-parser & from 0.3.0\newline to 0.3.1 & enum\allowbreak\_tuple\allowbreak\_variant\allowbreak\_field\allowbreak\_missing & der\allowbreak\_parser::DerObjectContent::Unknown field 1\newline der\allowbreak\_parser::der::DerObjectContent::Unknown field 1
+\hline
+flume & from 0.8.0\newline to 0.8.1 & enum\allowbreak\_missing & flume::TryRecvTimeoutError\newline flume::TrySendTimeoutError
+\hline
+flume & from 0.8.0\newline to 0.8.1 & struct\allowbreak\_missing & flume::Hook
+\hline
+flume & from 0.7.1\newline to 0.7.2 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & flume::Sender no longer Sync
+\hline
+infer & from 0.3.4\newline to 0.3.5 & enum\allowbreak\_variant\allowbreak\_added & infer::MatcherType::BOOK
+\hline
+cpp\allowbreak\_demangle & from 0.3.2\newline to 0.3.3 & enum\allowbreak\_variant\allowbreak\_added & cpp\allowbreak\_demangle::ast::StandardBuiltinType::Char8
+\hline
+cpp\allowbreak\_demangle & from 0.3.1\newline to 0.3.2 & enum\allowbreak\_variant\allowbreak\_added & cpp\allowbreak\_demangle::ast::SpecialName::TransactionClone\newline cpp\allowbreak\_demangle::ast::SpecialName::NonTransactionClone
+\hline
+cpp\allowbreak\_demangle & from 0.3.0\newline to 0.3.1 & enum\allowbreak\_variant\allowbreak\_added & cpp\allowbreak\_demangle::ast::SpecialName::JavaResource
+\hline
+cpp\allowbreak\_demangle & from 0.2.15\newline to 0.2.16 & enum\allowbreak\_variant\allowbreak\_added & cpp\allowbreak\_demangle::ast::SimpleOperatorName::Spaceship\newline cpp\allowbreak\_demangle::ast::MangledName::BlockInvoke
+\hline
+cpp\allowbreak\_demangle & from 0.2.14\newline to 0.2.15 & enum\allowbreak\_variant\allowbreak\_added & cpp\allowbreak\_demangle::DemangleNodeType::UnqualifiedName\newline cpp\allowbreak\_demangle::DemangleNodeType::TemplateParam\newline cpp\allowbreak\_demangle::DemangleNodeType::Decltype\newline (... and more)
+\hline
+cpp\allowbreak\_demangle & from 0.2.12\newline to 0.2.13 & enum\allowbreak\_tuple\allowbreak\_variant\allowbreak\_field\allowbreak\_added & MangledName::Encoding field 1
+\hline
+cpp\allowbreak\_demangle & from 0.2.12\newline to 0.2.13 & enum\allowbreak\_variant\allowbreak\_added & cpp\allowbreak\_demangle::error::Error::ForwardTemplateArgReference
+\hline
+cpp\allowbreak\_demangle & from 0.2.12\newline to 0.2.13 & enum\allowbreak\_variant\allowbreak\_missing & cpp\allowbreak\_demangle::ast::Expression::TypeUnqualifiedName\newline cpp\allowbreak\_demangle::ast::Expression::TypeUnqualifiedNameTemplateArgs
+\hline
+cpp\allowbreak\_demangle & from 0.2.9\newline to 0.2.12 & enum\allowbreak\_variant\allowbreak\_added & cpp\allowbreak\_demangle::ast::OperatorName::Conversion
+\hline
+cpp\allowbreak\_demangle & from 0.2.7\newline to 0.2.8 & enum\allowbreak\_variant\allowbreak\_added & cpp\allowbreak\_demangle::error::Error::BadLeafNameReference\newline cpp\allowbreak\_demangle::ast::UnscopedTemplateNameHandle::NonSubstitution
+\hline
+cpp\allowbreak\_demangle & from 0.2.6\newline to 0.2.7 & enum\allowbreak\_variant\allowbreak\_added & cpp\allowbreak\_demangle::ast::SpecialName::ConstructionVtable\newline cpp\allowbreak\_demangle::ast::SpecialName::TypeinfoFunction\newline cpp\allowbreak\_demangle::ast::SpecialName::TlsInit\newline (... and more)
+\hline
+cpp\allowbreak\_demangle & from 0.2.5\newline to 0.2.6 & enum\allowbreak\_variant\allowbreak\_added & cpp\allowbreak\_demangle::ast::UnqualifiedName::ABITag\newline cpp\allowbreak\_demangle::ast::UnqualifiedName::ClosureType\newline cpp\allowbreak\_demangle::ast::PrefixHandle::NonSubstitution\newline (... and more)
+\hline
+cpp\allowbreak\_demangle & from 0.2.4\newline to 0.2.5 & enum\allowbreak\_variant\allowbreak\_added & cpp\allowbreak\_demangle::ast::CtorDtorName::MaybeInChargeConstructor\newline cpp\allowbreak\_demangle::ast::CtorDtorName::MaybeInChargeDestructor
+\hline
+cpp\allowbreak\_demangle & from 0.2.1\newline to 0.2.2 & derive\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & cpp\allowbreak\_demangle::ast::TypeHandle no longer derives Hash\newline cpp\allowbreak\_demangle::ast::Substitution no longer derives Hash\newline cpp\allowbreak\_demangle::ast::SourceName no longer derives Hash\newline (... and more)
+\hline
+cpp\allowbreak\_demangle & from 0.2.1\newline to 0.2.2 & enum\allowbreak\_variant\allowbreak\_added & cpp\allowbreak\_demangle::error::Error::TooMuchRecursion\newline cpp\allowbreak\_demangle::ast::TypeHandle::QualifiedBuiltin\newline cpp\allowbreak\_demangle::ast::OperatorName::Simple\newline (... and more)
+\hline
+cpp\allowbreak\_demangle & from 0.2.1\newline to 0.2.2 & enum\allowbreak\_variant\allowbreak\_missing & cpp\allowbreak\_demangle::ast::Name::Std\newline cpp\allowbreak\_demangle::ast::OperatorName::New\newline cpp\allowbreak\_demangle::ast::OperatorName::NewArray\newline (... and more)
+\hline
+cpp\allowbreak\_demangle & from 0.2.0\newline to 0.2.1 & struct\allowbreak\_missing & cpp\allowbreak\_demangle::ast::ArgStack
+\hline
+cpp\allowbreak\_demangle & from 0.2.0\newline to 0.2.1 & trait\allowbreak\_missing & cpp\allowbreak\_demangle::ast::DemangleWithInner
+\hline
+parity-scale-codec & from 1.3.0\newline to 1.3.1 & trait\allowbreak\_missing & parity\allowbreak\_scale\allowbreak\_codec::WrapperTypeDecode
+\hline
+similar & from 1.1.0\newline to 1.2.0 & enum\allowbreak\_variant\allowbreak\_added & similar::Algorithm::Lcs\newline similar::algorithms::Algorithm::Lcs
+\hline
+protobuf-codegen & from 2.6.2\newline to 2.7.0 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & protobuf\allowbreak\_codegen::Customize field inside\allowbreak\_protobuf
+\hline
+protobuf-codegen & from 2.5.0\newline to 2.6.0 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & protobuf\allowbreak\_codegen::Customize field lite\allowbreak\_runtime
+\hline
+protobuf-codegen & from 2.0.6\newline to 2.1.0 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & protobuf\allowbreak\_codegen::Customize field serde\allowbreak\_derive\newline protobuf\allowbreak\_codegen::Customize field serde\allowbreak\_derive\allowbreak\_cfg
+\hline
+protobuf-codegen & from 2.0.6\newline to 2.1.0 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_private\allowbreak\_field & protobuf\allowbreak\_codegen::Customize field \allowbreak\_future\allowbreak\_options
+\hline
+jsonrpc-core & from 12.1.0\newline to 12.2.0 & enum\allowbreak\_variant\allowbreak\_missing & jsonrpc\allowbreak\_core::response::Output::Notification\newline jsonrpc\allowbreak\_core::types::response::Output::Notification\newline jsonrpc\allowbreak\_core::Output::Notification\newline (... and more)
+\hline
+jsonrpc-core & from 12.1.0\newline to 12.2.0 & inherent\allowbreak\_method\allowbreak\_missing & jsonrpc\allowbreak\_core::response::Output::method\newline jsonrpc\allowbreak\_core::types::response::Output::method\newline jsonrpc\allowbreak\_core::Output::method\newline (... and more)
+\hline
+jsonrpc-core & from 12.0.0\newline to 12.1.0 & enum\allowbreak\_variant\allowbreak\_added & jsonrpc\allowbreak\_core::response::Output::Notification\newline jsonrpc\allowbreak\_core::types::response::Output::Notification\newline jsonrpc\allowbreak\_core::Output::Notification\newline (... and more)
+\hline
+schemars & from 0.7.0\newline to 0.7.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & schemars::schema::Metadata field examples
+\hline
+schemars & from 0.4.0\newline to 0.4.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & schemars::gen::SchemaSettings field meta\allowbreak\_schema
+\hline
+raw-cpuid & from 10.3.0\newline to 10.4.0 & enum\allowbreak\_variant\allowbreak\_added & raw\allowbreak\_cpuid::DatType::LoadOnly\newline raw\allowbreak\_cpuid::DatType::StoreOnly\newline raw\allowbreak\_cpuid::TopologyType::Module\newline (... and more)
+\hline
+cbindgen & from 0.14.1\newline to 0.14.2 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::Config field after\allowbreak\_includes\newline cbindgen::Config field pragma\allowbreak\_once
+\hline
+cbindgen & from 0.14.1\newline to 0.14.2 & inherent\allowbreak\_method\allowbreak\_missing & cbindgen::RenameRule::apply\allowbreak\_to\allowbreak\_pascal\allowbreak\_case\newline cbindgen::RenameRule::apply\allowbreak\_to\allowbreak\_snake\allowbreak\_case
+\hline
+cbindgen & from 0.13.1\newline to 0.13.2 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::ConstantConfig field allow\allowbreak\_constexpr
+\hline
+cbindgen & from 0.12.0\newline to 0.12.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::EnumConfig field enum\allowbreak\_class
+\hline
+cbindgen & from 0.9.0\newline to 0.9.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::EnumConfig field private\allowbreak\_default\allowbreak\_tagged\allowbreak\_enum\allowbreak\_constructor
+\hline
+cbindgen & from 0.8.6\newline to 0.8.7 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::EnumConfig field derive\allowbreak\_tagged\allowbreak\_enum\allowbreak\_copy\allowbreak\_constructor
+\hline
+cbindgen & from 0.8.4\newline to 0.8.6 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::EnumConfig field derive\allowbreak\_tagged\allowbreak\_enum\allowbreak\_destructor
+\hline
+cbindgen & from 0.8.3\newline to 0.8.4 & enum\allowbreak\_variant\allowbreak\_added & cbindgen::DocumentationStyle::C99
+\hline
+cbindgen & from 0.8.2\newline to 0.8.3 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::StructConfig field must\allowbreak\_use\newline cbindgen::ExportConfig field renaming\allowbreak\_overrides\allowbreak\_prefixing\newline cbindgen::EnumConfig field must\allowbreak\_use\newline (... and more)
+\hline
+cbindgen & from 0.8.0\newline to 0.8.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::Config field macro\allowbreak\_expansion\newline cbindgen::EnumConfig field derive\allowbreak\_const\allowbreak\_casts\newline cbindgen::EnumConfig field derive\allowbreak\_mut\allowbreak\_casts\newline (... and more)
+\hline
+cbindgen & from 0.6.3\newline to 0.6.4 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::Config field no\allowbreak\_includes
+\hline
+cbindgen & from 0.6.0\newline to 0.6.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::ExportConfig field item\allowbreak\_types
+\hline
+cbindgen & from 0.2.1\newline to 0.2.2 & method\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & cbindgen::Builder::with\allowbreak\_std\allowbreak\_types now takes 2 parameters instead of 1
+\hline
+cbindgen & from 0.2.0\newline to 0.2.1 & struct\allowbreak\_missing & cbindgen::Cargo
+\hline
+cbindgen & from 0.1.26\newline to 0.1.27 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::Config field constant
+\hline
+cbindgen & from 0.1.26\newline to 0.1.27 & method\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & cbindgen::Bindings::new now takes 6 parameters instead of 4\newline cbindgen::Library::new now takes 10 parameters instead of 7
+\hline
+cbindgen & from 0.1.25\newline to 0.1.26 & inherent\allowbreak\_method\allowbreak\_missing & cbindgen::Library::get\allowbreak\_item
+\hline
+cbindgen & from 0.1.21\newline to 0.1.22 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::Config field defines
+\hline
+cbindgen & from 0.1.21\newline to 0.1.22 & inherent\allowbreak\_method\allowbreak\_missing & cbindgen::AnnotationSet::parse
+\hline
+cbindgen & from 0.1.20\newline to 0.1.21 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::EnumConfig field prefix\allowbreak\_with\allowbreak\_name\newline cbindgen::Config field documentation
+\hline
+cbindgen & from 0.1.20\newline to 0.1.21 & enum\allowbreak\_missing & cbindgen::AnnotationValue\newline cbindgen::IdentifierType
+\hline
+cbindgen & from 0.1.20\newline to 0.1.21 & inherent\allowbreak\_method\allowbreak\_missing & cbindgen::Library::load\allowbreak\_src\newline cbindgen::Library::load\allowbreak\_crate\newline cbindgen::Library::resolve\allowbreak\_path\newline (... and more)
+\hline
+cbindgen & from 0.1.20\newline to 0.1.21 & struct\allowbreak\_missing & cbindgen::GeneratedBindings
+\hline
+cbindgen & from 0.1.14\newline to 0.1.15 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::StructConfig field generic\allowbreak\_template\allowbreak\_specialization
+\hline
+cbindgen & from 0.1.14\newline to 0.1.15 & inherent\allowbreak\_method\allowbreak\_missing & cbindgen::Library::add\allowbreak\_deps\allowbreak\_for\allowbreak\_path
+\hline
+cbindgen & from 0.1.13\newline to 0.1.14 & method\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & cbindgen::Cargo::load now takes 3 parameters instead of 2
+\hline
+cbindgen & from 0.1.10\newline to 0.1.13 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::Config field namespace\newline cbindgen::Config field namespaces\newline cbindgen::Config field parse\newline (... and more)
+\hline
+cbindgen & from 0.1.10\newline to 0.1.13 & enum\allowbreak\_variant\allowbreak\_added & cbindgen::IdentifierType::Enum\newline cbindgen::RenameRule::QualifiedScreamingSnakeCase
+\hline
+cbindgen & from 0.1.10\newline to 0.1.13 & inherent\allowbreak\_method\allowbreak\_missing & cbindgen::Library::load\newline cbindgen::Library::add\allowbreak\_deps\allowbreak\_for\allowbreak\_path\allowbreak\_deps
+\hline
+cbindgen & from 0.1.8\newline to 0.1.9 & enum\allowbreak\_missing & cbindgen::RenameContext\newline cbindgen::DirectiveValue
+\hline
+cbindgen & from 0.1.8\newline to 0.1.9 & struct\allowbreak\_missing & cbindgen::DirectiveSet
+\hline
+cbindgen & from 0.1.6\newline to 0.1.7 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::Config field header\newline cbindgen::Config field trailer\newline cbindgen::Config field include\allowbreak\_guard\newline (... and more)
+\hline
+cbindgen & from 0.1.6\newline to 0.1.7 & inherent\allowbreak\_method\allowbreak\_missing & cbindgen::Config::from\allowbreak\_default\newline cbindgen::Config::from\allowbreak\_webrender\newline cbindgen::Config::load\newline (... and more)
+\hline
+cbindgen & from 0.1.6\newline to 0.1.7 & struct\allowbreak\_missing & cbindgen::FileConfig\newline cbindgen::ItemConfig
+\hline
+cbindgen & from 0.1.6\newline to 0.1.7 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & cbindgen::Config field global\newline cbindgen::Config field per\allowbreak\_item
+\hline
+cbindgen & from 0.1.4\newline to 0.1.5 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cbindgen::Config field global\newline cbindgen::Config field per\allowbreak\_item
+\hline
+cbindgen & from 0.1.4\newline to 0.1.5 & inherent\allowbreak\_method\allowbreak\_missing & cbindgen::Config::default\newline cbindgen::Config::gecko\allowbreak\_webrender
+\hline
+cbindgen & from 0.1.4\newline to 0.1.5 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & cbindgen::Config field file\allowbreak\_header\newline cbindgen::Config field file\allowbreak\_trailer\newline cbindgen::Config field file\allowbreak\_autogen\allowbreak\_warning\newline (... and more)
+\hline
+secp256k1-sys & from 0.8.0\newline to 0.8.1 & function\allowbreak\_missing & secp256k1\allowbreak\_sys::rustsecp256k1\allowbreak\_v0\allowbreak\_8\allowbreak\_0\allowbreak\_default\allowbreak\_error\allowbreak\_callback\allowbreak\_fn\newline secp256k1\allowbreak\_sys::rustsecp256k1\allowbreak\_v0\allowbreak\_8\allowbreak\_0\allowbreak\_default\allowbreak\_illegal\allowbreak\_callback\allowbreak\_fn\newline secp256k1\allowbreak\_sys::rustsecp256k1\allowbreak\_v0\allowbreak\_8\allowbreak\_0\allowbreak\_context\allowbreak\_create\newline (... and more)
+\hline
+secp256k1-sys & from 0.6.0\newline to 0.6.1 & function\allowbreak\_missing & secp256k1\allowbreak\_sys::rustsecp256k1\allowbreak\_v0\allowbreak\_5\allowbreak\_0\allowbreak\_default\allowbreak\_error\allowbreak\_callback\allowbreak\_fn\newline secp256k1\allowbreak\_sys::rustsecp256k1\allowbreak\_v0\allowbreak\_5\allowbreak\_0\allowbreak\_context\allowbreak\_create\newline secp256k1\allowbreak\_sys::rustsecp256k1\allowbreak\_v0\allowbreak\_5\allowbreak\_0\allowbreak\_default\allowbreak\_illegal\allowbreak\_callback\allowbreak\_fn\newline (... and more)
+\hline
+secp256k1-sys & from 0.4.0\newline to 0.4.1 & function\allowbreak\_missing & secp256k1\allowbreak\_sys::rustsecp256k1\allowbreak\_v0\allowbreak\_4\allowbreak\_0\allowbreak\_default\allowbreak\_illegal\allowbreak\_callback\allowbreak\_fn\newline secp256k1\allowbreak\_sys::rustsecp256k1\allowbreak\_v0\allowbreak\_4\allowbreak\_0\allowbreak\_context\allowbreak\_destroy\newline secp256k1\allowbreak\_sys::rustsecp256k1\allowbreak\_v0\allowbreak\_4\allowbreak\_0\allowbreak\_context\allowbreak\_create\newline (... and more)
+\hline
+secp256k1-sys & from 0.1.0\newline to 0.1.1 & function\allowbreak\_missing & secp256k1\allowbreak\_sys::rustsecp256k1\allowbreak\_v0\allowbreak\_1\allowbreak\_0\allowbreak\_default\allowbreak\_illegal\allowbreak\_callback\allowbreak\_fn\newline secp256k1\allowbreak\_sys::rustsecp256k1\allowbreak\_v0\allowbreak\_1\allowbreak\_0\allowbreak\_context\allowbreak\_destroy\newline secp256k1\allowbreak\_sys::rustsecp256k1\allowbreak\_v0\allowbreak\_1\allowbreak\_0\allowbreak\_default\allowbreak\_error\allowbreak\_callback\allowbreak\_fn\newline (... and more)
+\hline
+parity-wasm & from 0.35.1\newline to 0.35.2 & enum\allowbreak\_variant\allowbreak\_added & parity\allowbreak\_wasm::SerializationError::TooManyLocals\newline parity\allowbreak\_wasm::elements::Error::TooManyLocals
+\hline
+parity-wasm & from 0.27.4\newline to 0.27.5 & enum\allowbreak\_variant\allowbreak\_added & parity\allowbreak\_wasm::elements::Section::Reloc
+\hline
+parity-wasm & from 0.27.0\newline to 0.27.1 & enum\allowbreak\_variant\allowbreak\_added & parity\allowbreak\_wasm::elements::ImportCountType::Table\newline parity\allowbreak\_wasm::elements::ImportCountType::Memory
+\hline
+parity-wasm & from 0.26.0\newline to 0.26.1 & enum\allowbreak\_variant\allowbreak\_added & parity\allowbreak\_wasm::SerializationError::InconsistentCode\newline parity\allowbreak\_wasm::elements::Error::InconsistentCode
+\hline
+parity-wasm & from 0.21.0\newline to 0.21.1 & enum\allowbreak\_variant\allowbreak\_added & parity\allowbreak\_wasm::elements::Section::Name
+\hline
+parity-wasm & from 0.15.3\newline to 0.15.4 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & parity\allowbreak\_wasm::interpreter::EnvParams field static\allowbreak\_size
+\hline
+parity-wasm & from 0.14.3\newline to 0.14.4 & enum\allowbreak\_variant\allowbreak\_added & parity\allowbreak\_wasm::SerializationError::InvalidVarInt32\newline parity\allowbreak\_wasm::SerializationError::InvalidVarInt64\newline parity\allowbreak\_wasm::elements::Error::InvalidVarInt32\newline (... and more)
+\hline
+parity-wasm & from 0.14.0\newline to 0.14.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & parity\allowbreak\_wasm::interpreter::EnvParams field table\allowbreak\_size
+\hline
+parity-wasm & from 0.12.2\newline to 0.12.3 & method\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & parity\allowbreak\_wasm::interpreter::ModuleInstance::instantiate now takes 2 parameters instead of 3\newline parity\allowbreak\_wasm::ModuleInstance::instantiate now takes 2 parameters instead of 3
+\hline
+parity-wasm & from 0.8.4\newline to 0.8.5 & enum\allowbreak\_variant\allowbreak\_added & parity\allowbreak\_wasm::interpreter::Error::Validation
+\hline
+parity-wasm & from 0.8.3\newline to 0.8.4 & enum\allowbreak\_variant\allowbreak\_added & parity\allowbreak\_wasm::SerializationError::InvalidMagic\newline parity\allowbreak\_wasm::SerializationError::UnsupportedVersion\newline parity\allowbreak\_wasm::elements::Error::InvalidMagic\newline (... and more)
+\hline
+jni-sys & from 0.2.3\newline to 0.2.4 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_private\allowbreak\_field & jni\allowbreak\_sys::jvalue field data
+\hline
+jni-sys & from 0.2.3\newline to 0.2.4 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & jni\allowbreak\_sys::jvalue field \allowbreak\_data
+\hline
+ndarray & from 0.12.0\newline to 0.12.1 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & ndarray::iter::ExactChunksIterMut no longer UnwindSafe\newline ndarray::iter::LanesIterMut no longer UnwindSafe\newline ndarray::iter::IndexedIterMut no longer UnwindSafe\newline (... and more)
+\hline
+ndarray & from 0.8.1\newline to 0.8.2 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & ndarray::WholeChunksIter no longer Send\newline ndarray::WholeChunksIter no longer Sync
+\hline
+ndarray & from 0.8.1\newline to 0.8.2 & derive\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & ndarray::WholeChunks no longer derives Debug
+\hline
+x509-parser & from 0.8.1\newline to 0.8.2 & enum\allowbreak\_variant\allowbreak\_added & x509\allowbreak\_parser::objects::Nid::DomainComponent
+\hline
+x509-parser & from 0.6.0\newline to 0.6.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_private\allowbreak\_field & x509\allowbreak\_parser::TbsCertificate field raw\newline x509\allowbreak\_parser::x509::TbsCertificate field raw
+\hline
+x509-parser & from 0.6.0\newline to 0.6.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_private\allowbreak\_field & x509\allowbreak\_parser::TbsCertificate field raw\newline x509\allowbreak\_parser::x509::TbsCertificate field raw
+\hline
+x509-parser & from 0.5.0\newline to 0.5.1 & derive\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & x509\allowbreak\_parser::error::X509Error no longer derives PartialEq
+\hline
+sentry-types & from 0.7.0\newline to 0.7.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & sentry\allowbreak\_types::protocol::v7::User field other\newline sentry\allowbreak\_types::protocol::latest::User field other\newline sentry\allowbreak\_types::protocol::v7::DeviceContext field other\newline (... and more)
+\hline
+sentry-types & from 0.7.0\newline to 0.7.1 & enum\allowbreak\_variant\allowbreak\_added & sentry\allowbreak\_types::protocol::v7::Context::Other\newline sentry\allowbreak\_types::protocol::latest::Context::Other
+\hline
+sentry-types & from 0.5.1\newline to 0.5.2 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & sentry\allowbreak\_types::protocol::v7::MachException field name\newline sentry\allowbreak\_types::protocol::latest::MachException field name
+\hline
+sentry-types & from 0.5.1\newline to 0.5.2 & struct\allowbreak\_missing & sentry\allowbreak\_types::protocol::v7::HResult\newline sentry\allowbreak\_types::protocol::latest::HResult\newline sentry\allowbreak\_types::protocol::v7::Win32ErrorCode\newline (... and more)
+\hline
+sentry-types & from 0.5.1\newline to 0.5.2 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & sentry\allowbreak\_types::protocol::v7::MechanismMeta field hresult\newline sentry\allowbreak\_types::protocol::v7::MechanismMeta field seh\allowbreak\_code\newline sentry\allowbreak\_types::protocol::latest::MechanismMeta field hresult\newline (... and more)
+\hline
+sentry-types & from 0.5.0\newline to 0.5.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & sentry\allowbreak\_types::protocol::v7::Exception field mechanism\newline sentry\allowbreak\_types::protocol::latest::Exception field mechanism
+\hline
+sentry-types & from 0.3.1\newline to 0.3.2 & enum\allowbreak\_variant\allowbreak\_missing & sentry\allowbreak\_types::AuthParseError::MissingVersion
+\hline
+sentry-types & from 0.3.0\newline to 0.3.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & sentry\allowbreak\_types::protocol::latest::Event field transaction\newline sentry\allowbreak\_types::protocol::v7::Event field transaction
+\hline
+sentry-types & from 0.3.0\newline to 0.3.1 & enum\allowbreak\_variant\allowbreak\_added & sentry\allowbreak\_types::protocol::latest::ContextData::Browser\newline sentry\allowbreak\_types::protocol::v7::ContextData::Browser
+\hline
+sentry-types & from 0.2.0\newline to 0.2.1 & enum\allowbreak\_variant\allowbreak\_added & sentry\allowbreak\_types::protocol::v7::Level::Fatal\newline sentry\allowbreak\_types::protocol::latest::Level::Fatal
+\hline
+sentry-types & from 0.2.0\newline to 0.2.1 & enum\allowbreak\_variant\allowbreak\_missing & sentry\allowbreak\_types::protocol::v7::Level::Critical\newline sentry\allowbreak\_types::protocol::latest::Level::Critical
+\hline
+sentry-types & from 0.2.0\newline to 0.2.1 & inherent\allowbreak\_method\allowbreak\_missing & sentry\allowbreak\_types::protocol::v7::Level::is\allowbreak\_critical\newline sentry\allowbreak\_types::protocol::latest::Level::is\allowbreak\_critical
+\hline
+jni & from 0.12.1\newline to 0.12.2 & struct\allowbreak\_repr\allowbreak\_c\allowbreak\_removed & jni::objects::JThrowable\newline jni::objects::JMethodID\newline jni::objects::JStaticFieldID\newline (... and more)
+\hline
+ron & from 0.7.0\newline to 0.7.1 & enum\allowbreak\_missing & ron::ser::State
+\hline
+ron & from 0.1.5\newline to 0.1.6 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & ron::ser::PrettyConfig field enumerate\allowbreak\_arrays
+\hline
+ron & from 0.1.0\newline to 0.1.1 & enum\allowbreak\_variant\allowbreak\_added & ron::de::Error::IoError
+\hline
+procfs & from 0.7.6\newline to 0.7.7 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & procfs::net::UdpNetEntry field state\newline procfs::net::UnixNetEntry field state
+\hline
+procfs & from 0.7.4\newline to 0.7.5 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & procfs::process::FDInfo field mode
+\hline
+procfs & from 0.7.0\newline to 0.7.1 & enum\allowbreak\_variant\allowbreak\_added & procfs::process::ProcState::Idle
+\hline
+procfs & from 0.5.3\newline to 0.5.4 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & procfs::Meminfo field hugetlb\newline procfs::Meminfo field per\allowbreak\_cpu\newline procfs::Meminfo field k\allowbreak\_reclaimable\newline (... and more)
+\hline
+procfs & from 0.5.1\newline to 0.5.2 & enum\allowbreak\_variant\allowbreak\_added & procfs::MMapPath::Vvar\newline procfs::MMapPath::Vsyscall
+\hline
+procfs & from 0.4.6\newline to 0.4.7 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & procfs::Status field speculation\allowbreak\_store\allowbreak\_bypass
+\hline
+num-format & from 0.4.0\newline to 0.4.2 & enum\allowbreak\_variant\allowbreak\_added & num\allowbreak\_format::ErrorKind::ParseNumber\newline num\allowbreak\_format::Locale::ceb\newline num\allowbreak\_format::Locale::en\allowbreak\_AE\newline (... and more)
+\hline
+lz4-sys & from 1.9.2\newline to 1.9.3 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & lz4\allowbreak\_sys::LZ4FPreferences field favor\allowbreak\_dec\allowbreak\_speed
+\hline
+fern & from 0.4.2\newline to 0.4.3 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & fern::Dispatch no longer Sync\newline fern::Output no longer Sync
+\hline
+duct & from 0.13.0\newline to 0.13.1 & trait\allowbreak\_missing & duct::ToExecutable
+\hline
+cfg-expr & from 0.10.2\newline to 0.10.3 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & cfg\allowbreak\_expr::targets::TargetInfo field has\allowbreak\_atomics\newline cfg\allowbreak\_expr::targets::TargetInfo field panic
+\hline
+cfg-expr & from 0.10.2\newline to 0.10.3 & enum\allowbreak\_variant\allowbreak\_added & cfg\allowbreak\_expr::error::Reason::InvalidHasAtomic\newline cfg\allowbreak\_expr::TargetPredicate::HasAtomic\newline cfg\allowbreak\_expr::TargetPredicate::Panic\newline (... and more)
+\hline
+winit & from 0.15.0\newline to 0.15.1 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & winit::WindowAttributes field resizable
+\hline
+winit & from 0.7.5\newline to 0.7.6 & enum\allowbreak\_variant\allowbreak\_added & winit::WindowEvent::HoveredFile\newline winit::WindowEvent::HoveredFileCancelled
+\hline
+winit & from 0.6.0\newline to 0.6.1 & enum\allowbreak\_missing & winit::os::unix::x11::XNotSupported
+\hline
+winit & from 0.6.0\newline to 0.6.1 & enum\allowbreak\_tuple\allowbreak\_variant\allowbreak\_field\allowbreak\_added & WindowEvent::KeyboardInput field 3
+\hline
+winit & from 0.6.0\newline to 0.6.1 & function\allowbreak\_missing & winit::os::unix::x11::get\allowbreak\_available\allowbreak\_monitors\newline winit::os::unix::x11::get\allowbreak\_primary\allowbreak\_monitor
+\hline
+winit & from 0.6.0\newline to 0.6.1 & struct\allowbreak\_missing & winit::os::unix::x11::PollEventsIterator\newline winit::os::unix::x11::XError\newline winit::os::unix::x11::MonitorId\newline (... and more)
+\hline
+rustyline & from 9.1.1\newline to 9.1.2 & inherent\allowbreak\_method\allowbreak\_must\allowbreak\_use\allowbreak\_added & rustyline::config::Builder::max\allowbreak\_history\allowbreak\_size\newline rustyline::config::Builder::history\allowbreak\_ignore\allowbreak\_dups\newline rustyline::config::Builder::history\allowbreak\_ignore\allowbreak\_space\newline (... and more)
+\hline
+rustyline & from 6.1.2\newline to 6.2.0 & struct\allowbreak\_missing & rustyline::Iter
+\hline
+rustyline & from 6.1.1\newline to 6.1.2 & enum\allowbreak\_marked\allowbreak\_non\allowbreak\_exhaustive & rustyline::Cmd\newline rustyline::config::EditMode\newline rustyline::EditMode\newline (... and more)
+\hline
+rustyline & from 6.0.0\newline to 6.1.0 & enum\allowbreak\_variant\allowbreak\_added & rustyline::Cmd::LineUpOrPreviousHistory\newline rustyline::Cmd::LineDownOrNextHistory\newline rustyline::Cmd::AcceptOrInsertLine\newline (... and more)
+\hline
+rustyline & from 5.0.1\newline to 5.0.2 & enum\allowbreak\_variant\allowbreak\_added & rustyline::Cmd::CompleteBackward
+\hline
+lexical-write-float & from 0.8.3\newline to 0.8.4 & function\allowbreak\_missing & lexical\allowbreak\_write\allowbreak\_float::algorithm::mod32\allowbreak\_inverse\newline lexical\allowbreak\_write\allowbreak\_float::algorithm::mod64\allowbreak\_inverse\newline lexical\allowbreak\_write\allowbreak\_float::algorithm::umul192\allowbreak\_upper64\newline (... and more)
+\hline
+lexical-write-float & from 0.8.3\newline to 0.8.4 & struct\allowbreak\_missing & lexical\allowbreak\_write\allowbreak\_float::algorithm::Div32Table\newline lexical\allowbreak\_write\allowbreak\_float::algorithm::Div64Table
+\hline
+im & from 12.3.1\newline to 12.3.2 & enum\allowbreak\_variant\allowbreak\_added & im::vector::FocusMut::Empty\newline im::vector::ConsumingIter::Empty\newline im::vector::Vector::Empty\newline (... and more)
+\hline
+im & from 10.0.0\newline to 10.1.0 & struct\allowbreak\_missing & im::ordset::Iter\newline im::ordmap::Iter
+\hline
+deadpool & from 0.2.2\newline to 0.2.3 & struct\allowbreak\_missing & deadpool::PoolSize\newline deadpool::PoolInner
+\hline
+serde-xml-rs & from 0.2.0\newline to 0.2.1 & enum\allowbreak\_variant\allowbreak\_added & serde\allowbreak\_xml\allowbreak\_rs::Error::Io\newline serde\allowbreak\_xml\allowbreak\_rs::Error::UnsupportedOperation
+\hline
+heapless & from 0.5.4\newline to 0.5.5 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & heapless::pool::Pool no longer RefUnwindSafe
+\hline
+actix & from 0.7.8\newline to 0.7.9 & enum\allowbreak\_missing & actix::prelude::actix::MailboxError\newline actix::dev::actix::MailboxError\newline actix::prelude::actix::dev::MailboxError\newline (... and more)
+\hline
+actix & from 0.7.8\newline to 0.7.9 & function\allowbreak\_missing & actix::prelude::actix::fut::result\newline actix::dev::actix::fut::result\newline actix::prelude::actix::dev::fut::result\newline (... and more)
+\hline
+actix & from 0.7.5\newline to 0.7.6 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & actix::actors::resolver::Resolver no longer UnwindSafe\newline actix::actors::resolver::Resolver no longer RefUnwindSafe\newline actix::prelude::actix::actors::resolver::Resolver no longer UnwindSafe\newline (... and more)
+\hline
+actix & from 0.4.4\newline to 0.4.5 & enum\allowbreak\_missing & actix::dev::ContextCellResult
+\hline
+actix & from 0.4.4\newline to 0.4.5 & struct\allowbreak\_missing & actix::dev::ActorAddressCell\newline actix::dev::ActorWaitCell\newline actix::dev::queue::sync::SendError\newline (... and more)
+\hline
+actix & from 0.4.4\newline to 0.4.5 & enum\allowbreak\_missing & actix::dev::ContextCellResult
+\hline
+actix & from 0.4.4\newline to 0.4.5 & struct\allowbreak\_missing & actix::dev::queue::unsync::Sender\newline actix::dev::ActorAddressCell\newline actix::dev::queue::sync::TrySendError\newline (... and more)
+\hline
+goblin & from 0.6.0\newline to 0.6.1 & enum\allowbreak\_variant\allowbreak\_added & goblin::mach::load\allowbreak\_command::CommandVariant::BuildVersion
+\hline
+goblin & from 0.4.2\newline to 0.4.3 & constructible\allowbreak\_struct\allowbreak\_adds\allowbreak\_field & (hidden) goblin::elf::compression\allowbreak\_header::compression\allowbreak\_header64::CompressionHeader field ch\allowbreak\_reserved\newline (hidden) goblin::elf::compression\allowbreak\_header::compression\allowbreak\_header32::compression\allowbreak\_header64::CompressionHeader field ch\allowbreak\_reserved\newline goblin::elf::dynamic::dyn64::DynamicInfo field verdef\newline (... and more)
+\hline
+goblin & from 0.3.2\newline to 0.3.3 & function\allowbreak\_parameter\allowbreak\_count\allowbreak\_changed & goblin::pe::utils::try\allowbreak\_name now takes 5 parameters instead of 4\newline goblin::pe::utils::find\allowbreak\_offset now takes 4 parameters instead of 3\newline goblin::pe::utils::find\allowbreak\_offset\allowbreak\_or now takes 5 parameters instead of 4\newline (... and more)
+\hline
+nanorand & from 0.5.1\newline to 0.5.2 & function\allowbreak\_missing & nanorand::entropy::unix::entropy\allowbreak\_from\allowbreak\_system
+\hline
+http-types & from 2.10.0\newline to 2.11.0 & enum\allowbreak\_variant\allowbreak\_added & http\allowbreak\_types::Method::Acl\newline http\allowbreak\_types::Method::BaselineControl\newline http\allowbreak\_types::Method::Bind\newline (... and more)
+\hline
+multihash & from 0.11.3\newline to 0.11.4 & enum\allowbreak\_variant\allowbreak\_missing & multihash::Code::Blake3
+\hline
+multihash & from 0.11.2\newline to 0.11.3 & enum\allowbreak\_variant\allowbreak\_added & multihash::Code::Blake3
+\hline
+multihash & from 0.9.3\newline to 0.9.4 & enum\allowbreak\_variant\allowbreak\_added & multihash::Hash::Identity\newline multihash::EncodeError::UnsupportedInputLength
+\hline
+x11-dl & from 2.20.1\newline to 2.21.0 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & x11\allowbreak\_dl::xshm::Xext field XShmCreatePixMap
+\hline
+x11-dl & from 2.19.1\newline to 2.20.0 & struct\allowbreak\_missing & x11\allowbreak\_dl::xshm::XshmSegmentInfo
+\hline
+x11-dl & from 2.19.1\newline to 2.20.0 & struct\allowbreak\_pub\allowbreak\_field\allowbreak\_missing & x11\allowbreak\_dl::xshm::Xext field XshmQueryVersion
+\hline
+x11-dl & from 2.19.0\newline to 2.19.1 & unit\allowbreak\_struct\allowbreak\_changed\allowbreak\_kind & x11\allowbreak\_dl::xlib::\allowbreak\_XkbControls\newline x11\allowbreak\_dl::xlib::XkbModsRec\newline x11\allowbreak\_dl::xlib::\allowbreak\_XkbMods\newline (... and more)
+\hline
+x11-dl & from 2.18.4\newline to 2.18.5 & unit\allowbreak\_struct\allowbreak\_changed\allowbreak\_kind & x11\allowbreak\_dl::xlib::\allowbreak\_XkbStateRec
+\hline
+x11-dl & from 2.15.0\newline to 2.16.0 & struct\allowbreak\_missing & x11\allowbreak\_dl::xinput2::Struct\allowbreak\_Unnamed11\newline x11\allowbreak\_dl::xinput2::Struct\allowbreak\_Unnamed3\newline x11\allowbreak\_dl::xinput2::Struct\allowbreak\_Unnamed10\newline (... and more)
+\hline
+tokio-test & from 0.2.0\newline to 0.2.1 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & tokio\allowbreak\_test::io::Builder no longer UnwindSafe\newline tokio\allowbreak\_test::io::Builder no longer RefUnwindSafe
+\hline
+byte-unit & from 3.0.3\newline to 3.1.0 & enum\allowbreak\_variant\allowbreak\_added & byte\allowbreak\_unit::ByteUnit::EB\newline byte\allowbreak\_unit::ByteUnit::EiB\newline byte\allowbreak\_unit::ByteUnit::ZB\newline (... and more)
+\hline
+serde\allowbreak\_path\allowbreak\_to\allowbreak\_error & from 0.1.4\newline to 0.1.5 & auto\allowbreak\_trait\allowbreak\_impl\allowbreak\_removed & serde\allowbreak\_path\allowbreak\_to\allowbreak\_error::Deserializer no longer Sync\newline serde\allowbreak\_path\allowbreak\_to\allowbreak\_error::Deserializer no longer Send\newline serde\allowbreak\_path\allowbreak\_to\allowbreak\_error::Deserializer no longer RefUnwindSafe\newline (... and more)
+\hline
+insta & from 1.17.2\newline to 1.18.0 & inherent\allowbreak\_method\allowbreak\_missing & insta::Settings::bind\allowbreak\_to\allowbreak\_thread
+\hline
+insta & from 1.6.3\newline to 1.7.0 & enum\allowbreak\_variant\allowbreak\_added & insta::internals::Content::U128\newline insta::internals::Content::I128\newline insta::\allowbreak\_macro\allowbreak\_support::Content::U128\newline (... and more)
+\hline
+
+
+
+
+\end{longtable}
+
+}
 
 \end{document}
 
