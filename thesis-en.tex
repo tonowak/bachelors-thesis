@@ -758,8 +758,7 @@ Rust team responsible for developing rustdoc,
 and thus they decided to adapt our tests in their testsuite
 (by running the tool's tests on their newest versions of rustdocs) \cite{issue-rustdoc-our-tests}.
 
-We also wrote a new kind of tests to be sure that we fixed some bugs
-which we have found or which have been reported by users of the tool.
+We also wrote a new kind of tests to ensure that some bugs found by us or reported by the users have been fixed.
 Such tests were made by writing a GitHub workflow job (which triggers on each
 commit and Pull Request) that downloads the tool and the user's git repository,
 runs the tool just like the user did to trigger the bug
