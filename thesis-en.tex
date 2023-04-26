@@ -776,8 +776,8 @@ thus the tests are not suitable to be run locally),
 we also had integration tests that we wanted to run locally, alongside the crate pair tests.
 For example, we had a bug where our work on developing the crate pair tests somehow
 stopped including the lints in the produced binary (and that bug almost went to production).
-To be sure that this bug won't happen anymore, we wrote an integration test that
-locally executes the produced binary and checks whether its output is correct.
+To be sure that this will not happen again, we wrote an integration test that
+locally executes the produced binary and verifies its output.
 
 \section{Command line interface}\label{r:section_cli}
 
