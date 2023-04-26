@@ -761,7 +761,7 @@ Thus they decided to adapt ours in their testsuite
 (by running the tool's tests on their newest versions of rustdocs) \cite{issue-rustdoc-our-tests}.
 
 We also wrote a new kind of tests to ensure that some bugs found by us or reported by the users have been fixed.
-Such tests were made by writing a GitHub workflow job (which triggers on each
+Such tests were made by writing GitHub workflow jobs (which are triggered by every
 commit and Pull Request) that downloads the tool and the user's git repository,
 runs the tool just like the user did to detect the bug
 and checks that it is no longer present.
