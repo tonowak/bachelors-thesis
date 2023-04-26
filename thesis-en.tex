@@ -753,11 +753,11 @@ available crate pairs. This has brought numerous benefits:
 		the code introduced an item, but on \say{baseline} it was being removed),
 		which made it too easy to make a mistake.
 \end{itemize}
-Funnily enough, because those tests also are good at testing the JSON rustdocs
-(they check a variety of rustdocs and a lot of different kinds of items),
-we have more extensive JSON rustdoc tests than the ones made by the
-Rust team responsible for developing rustdoc,
-and thus they decided to adapt our tests in their testsuite
+What is more, because those tests are also good for testing the JSON rustdocs
+(they check a variety of rustdocs and lots of different kinds of items),
+we have developed more extensive ones than the
+Rust team responsible for developing rustdoc.
+Thus they decided to adapt ours in their testsuite
 (by running the tool's tests on their newest versions of rustdocs) \cite{issue-rustdoc-our-tests}.
 
 We also wrote a new kind of tests to ensure that some bugs found by us or reported by the users have been fixed.
