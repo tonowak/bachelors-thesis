@@ -763,7 +763,7 @@ Thus they decided to adapt ours in their testsuite
 We also wrote a new kind of tests to ensure that some bugs found by us or reported by the users have been fixed.
 Such tests were made by writing a GitHub workflow job (which triggers on each
 commit and Pull Request) that downloads the tool and the user's git repository,
-runs the tool just like the user did to trigger the bug
+runs the tool just like the user did to detect the bug
 and checks that it is no longer present.
 Thanks to this, we can be sure that the user who reported the bug
 will not experience it ever again.
