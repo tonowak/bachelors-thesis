@@ -737,10 +737,9 @@ We have replaced this system with a new one that contains numerous \say{crate pa
 manifests and source codes) and Trustfall query results for each lint over all
 available crate pairs. This has brought numerous benefits:
 \begin{itemize}
-	\item because each lint is now checked on all the crate pairs,
-		the lints are also ran on codes meant to test other lints,
-		which found multiple false-positives
-		(e.g. that a similar error was reported by two different lints
+	\item testing each lint on all crate pairs found multiple false-positives by running
+		on codes originally meant to test other lints
+		(e.g. a similar error was reported by two different lints
 		when it should have been reported by only one of them),
 	\item the manifests of the baseline and current crates can be different,
 		which will allow writing tests for lints checking the manifests
