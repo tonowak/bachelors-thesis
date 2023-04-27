@@ -717,76 +717,44 @@ The differences between the V1 and V2 of the action are further discussed in sec
 
 \chapter{Implementation}\label{r:chapter_implementation}
 
-TODO:
-\begin{itemize}
-	\item change names to \say{why users care about this}
-\end{itemize}
-
-\section{New lints}\label{r:section_new_lints}
+\section{The lint set expansion}\label{r:section_new_lints}
 
 <Here write a list about the new lints we've written>
+
+\section{Command-line interface improvements}\label{r:section_cli}
+
+<Here write a list about changes that made the command line interface better>
+
+\section{Brand new GitHub Action}\label{r:section_github_action}
+
+<Here write a list about the V2 of the continuous integration>
 
 \section{Test suite}\label{r:section_test_suite}
 
 <Here write a list about the improvements in the testing suite>
 
-\section{Command line interface}\label{r:section_cli}
+\section{Healthier codebase}\label{r:section_healthier_codebase}
 
-<Here write a list about changes that made the command line interface better>
+TODO:
+\begin{itemize}
+	\item describe refactors and other changes that made the codebase better
+	\item describe other overall changes that prepares the tool to be more successful in the future
+	\item describe how the code changed to be more welcoming for next contributors
+\end{itemize}
 
 \section{Bugfixes}\label{r:section_bugfixes}
 
 <Here write a list about found and fixed bugs>
 
-\section{Continuous integration improvements}\label{r:section_continuous_integration_improvements}
 
-<Here write a list about the V2 of the continuous integration>
+% chapter semver-crater
+\chapter{Tool's findings in popular crates}\label{r:chapter_results_popular_crates}
 
-\section{Script}\label{r:section_script_implementation}
+\section{Statistics on true-positives and bugs}\label{r:section_results_statistics}
 
-<Here write about the script that searches all existing releases for detected semver breaks>
+\section{The process of gathering results (semver-crater)}\label{r:section_results_semver_crater}
 
-\section{Healthier codebase}\label{r:section_healthier_codebase}
-
-<Here write a list of changes that made the codebase better>
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%             Evaluation              %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Evaluation}\label{r:chapter_evaluation}
-
-\section{Steady increase in tool's popularity}\label{r:section_popularity_increase}
-
-TODO:
-\begin{itemize}
-	\item show how the number of downloads has changed
-	\item show how the number of stars on GitHub has changed
-	\item describe how our work might have impacted those results
-	\item show the comments of users on GitHub.
-		As one of the examples, give the maintainer of a big
-		library that created an issue \say{Make continuous integration runs faster}
-		and after learning about one of our PRs to make the continuous integration faster,
-		he was so excited that he wrote a comment with a tip in our PR.
-		Search also for other such examples in the PRs and issues.
-	\item list the maintainers of big libraries that started using the tool during our development
-\end{itemize}
-
-\section{Script}\label{r:section_script_evaluation}
-
-TODO:
-\begin{itemize}
-        \item adjust the name of the subsection
-        \item show the results of the script that searches all existing releases for detected semver breaks
-	\item describe how our new lints can make an impact on the community based on the found semver breaks from the script
-\end{itemize}
-
-\section{Future-proofing}\label{r:section_future_proofing}
-
-TODO:
-\begin{itemize}
-	\item describe other overall changes that prepares the tool to be more successful in the future
-	\item describe how the code changed to be more welcoming for next contributors
-\end{itemize}
+\section{Generating witnesses}\label{r:section_generating_witnesses}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1011,11 +979,28 @@ and immediate contact with him through chat).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Conclusion}\label{r:chapter_conclusion}
 
+\section{The significance of our contributions}\label{r:section_significance_of_contributions}
+
 TODO:
 \begin{itemize}
 	\item write a conclusion
 \end{itemize}
 
+\section{Rust community's positive response to the tool}\label{r:section_community_response}
+
+TODO:
+\begin{itemize}
+	\item show how the number of downloads has changed
+	\item show how the number of stars on GitHub has changed
+	\item describe how our work might have impacted those results
+	\item show the comments of users on GitHub.
+		As one of the examples, give the maintainer of a big
+		library that created an issue \say{Make continuous integration runs faster}
+		and after learning about one of our PRs to make the continuous integration faster,
+		he was so excited that he wrote a comment with a tip in our PR.
+		Search also for other such examples in the PRs and issues.
+	\item list the maintainers of big libraries that started using the tool during our development
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %            Bibliography             %
