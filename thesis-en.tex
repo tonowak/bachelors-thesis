@@ -747,11 +747,11 @@ available crate pairs. This has brought numerous benefits:
 		which allows to write tests for lints checking the manifests
 		(such lints are not yet implemented, but it is one of the future goals
 		of the project),
-	\item the tests became much more readable, which helped us to catch some bugs
-		-- previously each test sourcecode had a lot of branch conditions
-		(e.g. when it was being compiled as a \say{current} code
-		the code introduced an item, but on \say{baseline} it was being removed),
-		which made it too easy to make a mistake.
+	\item the tests became more organised, uncovering some bugs
+		-- previously each test sourcecode had a lot of branch conditions that
+		made it difficult to find mistakes
+		(e.g. when the code introduced an item in \say{current}
+		that was then removed in \say{baseline}).
 \end{itemize}
 What is more, because those tests are also good for testing the JSON rustdocs
 (they check a variety of rustdocs and lots of different kinds of items),
