@@ -813,8 +813,8 @@ Unfortunately, cargo-semver-checks is not yet perfect and sometimes produces fal
 		(\texttt{\#[doc(hidden)]} is most often used by macros to hide their generated code
 		as it is irrevelant for the user),
 	\item an item was moved to another crate and re-exported
-		(thus the item is still available with the old path,
-		but it's definition is in another rustdoc, so it's not visible to cargo-semver-checks).
+		(thus the item is still accessible with the old path,
+		but its definition is in another rustdoc making it not visible to cargo-semver-checks).
 \end{itemize}
 Other false-positives also happened, but they showed up rarely and primarily
 were just caused by a bug in the lint query.
