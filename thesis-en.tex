@@ -825,10 +825,10 @@ We came up with two solutions:
 \begin{itemize}
 	\item To detect most of the \say{doc hidden} false-positives
 		(though not all), we managed to get a list of items that are definitely
-		\say{doc hidden} and then we ignored such items in the results.
-		We could create the list by running cargo-semver-checks on one rustdoc
-		containing the hidden items and on another rustdoc without the hidden items
-		and by parsing the output to know which items were removed.
+		\say{doc hidden} and then ignored such items in the results.
+		We were able to create the list by running cargo-semver-checks on one rustdoc
+		containing the hidden items and another one without the hidden items,
+		parsing the output to know which items were removed.
 	\item As a way to know whether a reported item is a false-positive or a true-positive,
 		we created a witness (more on that in secion \ref{r:witness_generation})
 		and we ignored all items whose witnesses compile on both baseline and current versions.
