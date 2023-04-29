@@ -800,8 +800,8 @@ new compilator versions on a large number of crates).
 It fetches a list of one thousand crates available on crates.io, sorted by the number of
 all-time downloads (thus, they are often the biggest crates and libraries
 that strictly adhere to semantic versioning). For each crate,
-it then retrieves the available version which weren't yanked
-and compares each two adjacent non-yanked versions and parses the output.
+it then retrieves the available versions which were not yanked
+and compares every two adjacent, non-yanked versions and parses the output.
 The results (which take at least a day to generate) are saved to a CSV file.
 
 Unfortunately, cargo-semver-checks is not yet perfect and sometimes produces false-positives
