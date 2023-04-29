@@ -807,11 +807,11 @@ The results (which take at least a day to generate) are saved to a CSV file.
 Unfortunately, cargo-semver-checks is not yet perfect and sometimes produces false-positives
 (that hopefully soon will be fixed). Most of them were because of one of those two reasons:
 \begin{itemize}
-	\item an item was had a \texttt{\#[doc(hidden)]} macro,
-		which hides this item from the documentation and thus is not part
-		of the public API that the user can use
-		(which is most often used by macros to hide the generated code
-		that is irrevelant for the user),
+	\item an item had a \texttt{\#[doc(hidden)]} macro,
+		which hides it from the documentation and thus is not part
+		of the public API accessible by the user
+		(\texttt{\#[doc(hidden)]} is most often used by macros to hide their generated code
+		as it is irrevelant for the user),
 	\item an item was moved to another crate and re-exported
 		(thus the item is still available with the old path,
 		but it's definition is in another rustdoc, so it's not visible to cargo-semver-checks).
