@@ -771,9 +771,9 @@ For each true-positive we constructed a \texttt{witness} -- a short Rust code
 that shows that a particular item indeed breaks server,
 that is, the code that uses this item compiles on one crate version
 and it fails to compile on the other version.
-Besides that, for each result we have looked into the sourcecode to confirm
-that it is part of the public API that users can use. Thus, we are confident that each
-result is indeed a true-positive.
+Moreover, for each result we have viewed its sourcecode to confirm
+that it is part of the public API accessible by the user. Thus, we are confident that each
+result is a real true-positive.
 
 The following table shows in how many releases each lint was triggered
 and how many items in total it has reported:
