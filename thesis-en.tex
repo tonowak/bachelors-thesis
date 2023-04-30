@@ -767,10 +767,10 @@ From the X3 non-yanked releases which we were able to compile,
 \textbf{in X4 of them we found one or more semver breaks}.
 In total, different lints were triggered X5 times with X6 items reported (one release can trigger multiple lints, each of them reporting multiple items in the sourcecode that broke semver).
 
-For each true-positive we constructed a \texttt{witness} -- a short Rust code
-that shows that a particular item indeed breaks server,
-that is, the code that uses this item compiles on one crate version
-and it fails to compile on the other version.
+For every true-positive we constructed a \texttt{witness} -- a short Rust code
+proving that a particular item indeed breaks server.
+Each witness can be compiled using one version of a crate
+but results in a compilation error for the other version.
 Moreover, for each result we have viewed its sourcecode to confirm
 that it is part of the public API accessible by the user. Thus, we are confident that each
 result is a real true-positive.
