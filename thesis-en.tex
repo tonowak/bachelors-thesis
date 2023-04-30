@@ -719,7 +719,47 @@ The differences between the V1 and V2 of the action are further discussed in sec
 
 \section{The lint set expansion}\label{r:section_new_lints}
 
-<Here write a list about the new lints we've written>
+The continuosly expanding list of lints is the heart of the project.
+Before our contributions, there were 18 existing lints.
+We have managed to implement many new ones:
+\begin{itemize}
+    \item {\ttfamily enum\_marked\_non\_exhaustive}
+        -- detects marking {\ttfamily Enum} as {\ttfamily \#[non\_exhaustive]},
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/155
+    \item {\ttfamily enum\_struct\_variant\_field\_missing}
+        -- detects missing fields in a struct variant of an {\ttfamily Enum},
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/156
+    \item {\ttfamily function\_parameter\_count\_changed}
+        -- detects functions with changing parameter count,
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/170
+    \item {\ttfamily tuple\_struct\_to\_plain\_struct}
+        -- detects changing struct kind from tuple to plain,
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/249
+    \item {\ttfamily trait\_unsafe\_added}
+        -- detects marking {\ttfamily Trait} as {\ttfamily unsafe},
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/252
+    \item {\ttfamily trait\_unsafe\_removed}
+        -- detects removing {\ttfamily unsafe} marker from a {\ttfamily Trait},
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/252
+    \item {\ttfamily enum\_must\_use\_added}
+        -- detects marking {\ttfamily Enum} as {\ttfamily \#[must\_use]},
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/278
+    \item {\ttfamily struct\_must\_use\_added}
+        -- detects marking struct as {\ttfamily \#[must\_use]},
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/279
+    \item {\ttfamily trait\_must\_use\_added}
+        -- detects marking {\ttfamily Trait} as {\ttfamily \#[must\_use]},
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/280
+    \item {\ttfamily function\_must\_use\_added}
+        -- detects marking function as {\ttfamily \#[must\_use]},
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/281
+    \item {\ttfamily inherent\_method\_must\_use\_added}
+        -- detects marking method as {\ttfamily \#[must\_use]},
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/283
+\end{itemize}
+To enable the new lints, we had to do some work in the Trustfall rustdoc adapter. It mainly resolved around extending the schema.
+
+% https://github.com/obi1kenobi/cargo-semver-checks/pull/171
 
 \section{Command-line interface improvements}\label{r:section_cli}
 
