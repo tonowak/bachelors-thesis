@@ -757,8 +757,14 @@ We have managed to implement many new ones:
         -- detects marking method as {\ttfamily \#[must\_use]},
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/283
 \end{itemize}
-To enable the new lints, we had to do some work in the Trustfall rustdoc adapter. It mainly resolved around extending the schema.
+To enable the new lints, we had to do some work in the Trustfall rustdoc adapter. 
+It mainly resolved around extending the schema. Most of the time, the changes were simple. 
+The challenge there, was to design it in a way, that will not become a roadblock in the future.
 
+One notable exception, is that the schema for attributes only exported its value as a string, 
+so traversing its inner tags in lints was not possible. 
+Because of this, we had to introduce a breaking change there,
+making it more future-proof this time, and adjust the existing lints.
 % https://github.com/obi1kenobi/cargo-semver-checks/pull/171
 
 \section{Command-line interface improvements}\label{r:section_cli}
