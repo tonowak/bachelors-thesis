@@ -802,7 +802,7 @@ all-time downloads (thus, they are often the biggest crates and libraries
 that strictly adhere to semantic versioning). For each crate,
 it then retrieves the available versions which were not yanked
 and compares every two adjacent, non-yanked versions and parses the output.
-The results (which take at least a day to generate) are saved to a CSV file.
+The results (which take several days to generate) are saved to a CSV file.
 
 Unfortunately, cargo-semver-checks is not yet perfect and sometimes produces false-positives
 (that hopefully soon will be fixed). Most of them were because of one of those two reasons:
