@@ -735,12 +735,74 @@ The differences between the V1 and V2 of the action are further discussed in sec
 
 \section{Healthier codebase}\label{r:section_healthier_codebase}
 
-TODO:
+Since we are aware of how important it is to maintain high quality of the project's codebase,
+our contributions to the tool were not just limited to developing new code. We have introduced
+several changes and refactors that not only made the codebase easier to navigate and expand,
+but also prepared the tool to be even more successful in the future.
+
+With lints being the core of cargo-semver-checks, our first major refactoring targeted both their
+general file structure and development process. Imagine a user who is eager to contribute
+and decides to develop a new lint:
 \begin{itemize}
-	\item describe refactors and other changes that made the codebase better
-	\item describe other overall changes that prepares the tool to be more successful in the future
-	\item describe how the code changed to be more welcoming for next contributors
+	\item \textbf{Previously} they had to go through a tedious process of modifying single lines
+	of code in several different files. What is more, the tests for the new lint had to be written
+	in a single file where all the baseline and current code fragments had to be preceded by
+	a macro differentiating them. Although there were instructions available, they lacked
+	a general introduction of the project's approach and design goals.
+
+	\item \textbf{Currently} the user only has to choose an appropriate name for their lint
+	and implement it together with suitable tests -- all the minor file changes are taken care of
+	by a dedicated script that we developed. The tests have been split into two separate
+	directories and allow the user to provide the baseline and current test versions just
+	as if they were developing a crate (the difference being instead of avoiding semver violations
+	they are supposed to make ones that trigger their lint). The instructions received an overhaul
+	as well to be more welcoming and informative, greatly improving the user experience
+	and encouraging them to make new contributions.
 \end{itemize}
+
+Shortly after this refactor we changed how the tests are run. Instead of limiting one lint to just
+its dedicated test cases we decided to check it against all available tests from other
+lints as well. This allowed us to detect and eliminate some unnoticed false-positives,
+but even more importantly lowered the risk of new ones occuring in the tool's further development.
+
+Another significant improvement was the introduction of pre-compiled, executable binaries
+of the tool, available for different operating systems. This not only helps the users by saving
+their time normally spent on downloading and compiling the tool, but also makes it more accessible
+since the newest binaries are included with every release. They bring an additional benefit
+of stability, too -- as they undergo numerous tests before being added to the newest version,
+they are the safest way of using the tool on one's project.
+
+With time we kept on introducing even more changes, such as:
+\begin{itemize}
+	\item excluding yanked releases from the available versions when manually selecting the
+	baseline for running the tool. This protects the users from accidentally comparing their
+	current version of the project against ones that are not publicly accessible anymore,
+	what could lead to breaking the semver,
+	\item refactoring the \texttt{baseline.rs} file to make future additions easier. With this
+	we were able to change how the tool generates rustdoc for the baseline version of a crate
+	by introducing a placeholder project with a direct dependency to it, imitating how one would
+	naturally access it.
+\end{itemize}
+
+% TODO:
+% \begin{itemize}
+% 	\item describe how the code changed to be more welcoming for next contributors
+% 	\#203 -- pairs of crates instead of single, complicated crates
+% 		(writing tests is 10x easier thanks to this)
+% 	\#204 -- only one lint list
+% 	\#240 -- improved CONTRIBUTING.MD
+% 	\#239 -- script that creates everything for the new contributor
+
+% 	\item describe other overall changes that prepares the tool to be more successful in the future
+% 	\#206 -- run each lint on all test crates rather than just its own tests
+% 		(less false-positives etc.)
+% 	\#208 -- binaries to avoid downloading the repository all the time in actions
+% 	\#255 -- exclude yanked releases when choosing baseline version
+
+% 	\item describe refactors and other changes that made the codebase better
+% 		\#340 -- refactor of baseline.rs for easier changes in the future
+% 		\#341 -- use placeholders for rustdoc generation
+% \end{itemize}
 
 \section{Bugfixes}\label{r:section_bugfixes}
 
