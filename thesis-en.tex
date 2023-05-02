@@ -765,7 +765,7 @@ adds numerous features:
 \end{itemize}
 Moreover, the action now includes several optimizations of the running time:
 \begin{itemize}
-	\item The cargo-semver-checks is downloaded as a precompiled binary instead of being built from source.
+	\item The cargo-semver-checks tool is downloaded as a precompiled binary instead of being built from source.
 	\item The rustdoc of the baseline version is cached between the action's runs, so that it is generated
 		only once. The caching strategy might be adjusted by the user using inputs \texttt{shared-key}
 		and \texttt{prefix-key} (e.g. to share the cache between different GitHub jobs).
