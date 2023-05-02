@@ -723,7 +723,28 @@ The differences between the V1 and V2 of the action are further discussed in sec
 
 \section{Command-line interface improvements}\label{r:section_cli}
 
-<Here write a list about changes that made the command line interface better>
+The main change we implemented was adding ability to specify 
+features crate should be built with for the check. This is important,
+because some functionalities might move between features. Also,
+crates often have a feature, that breaks semver by design, which
+we discovered when working on the semver-crater \ref{r:section_results_semver_crater}.
+Now, user can adjust it for their specific use case.
+
+The new default behaviour is to include all the features,
+filtering out heuristicly the ones breaking semver, looking the 
+the feature name. For example, feature 'unstable' would not be
+included. The list of banned names was created by looking
+at features in popular crates.
+
+This option turned out to be error-prone, and required a heavy 
+test suite. For example, the tool caches generated rustdoc if it can.
+Now, we had to make sure, that the cache is not used if the feature
+config differs.
+
+Also, we improved the user experience by spotting and fixing a few bugs
+in the command-line interface: both in the tool's behaviour
+in combination with specific flags, and in the output messages.
+For details, see section \ref{r:section_bugfixes}.
 
 \section{Brand new GitHub Action}\label{r:section_github_action}
 
