@@ -737,7 +737,7 @@ the repository instead of using the latest release published on crates.io and di
 properly. The other problem was that the action did not allow passing any parameters to the tool, which
 was pointed out by the users, who often decided to setup the tool manually for this reason.
 Finally, the action was implemented as a bash script, which made it difficult to maintain
-and possible to be run only on Linux hosts.
+and runnable only on Linux hosts.
 
 The need for a redesign was clear, so we decided to use the fact that a GitHub action might
 be run using Node.js and implement the V2 version in TypeScript. It is a standard way
@@ -748,7 +748,7 @@ of creating complex actions, as it has multiple advantages:
 		Toolkit \cite{github_actions_toolkit}, instead of building the components from scratch.
 	\item TypeScript code is more readable and easier to organize than a bash script or a GitHub workflow file.
 \end{itemize}
-The new version of the action not only fixes the problems of the previous one, but also
+The new version of the action not only fixes the problems of the previous V1, but also
 adds numerous features:
 \begin{itemize}
 	\item input \texttt{rust-toolchain}, which allows the user to specify the Rust toolchain to use instead
@@ -765,16 +765,16 @@ adds numerous features:
 Moreover, the action now includes several optimizations of the running time:
 \begin{itemize}
 	\item The cargo-semver-checks is downloaded as a precompiled binary instead of being built from source.
-	\item The rustdoc of the baseline version is cached between the action runs, so that it is generated
+	\item The rustdoc of the baseline version is cached between the action's runs, so that it is generated
 		only once. The caching strategy might be adjusted by the user using inputs \texttt{shared-key}
 		and \texttt{prefix-key} (e.g. to share the cache between different GitHub jobs).
-	\item When possible, downloads from crates.io are being made using recently developed "sparse" protocol
+	\item When possible, downloads from crates.io are made using recently developed "sparse" protocol
 		\cite{crates_io_sparse_protocol}.
 \end{itemize}
 
-Along with the new version of the action we also developed an extended suite of action tests
+Along with the new version of the action we also developed an extensive suite of action tests
 (not to be confused with the test suite of cargo-semver-checks). The current CI workflow
-of the projects consists of over 30 checks, which are:
+of the project consists of over 30 checks, which are:
 \begin{itemize}
 	\item making sure the action's code is properly formatted and builds without errors and warnings,
 	\item running the unit tests,
