@@ -912,6 +912,7 @@ and immediate contact with him through chat).
 				the baseline in the registry as it was supposed to do.
 			\item Reported a bug where the precompiled tool crashed on Windows machines.
 				Added a CI job that checks for similar issues.
+			\item Found and fixed a bug that made the CLI ignore the \texttt{-{}-release-type} option.
 			\item Developed a new version of \texttt{cargo-semver-checks-action}, which consisted of:
 			\begin{itemize}
 				\item creating a test repository \cite{responsibilities-mieszko-action-tests}
@@ -919,11 +920,17 @@ and immediate contact with him through chat).
 					the action, then further developing the CI tests to cover all options added in
 					the new version,
 				\item making use of \texttt{cargo-semver-checks} built-in baseline choosing logic,
-					which fixed the user-reported issue,
 				\item adding support for running the action on Windows- and MacOs-based runners,
-				\item introducing input \texttt{manifest-path}, as requested by a user,
-				\item introducing input \texttt{verbose}, as requested by a user,
-				\item using pre-build binaries to speed up the action, as requested by a user,
+				\item introducing inputs \texttt{package}, \texttt{exclude}, \texttt{manifest-path},
+					\texttt{verbose}, \texttt{release-type} and \texttt{rust-toolchain},
+					which are parsed and passed to the CLI,
+				\item using pre-built binaries to speed up the action,
+				\item adding caching of baseline rustdoc JSON between action runs along with
+					inputs \texttt{shared-key} and \texttt{prefix-key}, which allow the user
+					to adjust the caching strategy,
+				\item setting up environmental variables for best performance of cargo (disabling
+					incremental compilation, enabling colors in the output and sparse
+					checkout protocol when possible),
 				\item rewriting the documentation of the action.
 			\end{itemize}
 		\end{itemize}
