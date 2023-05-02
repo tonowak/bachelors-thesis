@@ -763,7 +763,8 @@ and decides to develop a new lint:
 Shortly after this refactor we changed how the tests are run. Instead of limiting one lint to just
 its dedicated test cases we decided to check it against all available tests from other
 lints as well. This allowed us to detect and eliminate some unnoticed false-positives,
-but even more importantly lowered the risk of new ones occuring in the tool's further development.
+but even more importantly lowered the risk of new ones occuring in the tool's further development
+(for more details see section \ref{r:section_test_suite}).
 
 % Another significant improvement was the introduction of pre-compiled, executable binaries
 % of the tool, available for different operating systems. This not only helps the users by saving
