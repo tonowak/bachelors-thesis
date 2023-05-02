@@ -773,17 +773,10 @@ but even more importantly lowered the risk of new ones occuring in the tool's fu
 % of stability, too -- as they undergo numerous tests before being added to the newest version,
 % they are the safest way of using the tool on one's project.
 
-With time we kept on introducing even more changes, such as:
-\begin{itemize}
-	\item excluding yanked releases from the available versions when manually selecting the
-	baseline for running the tool. This protects the users from accidentally comparing their
-	current version of the project against ones that are not publicly accessible anymore,
-	what could lead to breaking the semver,
-	\item refactoring the \texttt{baseline.rs} file to make future additions easier. With this
-	we were able to change how the tool generates rustdoc for the baseline version of a crate
-	by introducing a placeholder project with a direct dependency to it, imitating how one would
-	naturally access it.
-\end{itemize}
+Later on we also refactored the \texttt{baseline.rs} file to make future additions easier. With this
+we were able to change how the tool generates rustdoc for the baseline version of a crate
+by introducing a placeholder project with a direct dependency to it, imitating how one would
+naturally access it.
 
 \section{Bugfixes}\label{r:section_bugfixes}
 
