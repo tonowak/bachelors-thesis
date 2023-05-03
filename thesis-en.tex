@@ -709,7 +709,7 @@ to maintain solution, which allowed the action to be run only on Linux hosts. Th
 we implemented the V2 version of the action in a platform-independent way using TypeScript
 and Node.js, allowing it to be used on all runners supported by GitHub Actions.
 The differences between the V1 and V2 of the action are further discussed in section
-\ref{r:section_github_action}.
+\ref{r:section_continuous_integration_improvements}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %           Implementation            %
@@ -727,66 +727,7 @@ The differences between the V1 and V2 of the action are further discussed in sec
 
 \section{Brand new GitHub Action}\label{r:section_github_action}
 
-The V1 version of cargo-semver-checks-action was created when
-cargo-semver-checks lacked a built-in logic of choosing the correct baseline version and was not
-generating the rustdoc output automatically. Both of these tasks where therefore handled by the action.
-When our work on the project started, the tool had already gained these features making the
-action obsolete. Its only advantage over the manual configuration was that it
-installed both the Rust toolchain and the tool itself. However, it downloaded the baseline version from
-the repository instead of using the latest release published on crates.io and did not handle the edge cases
-properly. The other problem was that the action did not allow passing any parameters to the tool, which
-was pointed out by the users who often decided to setup the tool manually for this reason.
-Finally, the action was implemented as a bash script, which made it both difficult to maintain
-and runnable only on Linux hosts.
-
-The need for a redesign was therefore clear. After reviewing the available options,
-we decided to use the fact that a GitHub action might
-be run using Node.js and implement the V2 version in TypeScript. It is a standard way
-of creating complex actions, as it has multiple advantages:
-\begin{itemize}
-	\item TypeScript action is platform-independent and can be run on all runners supported by GitHub Actions.
-	\item Using Node.js makes it possible to depend on variety of \texttt{npm} packages, in particular the GitHub Actions
-		Toolkit \cite{github_actions_toolkit}, instead of building the components from scratch.
-	\item TypeScript code is more readable and easier to organize than a bash script or a GitHub workflow file.
-\end{itemize}
-The new version of the action not only fixes the problems of the previous V1, but also
-adds numerous features:
-\begin{itemize}
-	\item input \texttt{rust-toolchain}, which allows the user to specify the Rust toolchain to use instead
-		of the default \texttt{stable},
-	\item inputs \texttt{package} and \texttt{exclude}, both accepting lists of package names,
-		allowing to define the exact set of packages to be checked,
-	\item input \texttt{manifest-path}, which allows to specify the path to the \texttt{Cargo.toml} file
-		of the crate or workspaces to be processed if it is not located in the directory where
-		the action is run,
-	\item input \texttt{verbose}, which might be used to enable extended output of the tool,
-		providing details about every executed lint,
-	\item input \texttt{release-type}, with possible values \texttt{major}, \texttt{minor} and \texttt{patch},
-		allowing to specify the type of the release instead of deducing it from the crate's version change.
-\end{itemize}
-Moreover, the action now includes several optimizations of the running time:
-\begin{itemize}
-	\item The cargo-semver-checks tool is downloaded as a precompiled binary instead of being built from source.
-	\item The rustdoc of the baseline version is cached between the action's runs, so that it is generated
-		only once. The caching strategy might be adjusted by the user using inputs \texttt{shared-key}
-		and \texttt{prefix-key} (e.g. to share the cache between different GitHub jobs).
-	\item When possible, downloads from crates.io are made using recently developed \say{sparse} protocol
-		\cite{crates_io_sparse_protocol}.
-\end{itemize}
-
-Along with the new version of the action, we also developed an extensive suite of action tests
-(not to be confused with the test suite of cargo-semver-checks). The current CI workflow
-of the project consists of over 30 checks, which are responsible for:
-\begin{itemize}
-	\item making sure the action's code is properly formatted and builds without errors and warnings,
-	\item running the unit tests,
-	\item verifying whether the action works on Linux, Windows and macOS with different versions of
-		Rust installed,
-	\item testing all of the action's inputs by running it on a test repository,
-	\item comparing the cache created by the action with the expected one.
-\end{itemize}
-Such a comprehensive collection of tests helped us to find and fix several bugs not only in the action,
-but also in cargo-semver-checks itself, and will make it easier to maintain the project in the future.
+<Here write a list about the V2 of the continuous integration>
 
 \section{Test suite}\label{r:section_test_suite}
 
@@ -1196,16 +1137,6 @@ TODO:
 % 	\textit{cargo-semver-checks} (2023) \\
 % 	\url{https://github.com/obi1kenobi/cargo-semver-checks}
 
-
-%%% section 5.3 links
-
-\bibitem{github_actions_toolkit} GitHub,
-	\textit{GitHub Actions Toolkit} (2023) \\
-	\url{https://github.com/actions/toolkit}
-
-\bibitem{crates_io_sparse_protocol} Inside Rust Blog,
-	\textit{Help test Cargo's new index protocol} (2023) \\
-	\url{https://blog.rust-lang.org/inside-rust/2023/01/30/cargo-sparse-protocol.html}
 
 %%% section 7.2 links
 
