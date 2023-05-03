@@ -843,6 +843,89 @@ With that, we have high confidence that the found items are indeed true-positive
 
 \section{Generating witnesses}\label{r:section_generating_witnesses}
 
+We can prove that a release broke semver by creating a \say{witness},
+which consists of two small crates:
+\begin{itemize}
+	\item a \say{baseline} -- a crate which uses the old release as a dependency
+		and compiles fine,
+	\item a \say{current} -- a crate which uses the new release as a dependency
+		and doesn't compile,
+\end{itemize}
+Both crates have to have the same code (same \texttt{src/lib.rs} file),
+but different manifests.
+Thus, a witness is just three short files -- a source code that uses the item that
+broke semver and two manifests that only differs in the \texttt{[dependency]} section
+(they have the same crate name as a dependency, but a different version).
+
+The output of each lint in cargo-semver-checks contains a list of importable paths
+of items that triggered the given lint, which is enough to construct some of the witnesses.
+
+For example, after parsing the output of the \texttt{enum\_variant\_missing} lint,
+we got the importable path of the enum and the variant name of it that was removed.
+Thanks to that, we were able to write a Rust code consisting of a function that deconstructs the enum
+to the given variant. This source code compiles on the baseline, but doesn't compile
+on the current (because the Rust compiler doesn't find the variant), thus it's a valid witness.
+
+Using this logic, we wrote a Python script that parses the output of cargo-semver-checks,
+generates the witnesses and tries to compile them.
+During the compilation attempt, one of the three scenarios can happen:
+\begin{itemize}
+	\item the baseline compiles and the current doesn't compile, so it's a correct witness,
+	\item both the baseline and current compiles, which indicates a false-positive and a bug in cargo-semver-checks,
+	\item the baseline doesn't compile, which means that the witness was wrongly constructed.
+\end{itemize}
+
+We stumbled on some complications while creating the witnesses for some of the lints.
+We had the importable path of an item, but we didn't have any information
+about generics or traits, which the Rust compiler requires to have in the source code
+(e.g. a function could take a generic argument which type needs to be declared when passing to the function).
+Most of the cases were solved by writing a script that iterates over the number of generic arguments
+and checks whether a witness with this number of generic argument successfully compiles.
+The other cases required the generic types to satisfy some traits,
+which is much harder to automate or even write manually.
+Thus we decided that we'll skip checking some of the reports that required using generic types with traits.
+
+In some lints we could choose between simply importing the given item
+(e.g. by \texttt{use importable\_path;}) or by creating a source code that uses the given item.
+Simply importing the item can be seen as not convincing and not visually appealing (it doesn't use any item properties,
+e.g. it just uses the function name but it doesn't use the fact that it's a function and doesn't call the function),
+so we decided to generate witnesses with the more robust Rust code when possible
+and use the import technique as a fallback when it didn't compile.
+
+We stumbled on the last complication when we tried to create witnesses for the e.g. \texttt{enum\_variant\_added} lint.
+To construct a witness for it, one has to match on the given enum and exhaustively pattern-match
+on all of the enum's variants. The output only contained the name of the variant that was added,
+not all of the enum's variants. To retrieve the list of all variants, we wrote a separate
+Rust project that uses \texttt{trustfall\_rustdoc} by passing it the generated rustdoc of the dependency
+and running a Trustfall query that finds the enum with the given importable path and returns
+all of its variants. After retrieving that data in the Python script, we could construct the witness
+just like in the other lints.
+
+Some lints were triggered only a few times, so it was faster to manually write witnesses for them
+instead of expanding the Python script's functionality.
+There was also the \texttt{struct\_repr\_c\_removed} lint,
+which reports a breaking change, but it's not easily possible to create a witness,
+because the breaking change is based on creating an undefined behavior and not a compilation error,
+so we skipped writing witnesses for it and manually confirmed whether it indeed happens.
+
+After all the work, our Python script is able to create the following witness kinds
+with the following ways to write them:
+\begin{itemize}
+	\item a struct or enum item removed -- a (possibly generic) function that takes the item as an argument,
+	\item a trait removed -- a generic function (with possibly multiple generic arguments) that takes
+		a generic argument satisfying the trait,
+	\item a function or method changed (parameter count changed or removed)-- executing the function with
+		an adequate number of \texttt{todo!()} arguments.
+		This technique creates valid witnesses, even though it gives a warning that such statements are unreachable
+		(it is still possible to replace the \texttt{todo!()} argument with manually constructed ones,
+		but it's not needed to show a semver break),
+	\item a trait implementation removed -- a helper function that takes a generic argument satisfying
+		the given trait an a (possibly generic) function that takes the item and passes it to the helper function,
+	\item a enum variant missing -- deconstructing the enum with an \texttt{if} to the given variant,
+	\item a enum variant added, enum marked non-exhaustive or struct field added -- pattern-matching
+		on all of the item's variants or fields.
+\end{itemize}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                Team                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
