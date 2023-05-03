@@ -745,19 +745,19 @@ TODO:
 \section{Bugfixes}\label{r:section_bugfixes}
 
 Another important part of our work was diagnosing the issues present in the tool.
-Throughout our contribution to the project we managed to fix the following bugs:
+Throughout our contributions to the project, we managed to fix the following bugs:
 \begin{itemize}
 	\item current and baseline's rustdoc being generated with different features, which
 		resulted in false-positives,
 	\item tests failing on Rust 1.67.0,
 	\item incorect baseline version printed when the baseline was specified through
 		a path to the manifest,
-	\item trustfall-rustdoc-adapter incompatibility with new version of rustdoc v23
+	\item trustfall-rustdoc-adapter incompatibility with the new version of rustdoc v23
 		which stopped exporting inlined items of external crates,
-	\item running the tool resulting in update of the Cargo.lock file,
+	\item running the tool resulting in unwanted changes in the of the Cargo.lock file,
 	\item CI job wrongly checking the exit code in one of
 		the integration tests,
-	\item broken link appearing in the tool's output,
+	\item broken links appearing in the tool's output,
 	\item false-positives from target-specific optional features,
 	\item rustdoc command's output showing up without colors,
 	\item compilation error which happened because of changes
@@ -777,7 +777,7 @@ Apart from that, we reported a few bugs that were or are to be fixed by other co
 	\item duplicated lint's output on the bevy-render crate,
 	\item the tool failing to work when generating rustdoc of a crate
 		that has only yanked releases,
-	\item the tool printing some internal data while cheching the clap
+	\item the tool printing some internal data while checking the clap
 		crate,
 	\item a false-positive related to re-exporting types, values and
 		macros with the same names,
