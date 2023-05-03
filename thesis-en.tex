@@ -750,12 +750,98 @@ TODO:
 % chapter semver-crater
 \chapter{Tool's findings in popular crates}\label{r:chapter_results_popular_crates}
 
-\section{Statistics on true-positives and bugs}\label{r:section_results_statistics}
+\section{Statistics on found true-positives}\label{r:section_results_statistics}
+
+Thanks to cargo-semver-checks, we were able to find numerous true-positives
+amongst the one thousand most downloaded Rust crates.
+This section presents the results we got and the following one (\ref{r:section_generating_witnesses})
+describes how we managed to obtain them.
+
+TODO: calculate Xi constants.
+
+Those crates have X0 total releases (at the time of writing)
+that were published after XX-XX-XXXX, X1 of which do not compile anymore with the current version of Rust
+and X2 of the remaining ones were yanked.
+
+From the X3 non-yanked releases which we were able to compile,
+\textbf{in X4 of them we found one or more semver breaks}.
+In total, different lints were triggered X5 times with X6 items reported (one release can trigger multiple lints, each of them reporting multiple items in the sourcecode that broke semver).
+
+For every true-positive we constructed a \texttt{witness} -- a short Rust code
+proving that a particular item indeed breaks server.
+Each witness can be compiled using one version of a crate
+but results in a compilation error for the other version.
+Moreover, for each result we have viewed its sourcecode to confirm
+that it is part of the public API accessible by the user. Thus, we are confident that each
+result is a real true-positive.
+
+The following table shows for each lint in how many releases it was triggered
+and how many items in total it has reported:
+
+X7-table
+
+X8-explain-implications
+
+All of the detected true-positives (with their witnesses) can be found in a GitHub repository [X10]
+in both human-readable and machine-readable form.
+All of the results (both true-positives and false-positives / bugs) are provided
+in a human-readable form.
 
 \section{The process of gathering results (semver-crater)}\label{r:section_results_semver_crater}
 
-\section{Generating witnesses}\label{r:section_generating_witnesses}
+Because cargo-semver-checks is able to create a rustdoc
+from the registry of a particular crate and version,
+we thought of running the tool on a large number of existing crates
+to find true-positives and bugs (which mostly are false-positives or crashes).
+We developed a tool for this purpose and called it \texttt{semver-crater}
+(similarly to \texttt{crater} which is used by the Rust team to check
+new compilator versions on a large number of crates).
 
+It fetches a list of one thousand crates available on crates.io, sorted by the number of
+all-time downloads (thus, they are often the biggest crates and libraries
+that strictly adhere to semantic versioning). For each crate,
+it then retrieves the available versions which were not yanked
+and compares every two adjacent, non-yanked versions and parses the output.
+The results (which take several days to generate) are saved to a CSV file.
+
+Unfortunately, cargo-semver-checks is not yet perfect and sometimes produces false-positives
+that are to be fixed. However, most of them were caused by one of the two cases:
+\begin{itemize}
+	\item an item was marked with the \texttt{\#[doc(hidden)]} attribute,
+		which hides it from the documentation and thus is not part
+		of the public API accessible by the user
+		(\texttt{\#[doc(hidden)]} is most often used by macros to hide their generated code
+		as it is irrevelant for the user),
+	\item an item was moved to another crate and re-exported
+		(thus the item is still accessible with the old path,
+		but its definition is in another rustdoc making it not visible to cargo-semver-checks).
+\end{itemize}
+Other false-positives also happened, but they showed up rarely and primarily
+were just caused by a bug in the lint query.
+
+Because fixing the two main false-positives turned out to be difficult, we instead shifted our focus
+to finding ways for detecting when one of them happened.
+We came up with two solutions:
+\begin{itemize}
+	\item To detect most of the \say{doc hidden} false-positives
+		(though not all), we managed to get a list of items that are definitely
+		\say{doc hidden} and then ignored such items in the results.
+		We were able to create the list by running cargo-semver-checks on one rustdoc
+		containing the hidden items and another one without the hidden items,
+		parsing the output to know which items were removed.
+	\item As a way to know whether a reported item is a false-positive or a true-positive,
+		we created a witness (more on that in section \ref{r:witness_generation})
+		and ignored all items whose witnesses compile on both baseline and current versions.
+\end{itemize}
+
+Those two techniques greatly reduced the number of reports.
+To be sure that the remaining items were true-positives,
+we manually checked the code (we managed to generate links to the line of code where each item was defined).
+Mostly we verified whether an item was indeed a part of the public API
+(not below a \say{doc hidden} and not a part of a test module).
+With that, we have high confidence that the found items are indeed true-positives.
+
+\section{Generating witnesses}\label{r:section_generating_witnesses}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                Team                 %
