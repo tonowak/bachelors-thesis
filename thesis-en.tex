@@ -724,47 +724,48 @@ Before our contributions, there were 18 existing lints.
 We have managed to implement many new ones:
 \begin{itemize}
     \item {\ttfamily enum\_marked\_non\_exhaustive}
-        -- detects marking {\ttfamily Enum} as {\ttfamily \#[non\_exhaustive]},
+        -- detects marking an {\ttfamily Enum} as {\ttfamily \#[non\_exhaustive]},
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/155
     \item {\ttfamily enum\_struct\_variant\_field\_missing}
         -- detects missing fields in a struct variant of an {\ttfamily Enum},
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/156
     \item {\ttfamily function\_parameter\_count\_changed}
-        -- detects functions with changing parameter count,
+        -- detects functions with changed parameter count,
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/170
     \item {\ttfamily tuple\_struct\_to\_plain\_struct}
         -- detects changing struct kind from tuple to plain,
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/249
     \item {\ttfamily trait\_unsafe\_added}
-        -- detects marking {\ttfamily Trait} as {\ttfamily unsafe},
+        -- detects marking a {\ttfamily Trait} as {\ttfamily unsafe},
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/252
     \item {\ttfamily trait\_unsafe\_removed}
         -- detects removing {\ttfamily unsafe} marker from a {\ttfamily Trait},
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/252
     \item {\ttfamily enum\_must\_use\_added}
-        -- detects marking {\ttfamily Enum} as {\ttfamily \#[must\_use]},
+        -- detects marking an {\ttfamily Enum} with the {\ttfamily \#[must\_use]} attribute,
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/278
     \item {\ttfamily struct\_must\_use\_added}
-        -- detects marking struct as {\ttfamily \#[must\_use]},
+        -- detects marking a struct with the {\ttfamily \#[must\_use]} attribute,
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/279
     \item {\ttfamily trait\_must\_use\_added}
-        -- detects marking {\ttfamily Trait} as {\ttfamily \#[must\_use]},
+        -- detects marking a {\ttfamily Trait} with the {\ttfamily \#[must\_use]} attribute,
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/280
     \item {\ttfamily function\_must\_use\_added}
-        -- detects marking function as {\ttfamily \#[must\_use]},
+        -- detects marking a function with the {\ttfamily \#[must\_use]} attribute,
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/281
     \item {\ttfamily inherent\_method\_must\_use\_added}
-        -- detects marking method as {\ttfamily \#[must\_use]},
+        -- detects marking a method with the {\ttfamily \#[must\_use]} attribute,
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/283
 \end{itemize}
-To enable the new lints, we had to do some work in the Trustfall rustdoc adapter. 
-It mainly resolved around extending the schema. Most of the time, the changes were simple. 
-The challenge there, was to design it in a way, that will not become a roadblock in the future.
+To enable the new lints, we had to do some development of the Trustfall rustdoc adapter. 
+It mainly resolved around extending its schema and the changes were simple most of the time.
+The real challenge there was to design it in a way that would not become troublesome to work with in the future.
 
-One notable exception, is that the schema for attributes only exported its value as a string, 
-so traversing its inner tags in lints was not possible. 
-Because of this, we had to introduce a breaking change there,
-making it more future-proof this time, and adjust the existing lints.
+One of the notable changes in the schema involved attributes.
+It originally exported its value as a string, which made traversing
+its inner tags in lints not possible. 
+Because of this we had to introduce a breaking change there
+and adjust the existing lints, making it more future-proof.
 % https://github.com/obi1kenobi/cargo-semver-checks/pull/171
 
 \section{Command-line interface improvements}\label{r:section_cli}
