@@ -772,7 +772,8 @@ Just the writing of such tests helped us find other bugs
 with various commandline arguments and they detected that it wrongly handled some arguments.
 
 While those integration tests were more appropriate to be written as a GitHub workflow job
-(simply because cloning the user's git repo takes time and requires internet connection,
+(simply because cloning the user's git repo takes time and memory, it requires internet connection
+and often the projects are platform-specific,
 thus the tests are not suitable to be run locally),
 we also had integration tests that we wanted to run locally, alongside the crate pair tests.
 For example, there was a bug where the crate pair tests did not include the lints in the produced binary (which fortunately was noticed before going to production).
