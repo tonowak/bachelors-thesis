@@ -731,7 +731,7 @@ The V1 version of cargo-semver-checks-action was created when
 cargo-semver-checks lacked a built-in logic of choosing the correct baseline version and was not
 generating the rustdoc output automatically. Both of these tasks where therefore handled by the action.
 When our work on the project started, the tool had already gained these features making the
-action obsolete. It was still handy for continuous integration as it
+action obsolete. Its only advantage over the manual configuration was that it
 installed both the Rust toolchain and the tool itself. However, it downloaded the baseline version from
 the repository instead of using the latest release published on crates.io and did not handle the edge cases
 properly. The other problem was that the action did not allow passing any parameters to the tool, which
