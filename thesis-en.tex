@@ -776,7 +776,9 @@ While those integration tests were more appropriate to be written as a GitHub wo
 and often the projects are platform-specific,
 thus the tests are not suitable to be run locally),
 we also had integration tests that we wanted to run locally, alongside the crate pair tests.
-For example, there was a bug where the crate pair tests did not include the lints in the produced binary (which fortunately was noticed before going to production).
+For example, there was a bug which caused the tool to not check any lints at all
+because they accidentally weren't being included in the produced binary
+(which fortunately was noticed before going to production).
 To be sure that this will not happen again, we wrote an integration test that
 locally executes the produced binary and verifies its output.
 
