@@ -744,8 +744,47 @@ TODO:
 
 \section{Bugfixes}\label{r:section_bugfixes}
 
-<Here write a list about found and fixed bugs>
-
+Another important part of our work was diagnosing the issues present in the tool.
+Throughout our contribution to the project we managed to fix the following bugs:
+\begin{itemize}
+	\item current and baseline's rustdoc being generated with different features, which
+		resulted in false-positives,
+	\item tests failing on Rust 1.67.0,
+	\item incorect baseline version printed when the baseline was specified through
+		a path to the manifest,
+	\item trustfall-rustdoc-adapter incompatibility with new version of rustdoc v23
+		which stopped exporting inlined items of external crates,
+	\item running the tool resulting in update of the Cargo.lock file,
+	\item CI job wrongly checking the exit code in one of
+		the integration tests,
+	\item broken link appearing in the tool's output,
+	\item false-positives from target-specific optional features,
+	\item rustdoc command's output showing up without colors,
+	\item compilation error which happened because of changes
+		in one of the tool's dependencies,
+	\item the rustdoc of the current and the baseline crates overwriting each other,
+	\item CLI choosing the latest release from the registry as a baseline version
+		even when it had been yanked,
+	\item CLI ignoring the \texttt{-{}-release-type} option.
+\end{itemize}
+Apart from that, we reported a few bugs that were or are to be fixed by other contributors:
+\begin{itemize}
+	\item incorrect path to the generated rustdoc when passing a
+		manifest path in the CLI,
+	\item lack of detailed information in the help messages of the tool,
+	\item output of the tool on the bevy-audio crate seeming
+		like it was producing a false positive,
+	\item duplicated lint's output on the bevy-render crate,
+	\item the tool failing to work when generating rustdoc of a crate
+		that has only yanked releases,
+	\item the tool printing some internal data while cheching the clap
+		crate,
+	\item a false-positive related to re-exporting types, values and
+		macros with the same names,
+	\item CLI of v0.18.2 not looking for the baseline in the registry
+		as it was supposed to do,
+	\item the precompiled tool crashing on Windows machines.
+\end{itemize}
 
 % chapter semver-crater
 \chapter{Tool's findings in popular crates}\label{r:chapter_results_popular_crates}
