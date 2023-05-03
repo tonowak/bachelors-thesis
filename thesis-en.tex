@@ -769,7 +769,7 @@ Moreover, the action now includes several optimizations of the running time:
 	\item The rustdoc of the baseline version is cached between the action's runs, so that it is generated
 		only once. The caching strategy might be adjusted by the user using inputs \texttt{shared-key}
 		and \texttt{prefix-key} (e.g. to share the cache between different GitHub jobs).
-	\item When possible, downloads from crates.io are made using recently developed "sparse" protocol
+	\item When possible, downloads from crates.io are made using recently developed \say{sparse} protocol
 		\cite{crates_io_sparse_protocol}.
 \end{itemize}
 
