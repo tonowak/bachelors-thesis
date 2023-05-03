@@ -750,11 +750,11 @@ Throughout our contributions to the project, we managed to fix the following bug
 	\item current and baseline's rustdoc being generated with different features, which
 		resulted in false-positives,
 	\item tests failing on Rust 1.67.0,
-	\item incorect baseline version printed when the baseline was specified through
+	\item incorrect baseline version printed when the baseline was specified through
 		a path to the manifest,
 	\item trustfall-rustdoc-adapter incompatibility with the new version of rustdoc v23
 		which stopped exporting inlined items of external crates,
-	\item running the tool resulting in unwanted changes in the of the Cargo.lock file,
+	\item running the tool resulting in unwanted changes in the Cargo.lock file,
 	\item CI job wrongly checking the exit code in one of
 		the integration tests,
 	\item broken links appearing in the tool's output,
@@ -771,7 +771,6 @@ Apart from that, we reported a few bugs that were or are to be fixed by other co
 \begin{itemize}
 	\item incorrect path to the generated rustdoc when passing a
 		manifest path in the CLI,
-	\item lack of detailed information in the help messages of the tool,
 	\item output of the tool on the bevy-audio crate seeming
 		like it was producing a false positive,
 	\item duplicated lint's output on the bevy-render crate,
