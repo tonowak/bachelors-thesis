@@ -723,27 +723,27 @@ The differences between the V1 and V2 of the action are further discussed in sec
 
 \section{Command-line interface improvements}\label{r:section_cli}
 
-The main change we implemented was adding ability to specify 
-features crate should be built with for the check. This is important,
-because some functionalities might move between features. Also,
-crates often have a feature, that breaks semver by design, which
+The main change which we implemented was adding the ability to specify 
+features that a crate should be built with for the checks. This is important
+because some functionalities may change between features. What is more,
+crates often have a feature that breaks semver by design, what
 we discovered when working on the semver-crater \ref{r:section_results_semver_crater}.
-Now, user can adjust it for their specific use case.
+Now the users can adjust them for their specific use cases.
 
 The new default behaviour is to include all the features,
-filtering out heuristicly the ones breaking semver, looking the 
-the feature name. For example, feature {\ttfamily unstable} would not be
+filtering out heuristicly the ones that break semver by looking at 
+the feature's name. For example, feature {\ttfamily unstable} would not be
 included. The list of banned names was created by looking
-at features in popular crates.
+at different features in popular crates.
 
-This option turned out to be error-prone, and required a heavy 
-test suite. For example, the tool caches generated rustdoc if it can.
-Now, we had to make sure, that the cache is not used if the feature
-config differs.
+This option turned out to be error-prone and required a heavy 
+test suite. For example, the tool caches generated rustdoc if it can,
+thus we had to make sure that the cache is not used if the feature
+configs differ.
 
-Also, we improved the user experience by spotting and fixing a few bugs
+We also improved the user experience by spotting and fixing a couple bugs
 in the command-line interface: both in the tool's behaviour
-in combination with specific flags, and in the output messages.
+in combination with specific flags and in its output messages.
 For details, see section \ref{r:section_bugfixes}.
 
 \section{Brand new GitHub Action}\label{r:section_github_action}
