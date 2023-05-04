@@ -868,7 +868,7 @@ on the current (because the Rust compiler cannot find the variant), thus it is a
 
 Using this logic, we wrote a Python script that parses the output of cargo-semver-checks,
 generates the witnesses and tries to compile them.
-During the compilation attempt, one of the three scenarios can happen:
+There are three possible outcomes:
 \begin{itemize}
 	\item the baseline compiles and the current doesn't compile, so it's a correct witness,
 	\item both the baseline and current compiles, which indicates a false-positive and a bug in cargo-semver-checks,
