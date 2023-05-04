@@ -863,8 +863,8 @@ of items that it was triggered by, which is enough to construct some of the witn
 For example, after parsing the output of the \texttt{enum\_variant\_missing} lint,
 we got the importable path of the enum and the name of its variant that was removed.
 Thanks to that, we were able to write a Rust code with a function that deconstructs the enum
-to the given variant. This source code compiles on the baseline, but doesn't compile
-on the current (because the Rust compiler doesn't find the variant), thus it's a valid witness.
+to the given variant. This source code compiles on the baseline, but does not compile
+on the current (because the Rust compiler cannot find the variant), thus it is a valid witness.
 
 Using this logic, we wrote a Python script that parses the output of cargo-semver-checks,
 generates the witnesses and tries to compile them.
