@@ -861,7 +861,7 @@ The output of each lint in cargo-semver-checks contains a list of importable pat
 of items that it was triggered by, which is enough to construct some of the witnesses automatically.
 
 For example, after parsing the output of the \texttt{enum\_variant\_missing} lint,
-we got the importable path of the enum and the variant name of it that was removed.
+we got the importable path of the enum and the name of its variant that was removed.
 Thanks to that, we were able to write a Rust code consisting of a function that deconstructs the enum
 to the given variant. This source code compiles on the baseline, but doesn't compile
 on the current (because the Rust compiler doesn't find the variant), thus it's a valid witness.
