@@ -879,8 +879,8 @@ We stumbled upon some complications while creating the witnesses for some of the
 We had the importable path of an item, but we didn't have any information
 about generics or traits, which the Rust compiler requires to be in the source code
 (e.g. a function could take a generic argument which type needs to be declared when calling the function).
-Most of the cases were solved by writing a script that iterates over the number of generic arguments
-and checks whether a witness with this number of generic argument successfully compiles.
+Most cases were solved by writing a script that iterates over the number of generic arguments
+and checks whether a witness with some number of generic argument successfully compiles.
 The other cases required the generic types to satisfy some traits,
 which is much harder to automate or even write manually.
 Thus we decided that we'll skip checking some of the reports that required using generic types with traits.
