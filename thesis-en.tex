@@ -888,7 +888,7 @@ Thus we decided that we would skip checking some of the reports that required us
 For some lints we could choose between simply importing the given item
 (e.g. by \texttt{use importable\_path;}) or creating a source code that uses it.
 Since just importing the item can be seen as not convincing and not visually appealing (it does not use any item properties,
-e.g. it just uses the function name but it doesn't use the fact that it's a function and doesn't call the function),
+e.g. it uses the function name but does not call the function itself).
 so we decided to generate witnesses with the more robust Rust code when possible
 and use the import technique as a fallback when it didn't compile.
 
