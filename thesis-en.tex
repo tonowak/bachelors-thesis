@@ -851,7 +851,7 @@ which consists of two small crates:
 	\item a \say{current} -- a crate which uses the new release as a dependency
 		and does not compile.
 \end{itemize}
-Both crates have to have the same code (same \texttt{src/lib.rs} file),
+Both crates must have exactly the same code (same \texttt{src/lib.rs} file),
 but different manifests.
 Thus, a witness is just three short files -- a source code that uses the item that
 broke semver and two manifests that only differs in the \texttt{[dependency]} section
