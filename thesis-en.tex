@@ -765,9 +765,10 @@ cargo-semver-checks has been ran).
 
 From those non-yanked non-major releases which we were able to compile,
 \textbf{in 470 of them we found one or more semver breaks}.
-Thus, on average, we found at least one break in 1 out of 30 releases.
+Thus, on average we found at least one break in 1 out of 30 releases.
+Those releases are in 173 different crates (out of 1000).
 In total, different lints were triggered 655 times with 3305 items reported 
-(one release can trigger multiple lints, each of them reporting multiple items in the sourcecode that broke semver).
+(one release can trigger multiple lints, each of them reporting multiple items in the source code that broke semver).
 
 For every true-positive we constructed a \texttt{witness} -- a short Rust code
 proving that a particular item indeed breaks server.
@@ -811,10 +812,6 @@ and how many items in total it has reported:
 		enum\_struct\_variant\_field\_added & $1$ & $1$ & $1$ \\
 	\end{tabular}
 \end{center}
-
-TODO: calculate Xi constants.
-
-X8-explain-implications
 
 All of the detected true-positives (with their witnesses) can be found in a GitHub repository \cite{github-csv-results}
 in both a human-readable and a machine-readable form.
