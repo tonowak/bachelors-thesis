@@ -904,10 +904,10 @@ we could then automatically construct its witness.
 
 Some lints were triggered only a few times, so it was faster to manually write witnesses for them
 instead of expanding the Python script's functionality.
-There was also the \texttt{struct\_repr\_c\_removed} lint,
-which reports a breaking change, but it's not easily possible to create a witness,
-because the breaking change is based on creating an undefined behavior and not a compilation error,
-so we skipped writing witnesses for it and manually confirmed whether it indeed happens.
+There was also the \texttt{struct\_repr\_c\_removed} lint that reported a breaking change.
+However, the issue was based on creating an undefined behavior rather than a compilation error,
+making it difficult to create a witness.
+Thus we decided to make an exception and manually verify whether it was indeed a semver-break.
 
 After all the work, our Python script is able to create the following witness kinds
 with the following ways to write them:
