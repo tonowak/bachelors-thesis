@@ -910,21 +910,24 @@ Thus we decided to make an exception and manually verify whether it was indeed a
 
 After all the work, our Python script is able to create the following witness kinds
 with the following ways to write them:
-\begin{itemize}
-	\item a struct or enum item removed -- a (possibly generic) function that takes the item as an argument,
-	\item a trait removed -- a generic function (with possibly multiple generic arguments) that takes
-		a generic argument satisfying the trait,
-	\item a function or method changed (parameter count changed or removed)-- executing the function with
-		an adequate number of \texttt{todo!()} arguments.
-		This technique creates valid witnesses, even though it gives a warning that such statements are unreachable
-		(it is still possible to replace the \texttt{todo!()} argument with manually constructed ones,
-		but it's not needed to show a semver break),
-	\item a trait implementation removed -- a helper function that takes a generic argument satisfying
-		the given trait an a (possibly generic) function that takes the item and passes it to the helper function,
-	\item a enum variant missing -- deconstructing the enum with an \texttt{if} to the given variant,
-	\item a enum variant added, enum marked non-exhaustive or struct field added -- pattern-matching
-		on all of the item's variants or fields.
-\end{itemize}
+\begin{center}
+	\begin{tabular}{p{4cm} p{11cm}}
+		\textbf{lint type} & \textbf{witness description} \\ \hline
+		struct or enum item removed & a (possibly generic) function that takes the item as an argument \\ \hline
+		trait removed & a generic function (with possibly multiple generic arguments) that takes
+			a generic argument satisfying the trait \\ \hline
+		function or method changed (parameter count changed or removed) & executing the function with
+			an adequate number of \texttt{todo!()} arguments.
+			This technique creates valid witnesses, even though it gives a warning that such statements are unreachable
+			(it is still possible to replace the \texttt{todo!()} argument with manually constructed ones,
+			but it's not needed to show a semver break) \\ \hline
+		trait implementation removed & a helper function that takes a generic argument satisfying
+			the given trait an a (possibly generic) function that takes the item and passes it to the helper function \\ \hline
+		enum variant missing & deconstructing the enum with an \texttt{if} to the given variant \\ \hline
+		enum variant added, enum marked non-exhaustive or struct field added & pattern-matching
+			on all of the item's variants or fields \\
+	\end{tabular}
+\end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                Team                 %
