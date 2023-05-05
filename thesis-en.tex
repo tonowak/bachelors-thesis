@@ -893,9 +893,10 @@ so we decided to generate witnesses with the more robust Rust code when possible
 and use the import technique as a fallback when it didn't compile.
 
 We had one last difficulty when we tried to create witnesses for the e.g. \texttt{enum\_variant\_added} lint.
-To construct a witness for it, one has to match on the given enum and exhaustively pattern-match
-on all of the enum's variants. The output only contained the name of the variant that was added,
-not all of the enum's variants. To retrieve the list of all variants, we wrote a separate
+To construct a witness for it, one has to exhaustively pattern-match
+on all of the given enum's variants. However, the output only contained the name
+of the variant that was added rather than a list of all the variants' names.
+To retrieve the full list, we wrote a separate
 Rust project that uses \texttt{trustfall\_rustdoc} by passing it the generated rustdoc of the dependency
 and running a Trustfall query that finds the enum with the given importable path and returns
 all of its variants. After retrieving that data in the Python script, we could construct the witness
