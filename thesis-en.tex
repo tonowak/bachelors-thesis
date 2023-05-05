@@ -724,9 +724,10 @@ The differences between the V1 and V2 of the action are further discussed in sec
 \section{Command-line interface improvements}\label{r:section_cli}
 
 The main change which we implemented was adding the ability to specify 
-features that a crate should be built with for the checks. This is important
-because some functionalities may change between features. What is more,
-crates often have a feature that breaks semver by design, what
+features that a crate should be built with for the checks. It is also
+possible to use different configuration for the current and baseline version.
+This is important because some functionalities may change between features. What is more,
+crates often have a feature that breaks semver by design, which
 we discovered when working on the semver-crater \ref{r:section_results_semver_crater}.
 Now the users can adjust them for their specific use cases.
 
@@ -736,7 +737,7 @@ the feature's name. For example, feature {\ttfamily unstable} would not be
 included. The list of banned names was created by looking
 at different features in popular crates.
 
-This option turned out to be error-prone and required a heavy 
+This feature turned out to be error-prone and required a heavy 
 test suite. For example, the tool caches generated rustdoc if it can,
 thus we had to make sure that the cache is not used if the feature
 configs differ.
