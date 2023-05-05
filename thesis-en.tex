@@ -2,6 +2,9 @@
 \usepackage{dirtytalk}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{cellspace}
+\setlength\cellspacetoplimit{5pt}
+\setlength\cellspacebottomlimit{5pt}
 \graphicspath{ {./images/} }
 
 \autor{Tomasz Nowak}{429575}
@@ -910,24 +913,71 @@ Thus we decided to make an exception and manually verify whether it was indeed a
 
 After all the work, our Python script is able to create the following witness kinds
 with the following ways to write them:
-\begin{center}
-	\begin{tabular}{p{4cm} p{11cm}}
-		\textbf{lint type} & \textbf{witness description} \\ \hline
-		struct or enum item removed & a (possibly generic) function that takes the item as an argument \\ \hline
-		trait removed & a generic function (with possibly multiple generic arguments) that takes
-			a generic argument satisfying the trait \\ \hline
-		function or method changed (parameter count changed or removed) & executing the function with
-			an adequate number of \texttt{todo!()} arguments.
-			This technique creates valid witnesses, even though it gives a warning that such statements are unreachable
-			(it is still possible to replace the \texttt{todo!()} argument with manually constructed ones,
-			but it's not needed to show a semver break) \\ \hline
-		trait implementation removed & a helper function that takes a generic argument satisfying
-			the given trait an a (possibly generic) function that takes the item and passes it to the helper function \\ \hline
-		enum variant missing & deconstructing the enum with an \texttt{if} to the given variant \\ \hline
-		enum variant added, enum marked non-exhaustive or struct field added & pattern-matching
-			on all of the item's variants or fields \\
+\begin{table}[h]
+	\centering
+	% adjust the fractions here so that it looks nice (MUST sum up to 1)
+	\begin{tabular}{| p{.5\linewidth} | p{.5\linewidth} |}
+		\hline
+			\multicolumn{1}{|Sc|}{\textbf{lint}} &
+			\multicolumn{1}{Sc|}{\textbf{witness description}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{enum\_missing} \\
+				\texttt{struct\_missing}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+				a (possibly generic) function that takes the item as an argument
+			}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{trait\_missing}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+				a generic function (with possibly multiple generic arguments) that takes
+				a generic argument satisfying the trait
+			}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{function\_missing} \\
+				\texttt{method\_missing} \\
+				\texttt{function\_parameter\_count\_changed} \\
+				\texttt{method\_parameter\_count\_changed}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+				executing the function with an adequate number of \texttt{todo!()} arguments.
+				This technique creates valid witnesses, even though it gives a warning that
+				such statements are unreachable (it is still possible to replace
+				the \texttt{todo!()} argument with manually constructed ones, but it's not needed
+				to show a semver break)
+			}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				TODO \texttt{trait\_implementation\_removed}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+				a helper function that takes a generic argument satisfying the given trait
+				and a (possibly generic) function that takes the item and passes it to
+				the helper function
+			}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{enum\_variant\_missing}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+				deconstructing the enum with an \texttt{if} to the given variant
+			}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{enum\_variant\_added} \\
+				\texttt{enum\_marked\_non\_exhaustive} \\
+				\texttt{struct\_field\_added}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+				pattern-matching on all of the item's variants or fields
+			}} \\
+		\hline
 	\end{tabular}
-\end{center}
+\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                Team                 %
