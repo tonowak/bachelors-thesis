@@ -899,8 +899,8 @@ of the variant that was added rather than a list of all the variants' names.
 To retrieve the full list, we wrote a separate
 Rust project that uses \texttt{trustfall\_rustdoc} by passing it the generated rustdoc of the dependency
 and running a Trustfall query that finds the enum with the given importable path and returns
-all of its variants. After retrieving that data in the Python script, we could construct the witness
-just like in the other lints.
+all of its variants. Having passed the newly-acquired data to the Python script,
+we could then automatically construct its witness.
 
 Some lints were triggered only a few times, so it was faster to manually write witnesses for them
 instead of expanding the Python script's functionality.
