@@ -897,8 +897,8 @@ To construct a witness for it, one has to exhaustively pattern-match
 on all of the given enum's variants. However, the output only contained the name
 of the variant that was added rather than a list of all the variants' names.
 To retrieve the full list, we wrote a separate
-Rust project that uses \texttt{trustfall\_rustdoc} by passing it the generated rustdoc of the dependency
-and running a Trustfall query that finds the enum with the given importable path and returns
+Rust project that uses \texttt{trustfall\_rustdoc} -- given the generated rustdoc of the dependency,
+it runs a Trustfall query that finds the enum with matching importable path and returns
 all of its variants. Having passed the newly-acquired data to the Python script,
 we could then automatically construct its witness.
 
