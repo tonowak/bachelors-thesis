@@ -2,6 +2,7 @@
 \usepackage{dirtytalk}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{array}
 \usepackage{cellspace}
 \setlength\cellspacetoplimit{5pt}
 \setlength\cellspacebottomlimit{5pt}
@@ -770,7 +771,7 @@ From those non-yanked, non-major releases which we were able to compile,
 \textbf{in 470 of them we found one or more semver breaks}.
 This means that on average every 1 in 30 releases that we checked had at least one semver break.
 Those releases are in 173 different crates (out of 1000).
-In total, different lints were triggered 655 times and reported 3305 items. 
+In total, different lints were triggered 655 times and reported 3305 items.
 (one release can trigger multiple lints, each of them reporting multiple items in the source code that broke semver).
 
 For every true-positive we constructed a \texttt{witness} -- a short Rust code
@@ -784,9 +785,20 @@ result is a real true-positive.
 The following table shows for each lint in how many releases it was triggered
 and how many items in total it has reported:
 
-\begin{center}
-	\begin{tabular}{p{7cm} p{2cm} p{2cm} p{2cm}}
-		\textbf{name of the lint} & \textbf{number of found items} & \textbf{number of different triggered releases} & \textbf{number of different triggered crates} \\ \hline
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|
+		>{\centering\arraybackslash}m{.55\linewidth} |
+		>{\centering\arraybackslash}m{.15\linewidth} |
+		>{\centering\arraybackslash}m{.15\linewidth} |
+		>{\centering\arraybackslash}m{.15\linewidth} |
+		}
+		\hline
+			{\textbf{name of the lint}} &
+			{\textbf{number of found items}} &
+			{\textbf{number of different triggered releases}} &
+			{\textbf{number of different triggered crates}} \\
+		\hline
 		inherent\_method\_missing & $791$ & $41$ & $27$ \\
 		enum\_variant\_added & $387$ & $140$ & $60$ \\
 		constructible\_struct\_adds\_field & $343$ & $123$ & $34$ \\
@@ -813,8 +825,9 @@ and how many items in total it has reported:
 		enum\_tuple\_variant\_field\_added & $3$ & $3$ & $3$ \\
 		enum\_repr\_int\_removed & $1$ & $1$ & $1$ \\
 		enum\_struct\_variant\_field\_added & $1$ & $1$ & $1$ \\
+		\hline
 	\end{tabular}
-\end{center}
+\end{table}
 
 All of the detected true-positives (with their witnesses) can be found in a GitHub repository \cite{github-csv-results}.
 They are provided in both human-readable and machine-readable form.
@@ -947,7 +960,7 @@ In the end, our Python script is able to create the following witnesses:
 	% adjust the fractions here so that it looks nice (MUST sum up to 1)
 	\begin{tabular}{| p{.5\linewidth} | p{.5\linewidth} |}
 		\hline
-			\multicolumn{1}{|Sc|}{\textbf{lint}} &
+			\multicolumn{1}{|Sc|}{\textbf{lint name}} &
 			\multicolumn{1}{Sc|}{\textbf{witness description}} \\
 		\hline
 			\begin{tabular}[c]{@{}l@{}}
