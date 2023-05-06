@@ -2,6 +2,9 @@
 \usepackage{dirtytalk}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{cellspace}
+\setlength\cellspacetoplimit{5pt}
+\setlength\cellspacebottomlimit{5pt}
 \graphicspath{ {./images/} }
 
 \autor{Tomasz Nowak}{429575}
@@ -872,6 +875,138 @@ Mostly we verified whether an item was indeed a part of the public API
 With that, we have high confidence that the found items are indeed true-positives.
 
 \section{Generating witnesses}\label{r:section_generating_witnesses}
+
+The fact that a release broke semver can be proven by a \say{witness},
+which consists of two small crates:
+\begin{itemize}
+	\item a \say{baseline} -- a crate which uses the old release as a dependency
+		and compiles fine,
+	\item a \say{current} -- a crate which uses the new release as a dependency
+		and does not compile.
+\end{itemize}
+Both crates must have exactly the same code (same \texttt{src/lib.rs} file),
+but slightly different manifests.
+Thus, a witness is made of just three short files -- a source code that uses the item that
+broke semver and two manifests that only differ in the \texttt{[dependency]} section
+(they have the same crate name as a dependency, but two different versions of it).
+
+The output of each lint in cargo-semver-checks contains a list of importable paths
+of items that it was triggered by, which is enough to construct some of the witnesses automatically.
+
+For example, after parsing the output of the \texttt{enum\_variant\_missing} lint,
+we got the importable path of the enum and the name of its variant that was removed.
+Thanks to that, we were able to write a Rust code with a function that deconstructs the enum
+to the given variant. This source code compiles in the baseline, but does not compile
+in the current (because the Rust compiler cannot find the variant), thus it is a valid witness.
+
+Using this logic, we wrote a Python script that parses the output of cargo-semver-checks,
+generates the witnesses and tries to compile them.
+There are three possible outcomes:
+\begin{itemize}
+	\item the baseline compiles and the current does not compile, which means the witness has confirmed that there is a true-positive,
+	\item both the baseline and current compile, which indicates a false-positive or a bug in one of the dependencies used by cargo-semver-checks,
+	\item the baseline does not compile, which means that the witness was constructed incorrectly.
+\end{itemize}
+
+We stumbled upon some complications while creating the witnesses for some of the lints.
+We had the importable path of an item, but we were missing the information
+about generics or traits, which the Rust compiler requires to be in the source code
+(e.g. a function could take a generic argument which type needs to be declared when calling the function).
+Most cases were solved by writing a script that iterates over the number of generic arguments
+and checks whether a witness with some number of generic argument successfully compiles.
+The other cases required the generic types to satisfy some traits,
+which is much harder to automate or even write manually.
+Thus we decided that we would skip checking some of the reports that required using generic types with traits.
+
+For some lints we could choose between simply importing the given item
+(e.g. by \texttt{use importable\_path;}) or creating a source code that uses it.
+Since just importing the item can be seen as not convincing and not visually appealing (it does not use any item properties,
+e.g. it uses the function name but does not call the function itself).
+Thus, we decided to generate witnesses with the more convincing technique of writing the more realistic Rust code whenever possible
+and used the pure imports as a fallback when it failed to compile.
+
+We had one last difficulty when we tried to create witnesses for the e.g. \texttt{enum\_variant\_added} lint.
+To construct a witness for it, one has to exhaustively pattern-match
+on all of the given enum's variants. However, the output only contained the name
+of the variant that was added rather than a list of all the variants' names.
+To retrieve the full list, we wrote a separate
+Rust project that uses \texttt{trustfall\_rustdoc} -- given the generated rustdoc of the dependency,
+it runs a Trustfall query that finds the enum with matching importable path and returns
+all of its variants. Having passed the newly-acquired data to the Python script,
+we could then automatically construct its witness.
+
+Some lints were triggered only a couple times, so instead of expanding the Python script's functionality, it was faster to manually write witnesses for them.
+There was also the \texttt{struct\_repr\_c\_removed} lint that reported a breaking change.
+However, the issue was based on creating an undefined behavior rather than a compilation error,
+making it difficult to create a witness.
+Thus we decided to make an exception and manually verify whether it was indeed a semver-break.
+
+In the end, our Python script is able to create the following witnesses:
+\begin{table}[h]
+	\centering
+	% adjust the fractions here so that it looks nice (MUST sum up to 1)
+	\begin{tabular}{| p{.5\linewidth} | p{.5\linewidth} |}
+		\hline
+			\multicolumn{1}{|Sc|}{\textbf{lint}} &
+			\multicolumn{1}{Sc|}{\textbf{witness description}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{enum\_missing} \\
+				\texttt{struct\_missing}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+				a function (possibly a generic one) that takes the missing item as an argument
+			}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{trait\_missing}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+				a generic function (with one or more generic arguments) that takes
+				a generic argument satisfying the missing trait
+			}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{function\_missing} \\
+				\texttt{method\_missing} \\
+				\texttt{function\_parameter\_count\_changed} \\
+				\texttt{method\_parameter\_count\_changed}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+				a missing function/method call with an adequate number of \texttt{todo!()} arguments.
+				This technique creates valid witnesses, even though it generates warnings that
+				such statements are unreachable (it is still possible to replace
+				the \texttt{todo!()} arguments with manually constructed ones, but it is not needed
+				to prove a semver break)
+			}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{auto\_trait\_impl\_removed} \\
+				\texttt{derive\_trait\_impl\_removed}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+				a function (possibly a generic one) that takes the item causing a break
+				and another function to which this item is passed by the first function.
+			}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{enum\_variant\_missing}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+				a deconstruction of the enum with an \texttt{if} that requires the missing variant
+			}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{enum\_variant\_added} \\
+				\texttt{enum\_marked\_non\_exhaustive} \\
+				\texttt{struct\_field\_added}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+				pattern-matching on all of the item's variants or fields
+			}} \\
+		\hline
+	\end{tabular}
+\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                Team                 %
