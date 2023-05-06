@@ -879,7 +879,7 @@ There are three possible outcomes:
 \end{itemize}
 
 We stumbled upon some complications while creating the witnesses for some of the lints.
-We had the importable path of an item, but we didn't have any information
+We had the importable path of an item, but we were missing the information
 about generics or traits, which the Rust compiler requires to be in the source code
 (e.g. a function could take a generic argument which type needs to be declared when calling the function).
 Most cases were solved by writing a script that iterates over the number of generic arguments
