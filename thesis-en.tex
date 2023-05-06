@@ -737,10 +737,12 @@ the feature's name. For example, a feature named {\ttfamily unstable} would not 
 included. The list of banned names was created by looking
 at different features in popular crates.
 
-This feature turned out to be error-prone and required a heavy 
-test suite. For example, the tool caches generated rustdoc if it can,
-thus we had to make sure that the cache is not used if the feature
-configs differ.
+It was not easy to correctly handle all edge cases,
+thus we wrote a heavy test suite for this change.
+For example, one of the optimizations written in cargo-semver-checks
+is caching the generated rustdoc and we had to make sure that 
+the caching mechanism is not used when a user changes the enabled features
+(which might change the rustdoc).
 
 We also improved the user experience by spotting and fixing a couple bugs
 in the command-line interface: both in the tool's behaviour
