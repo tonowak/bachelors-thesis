@@ -955,9 +955,8 @@ In the end, our Python script is able to create the following witnesses:
 				\texttt{derive\_trait\_impl\_removed}
 			\end{tabular} &
 			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
-				a helper function that takes a generic argument satisfying the given trait
-				and a (possibly generic) function that takes the item and passes it to
-				the helper function
+				a function (possibly a generic one) that takes the item causing a break
+				and another function to which this item is passed by the first function.
 			}} \\
 		\hline
 			\begin{tabular}[c]{@{}l@{}}
