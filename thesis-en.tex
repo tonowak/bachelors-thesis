@@ -1008,8 +1008,10 @@ the project's downloads. Originally a repository using cargo-semver-checks would
 download the same version multiple times. For example, every time a CI run took place the tool
 would be downloaded from crates.io and built locally from scratch. This resulted in a big variation
 of downloads per release, depending on factors such as how long it has been since the most
-recent one. However, with pre-builds now available, most projects download the newest version
-of the tool only once, add the binaries to their repository and use them instead. This has lowered
+recent one. However, with pre-builds now available, more and more projects
+decide to get them directly from the GitHub repository for CI usage
+rather than download the tool from crates.io.
+This has lowered
 the average downloads of cargo-semver-checks, but by no means decreased the tool's popularity --
 quite the contrary, as the current number of over 2 000 downloads per release better reflects
 how many repositories actively use cargo-semver-checks.
