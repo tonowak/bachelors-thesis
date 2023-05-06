@@ -744,20 +744,20 @@ We have managed to implement many new ones:
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/252
     \item {\ttfamily trait\_unsafe\_removed}
         -- detects removing {\ttfamily unsafe} marker from a {\ttfamily Trait},
-        removing the ability to do a unsafe {\ttfamily impl}.
+        removing the ability to do an unsafe {\ttfamily impl}.
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/252
     \item {\ttfamily enum\_must\_use\_added}
         -- detects marking an {\ttfamily Enum} with the {\ttfamily \#[must\_use]} attribute,
-        removing the ability to ignore it, when returned from a function.
+        removing the ability to ignore the enum when returned from a function.
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/278
     \item {\ttfamily struct\_must\_use\_added}
         -- detects marking a struct with the {\ttfamily \#[must\_use]} attribute,
-        removing the ability to ignore it, when returned from a function.
+        removing the ability to ignore the struct when returned from a function.
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/279
     \item {\ttfamily trait\_must\_use\_added}
         -- detects marking a {\ttfamily Trait} with the {\ttfamily \#[must\_use]} attribute,
-        removing the ability to ignore an object with dynamic type implementing
-        this trait, when returned from a function.
+        removing the ability to ignore a function's result, when it is returning an object
+        with dynamic type that implements this trait
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/280
     \item {\ttfamily function\_must\_use\_added}
         -- detects marking a function with the {\ttfamily \#[must\_use]} attribute,
