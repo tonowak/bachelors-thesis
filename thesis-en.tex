@@ -666,7 +666,7 @@ This makes the JSON format a~natural candidate for running Trustfall queries. Ho
 to be transformed into a~structure that is understandable for Trustfall, namely a~graph in which
 vertices are assigned types and type-dependent properties.
 
-This is where trustfall-rustdoc-adapter comes in. It provides an interface for querying
+This is where trustfall-rustdoc-adapter comes in. It provides an interface (called schema) for querying
 the rustdoc's output by associating JSON nodes with Trustfall vertices. To achieve this, the adapter
 implements the following methods:
 \begin{itemize}
@@ -676,7 +676,6 @@ implements the following methods:
 	\item \texttt{resolve\_neighbors} -- finds the neighboring vertices across an edge,
 	\item \texttt{resolve\_coercion} -- attempts to coerce a vertex into a more specific type.
 \end{itemize}
-The interface exported by the adapter (all the vertices with their properties and relations
 between them) is called a \textit{schema}.
 These are used by the Trustfall engine to execute lint queries written in the Trustfall language.
 
