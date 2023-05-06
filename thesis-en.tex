@@ -943,11 +943,11 @@ In the end, our Python script is able to create the following witnesses:
 				\texttt{method\_parameter\_count\_changed}
 			\end{tabular} &
 			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
-				executing the function with an adequate number of \texttt{todo!()} arguments.
-				This technique creates valid witnesses, even though it gives a warning that
+				a missing function/method call with an adequate number of \texttt{todo!()} arguments.
+				This technique creates valid witnesses, even though it generates warnings that
 				such statements are unreachable (it is still possible to replace
-				the \texttt{todo!()} argument with manually constructed ones, but it's not needed
-				to show a semver break)
+				the \texttt{todo!()} arguments with manually constructed ones, but it is not needed
+				to prove a semver break)
 			}} \\
 		\hline
 			\begin{tabular}[c]{@{}l@{}}
