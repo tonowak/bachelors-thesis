@@ -770,8 +770,8 @@ We have managed to implement many new ones:
 \end{itemize}
 To enable the new lints, we had to do some development of the Trustfall rustdoc adapter. 
 It mainly resolved around extending its schema and implementing the changes.
-The challenge was to design new interface in a way that would
-make it still possible to extend it without problems in the future.
+The challenge was to design the new interface in a way that would
+still make it possible to extend it without problems in the future.
 
 One of the notable changes in the schema involved attributes.
 It originally exported its value as a string, which made traversing
@@ -779,7 +779,7 @@ its inner tags in lints not possible.
 The solution was to refactor it into a proper tree structure.
 This meant that we had to introduce a breaking change there
 and do minor adjustments in the existing lints, 
-making it more future-proof this time.
+making it more future-proof at the same time.
 % https://github.com/obi1kenobi/cargo-semver-checks/pull/171
 
 \section{Command-line interface improvements}\label{r:section_cli}
