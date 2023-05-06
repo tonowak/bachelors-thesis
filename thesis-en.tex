@@ -873,7 +873,7 @@ Using this logic, we wrote a Python script that parses the output of cargo-semve
 generates the witnesses and tries to compile them.
 There are three possible outcomes:
 \begin{itemize}
-	\item the baseline compiles and the current doesn't compile, so it's a correct witness,
+	\item the baseline compiles and the current does not compile, meaning the witness has confirmed that there is a true-positive,
 	\item both the baseline and current compile, which indicates a false-positive and a bug in cargo-semver-checks,
 	\item the baseline does not compile, which means that the witness was constructed incorrectly.
 \end{itemize}
