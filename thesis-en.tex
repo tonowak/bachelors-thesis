@@ -872,9 +872,9 @@ Because fixing the two main false-positives turned out to be difficult, we inste
 to finding ways for detecting when one of them happened.
 We came up with two solutions:
 \begin{itemize}
-	\item To detect most of the \say{doc hidden} false-positives
+	\item To detect most of the \say{doc-hidden} false-positives
 		(though not all), we managed to get a list of items that are definitely
-		\say{doc hidden} and then ignored such items in the results.
+		\say{doc-hidden} and then ignored such items in the results.
 		We were able to create the list by running cargo-semver-checks on one rustdoc JSON file
 		containing the hidden items and another one without the hidden items,
 		parsing the output to know which items were removed.
@@ -887,7 +887,7 @@ Those two techniques greatly reduced the number of reports.
 To be sure that the remaining items were true-positives,
 we manually checked the code (we managed to generate links to the line of code where each item was defined).
 Mostly we verified whether an item was indeed a part of the public API
-(not \say{doc hidden} and not a part of a test module).
+(not \say{doc-hidden} and not a part of a test module).
 With that, we have high confidence that the found items are indeed true-positives.
 
 \section{Generating witnesses}\label{r:section_generating_witnesses}
