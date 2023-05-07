@@ -771,8 +771,10 @@ From those non-yanked, non-major releases which we were able to compile,
 \textbf{in 470 of them we found one or more semver breaks}.
 This means that on average every 1 in 30 releases that we checked had at least one semver break.
 All in all, we found semver violations in 173 crates of the 1000 crates we scanned, slightly more than 1 in 6.
-In total, different lints were triggered 655 times and reported 3305 items.
-(one release can trigger multiple lints, each of them reporting multiple items in the source code that broke semver).
+In total, we discovered 3305 different instances of semver violations across all releases.
+We found that the same release frequently contained more than one instance of the same kind of semver violation:
+for example, a release could have removed multiple functions. Ignoring multiple instances
+of the same semver violation in the same release, the semver lints were triggered 655 times across all releases.
 
 We verified each reported semver violation by constructing a \texttt{witness} -- a short Rust code
 proving that a particular release indeed breaks semver.
