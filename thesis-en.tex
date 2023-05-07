@@ -768,8 +768,8 @@ Thus, we considered 14 389 releases in total (which is also the number of times
 cargo-semver-checks has been ran).
 
 From those non-yanked, non-major releases which we were able to compile,
-\textbf{in 470 of them we found one or more semver breaks}.
-This means that on average every 1 in 30 releases that we checked had at least one semver break.
+\textbf{in 470 of them we found one or more semver violations}.
+This means that on average every 1 in 30 releases that we checked had at least one semver violation.
 All in all, we found semver violations in 173 crates of the 1000 crates we scanned, slightly more than 1 in 6.
 In total, we discovered 3305 different instances of semver violations across all releases.
 We found that the same release frequently contained more than one instance of the same kind of semver violation:
@@ -777,7 +777,7 @@ for example, a release could have removed multiple functions. Ignoring multiple 
 of the same semver violation in the same release, the semver lints were triggered 655 times across all releases.
 
 We verified each reported semver violation by constructing a \texttt{witness} -- a short Rust code
-proving that a particular release indeed breaks semver.
+proving that a particular release indeed violates semver.
 Each witness can be compiled using one release of a crate,
 but results in a compilation error for the other release.
 Moreover, for each result we have examined its source code to confirm
