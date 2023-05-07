@@ -747,11 +747,8 @@ available crate pairs. This has brought numerous benefits:
 		which allows to write tests for lints checking the manifests
 		(such lints are not yet implemented, but it is one of the future goals
 		of the project),
-	\item the tests became more organised, uncovering some bugs
-		-- previously each test source code had a lot of branch conditions that
-		made it difficult to find mistakes
-		(e.g. when the code introduced an item in \say{current}
-		that was then removed in \say{baseline}).
+	\item because we replaced the heavy use of conditional compilation with separate crates with regular source code,
+	    it's now easier to triage issues like false-positives and to add new test cases
 \end{itemize}
 In the process of making the test suite more thorough,
 we discovered a variety of edge cases in the underlying rustdoc tool,
