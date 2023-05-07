@@ -932,9 +932,12 @@ about generics or traits, which the Rust compiler requires to be in the source c
 (e.g. a function could take a generic argument which type needs to be declared when calling the function).
 Most cases were solved by writing a script that iterates over the number of generic arguments
 and checks whether a witness with some number of generic argument successfully compiles.
-The other cases required the generic types to satisfy some traits,
+The other cases mainly required the generic types to satisfy some traits,
 which is much harder to automate or even write manually.
-Thus we decided that we would skip checking some of the reports that required using generic types with traits.
+Thus we decided that we would skip checking some of the reports that required using generic types.
+Because of that, there are 151 witnesses that we did not write
+and the releases without the witnesses are \textit{not} included in the statistics in section \ref{section_results_semver_crater}
+-- we could have found more semver violations, but it was too time-consuming for us.
 
 For some lints we could choose between simply importing the given item
 (e.g. by \texttt{use importable\_path;}) or creating a source code that uses it.
