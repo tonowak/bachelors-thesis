@@ -859,7 +859,7 @@ that are to be fixed. However, most of them were caused by one of the two cases:
 	\item an item was marked with the \texttt{\#[doc(hidden)]} attribute,
 		which hides it from the documentation and thus is not part
 		of the public API accessible by the user
-		(\texttt{\#[doc(hidden)]} is most often used by macros to hide their generated code
+		(\texttt{\#[doc(hidden)]} is most often used for code called from inside macro implementations
 		as it is not meant to be used directly by the user),
 	\item an item was moved to another crate and re-exported
 		(thus the item is still accessible with the old path,
