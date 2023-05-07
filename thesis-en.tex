@@ -951,7 +951,7 @@ it runs a Trustfall query that finds the enum with matching importable path and 
 all of its variants. Having passed the newly-acquired data to the Python script,
 we could then automatically construct its witness.
 
-Some lints were triggered only a couple times, so instead of expanding the Python script's functionality, it was faster to manually write witnesses for them.
+Some lints were triggered only a couple of times, so instead of expanding the Python script's functionality, it was faster to manually write witnesses for them.
 There was also the \texttt{struct\_repr\_c\_removed} lint that reported a breaking change.
 However, the issue was based on creating an undefined behavior rather than a compilation error,
 making it difficult to create a witness.
