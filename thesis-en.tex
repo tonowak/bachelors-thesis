@@ -986,8 +986,11 @@ even more semver breaks. Numerous new features together with stability and perfo
 have been introduced frequently as well to further increase its popularity.
 
 During the research that we conducted in chapter \ref{r:chapter_results_popular_crates},
-the tool has proven its reliability in varying conditions of the most popular Rust packages,
-further reaffirming the value and benefits it has to offer the developers.
+we have exposed that semver in Rust is hard to adhere to. Even among the top 1000 most downloaded
+crates more than 1 in 6 of them has violated semver and approximately 1 in 30 releases contained at
+least one semver violation. Those top crates were built and are maintained by highly experienced
+Rust developers, but this is not the case for less popular ones -- with their developers having
+less expertise and poorer semver knowledge, they are even more vulnerable to cause breaks.
 
 After all of our contributions, the tool's ultimate goal of becoming a built-in feature of cargo
 seems closer than it has ever been before. More and more users decide to add the tool to their
