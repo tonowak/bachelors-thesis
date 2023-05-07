@@ -774,7 +774,7 @@ All in all, we found semver violations in 173 crates of the 1000 crates we scann
 In total, different lints were triggered 655 times and reported 3305 items.
 (one release can trigger multiple lints, each of them reporting multiple items in the source code that broke semver).
 
-For every true-positive we constructed a \texttt{witness} -- a short Rust code
+We verified each reported semver violation by constructing a \texttt{witness} -- a short Rust code
 proving that a particular item indeed breaks server.
 Each witness can be compiled using one version of a crate,
 but results in a compilation error for the other version.
