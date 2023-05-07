@@ -860,7 +860,7 @@ that are to be fixed. However, most of them were caused by one of the two cases:
 		as it is irrevelant for the user),
 	\item an item was moved to another crate and re-exported
 		(thus the item is still accessible with the old path,
-		but its definition is in another rustdoc making it not visible to cargo-semver-checks).
+		but its definition is in another rustdoc JSON file making it not visible to cargo-semver-checks).
 \end{itemize}
 Other false-positives also happened, but they showed up rarely and primarily
 were just caused by a bug in the lint query.
@@ -872,7 +872,7 @@ We came up with two solutions:
 	\item To detect most of the \say{doc hidden} false-positives
 		(though not all), we managed to get a list of items that are definitely
 		\say{doc hidden} and then ignored such items in the results.
-		We were able to create the list by running cargo-semver-checks on one rustdoc
+		We were able to create the list by running cargo-semver-checks on one rustdoc JSON file
 		containing the hidden items and another one without the hidden items,
 		parsing the output to know which items were removed.
 	\item As a way to know whether a reported item is a false-positive or a true-positive,
