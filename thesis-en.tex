@@ -756,7 +756,7 @@ TODO:
 
 \section{Statistics on real-world violations of semver}\label{r:section_results_statistics}
 
-Thanks to cargo-semver-checks, we were able to find numerous true-positives
+Thanks to cargo-semver-checks, we were able to find numerous semver violations
 amongst the one thousand most downloaded Rust crates.
 This section is a presentation of all the results we got. To learn more about
 our methodology, see section \ref{r:section_generating_witnesses}.
@@ -780,7 +780,7 @@ Each witness can be compiled using one version of a crate,
 but results in a compilation error for the other version.
 Moreover, for each result we have examined its source code to confirm
 that it is part of the public API accessible by the user and not marked \texttt{\#[doc(hidden)]}. Thus, we are confident that each
-result is a real true-positive.
+result is a semver violation that is a true-positive.
 
 The following table shows for each lint in how many releases it was triggered
 and how many items in total it has reported:
@@ -838,7 +838,7 @@ The remaining results (`cargo-semver-checks` false-positive reports and bugs) ar
 Because cargo-semver-checks is able to create a rustdoc JSON file
 from the registry of a particular crate and version,
 we thought of running the tool on a large number of existing crates
-to find true-positives and bugs (which mostly are false-positives or crashes).
+to find semver violations and bugs (which mostly are false-positives or crashes).
 We developed a tool for this purpose and called it \texttt{semver-crater}
 (similarly to \texttt{crater} which is used by the Rust team to check
 new compilator versions on a large number of crates).
@@ -916,7 +916,7 @@ Using this logic, we wrote a Python script that parses the output of cargo-semve
 generates the witnesses and tries to compile them.
 There are three possible outcomes:
 \begin{itemize}
-	\item the baseline compiles and the current does not compile, which means the witness has confirmed that there is a true-positive,
+	\item the baseline compiles and the current does not compile, which means the witness has confirmed that there is a semver violation (a true-positive),
 	\item both the baseline and current compile, which indicates a false-positive or a bug in one of the dependencies used by cargo-semver-checks,
 	\item the baseline does not compile, which means that the witness was constructed incorrectly.
 \end{itemize}
