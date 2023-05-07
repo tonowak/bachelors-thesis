@@ -992,20 +992,6 @@ least one semver violation. Those top crates were built and are maintained by hi
 Rust developers, but this is not the case for less popular ones -- with their developers having
 less expertise and poorer semver knowledge, they are even more vulnerable to cause breaks.
 
-After all of our contributions, the tool's ultimate goal of becoming a built-in feature of cargo
-seems closer than it has ever been before. More and more maintainers decide to add the tool
-to their production processes. Moreover, it is not only them, but also all of
-the packages' dependents who benefit from the tool's presence in the crate's repository. Thus its
-actual impact and the group of beneficiaries are much greater than the number of repositories
-using it may suggest.
-
-The final impact of our work has been an order of magnitude greater than
-we expected. Since the early days of our contributions, we could see the constant increase
-in the tool's usage as it was growing to its current, well-estabilished position in the Rust
-ecosystem. With that, we firmly believe that its future is bright and are happy to already see it
-making such an impact, hoping to soon allow everyone to be fearless about running
-\texttt{cargo update} on their projects.
-
 \section{Rust community's positive response to the tool}\label{r:section_community_response}
 
 The Rust community has shown great interest in using the tool -- as of May 2023,
@@ -1078,6 +1064,17 @@ cargo-semver-checks into other systems -- the tool is available in nixOS and has
 into release managers like release-plz. With those and many more usage scenarios,
 cargo-semver-checks has proven its versatility in the vast, diverse world of semantic versioning.
 
+The final impact of our work has been an order of magnitude greater than we expected.
+Since the early days of our contributions, we could see the constant increase
+in cargo-semver-checks usage as it was growing to its current, well-estabilished position in
+the Rust ecosystem. Given its wide and enthusiastic adoption by both corporate and hobbyist
+projects, and the high frequency of accidental semantic versioning violations when it is not
+in use, the tool's ultimate goal of becoming a built-in feature of cargo seems closer than it has
+ever been before. Moreover, it is not only the packages' maintainers, but also all of the
+dependents who benefit from the tool's presence. Thus its actual impact and the group of
+beneficiaries are even greater than the numbers may suggest. With that, we firmly believe that
+its future is bright and are happy to already see it making such an impact, hoping to soon allow
+everyone to be fearless about running \texttt{cargo update} on their projects.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %            Bibliography             %
