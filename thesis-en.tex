@@ -994,6 +994,15 @@ less expertise and poorer semver knowledge, they are even more vulnerable to cau
 
 \section{Rust community's positive response to the tool}\label{r:section_community_response}
 
+So far, cargo-semver-checks has earned the trust of many projects' maintainers. Among them are some
+of the largest and most iconic Rust crates, such as tokio (library for concurrent programming)
+and libp2p (modular library for peer-to-peer networking). There are also numerous projects from
+companies widely known outside the Rust community that adopted the tool as well, including Amazon,
+Microsoft, Adobe and Mozilla. Developers have even built third party integrations to bring
+cargo-semver-checks into other systems -- the tool is available in nixOS and has been introduced
+into release managers like release-plz. With those and many more usage scenarios,
+cargo-semver-checks has proven its versatility in the vast, diverse world of semantic versioning.
+
 The Rust community has shown great interest in using the tool -- as of May 2023,
 cargo-semver-checks has over 63 000 downloads from the crates.io registry \cite{downloads-total}.
 This number can be split down into three components:
@@ -1054,15 +1063,6 @@ in continuous integration \cite{make-ci-runs-faster}. Shortly after learning mor
 goals regarding performance at that time, he decided to do some useful research himself
 and provided us with its helpful results. What is more, he was so excited about the possible
 improvements that he decided to contribute and implemented them \cite{user-contribution-1}.
-
-So far, cargo-semver-checks has earned the trust of many projects' maintainers. Among them are some
-of the largest and most iconic Rust crates, such as tokio (library for concurrent programming)
-and libp2p (modular library for peer-to-peer networking). There are also numerous projects from
-companies widely known outside the Rust community that adopted the tool as well, including Amazon,
-Microsoft, Adobe and Mozilla. Developers have even built third party integrations to bring
-cargo-semver-checks into other systems -- the tool is available in nixOS and has been introduced
-into release managers like release-plz. With those and many more usage scenarios,
-cargo-semver-checks has proven its versatility in the vast, diverse world of semantic versioning.
 
 The final impact of our work has been an order of magnitude greater than we expected.
 Since the early days of our contributions, we could see the constant increase
