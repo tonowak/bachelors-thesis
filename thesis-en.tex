@@ -741,8 +741,10 @@ available crate pairs. This has brought numerous benefits:
 \begin{itemize}
 	\item testing each lint on all crate pairs found multiple false-positives by running
 		on codes originally meant to test other lints
-		(e.g. a similar error was reported by two different lints
-		when it should have been reported by only one of them),
+		(e.g. we found that a lint has erroneously claimed that a trait
+		has been deleted, when in fact it was still present but its definition 
+		was changed, which could cause user confusion and frustration at the
+		misleading information)
 	\item the manifests of the baseline and current crates can be different,
 		which allows to write tests for lints checking the manifests
 		(such lints are not yet implemented, but it is one of the future goals
