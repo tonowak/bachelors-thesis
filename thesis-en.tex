@@ -775,7 +775,7 @@ All in all, we found semver violations in slightly more than \textbf{1 in 6 crat
 
 In total, we discovered 3305 different instances of semver violations across all releases.
 We found that the same release frequently contained more than one instance of the same kind of semver violation:
-for example, a release could have removed multiple functions. Ignoring multiple instances
+for example, a release could have removed multiple functions from the public API. Ignoring multiple instances
 of the same semver violation in the same release, the semver lints were triggered 655 times across all releases.
 
 We verified each reported semver violation by constructing a \texttt{witness} -- a short Rust code
