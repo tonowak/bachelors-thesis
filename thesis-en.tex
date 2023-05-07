@@ -779,9 +779,9 @@ for example, a release could have removed multiple functions from the public API
 of the same semver violation in the same release, the semver lints were triggered 655 times across all releases.
 
 We verified each reported semver violation by constructing a \texttt{witness} -- a short Rust code
-proving that a particular release indeed violates semver.
-Each witness can be compiled using one release of a crate,
-but results in a compilation error for the other release.
+proving that a particular non-major release indeed violates semver.
+Each witness can be compiled using the earlier release of a crate,
+but results in a compilation error for the next crate's release.
 Moreover, for each result we have examined its source code to confirm
 that it is part of the public API accessible by the user and not marked \texttt{\#[doc(hidden)]}. Thus, we are confident that each
 result is a true-positive report pointing out a real semver violation.
