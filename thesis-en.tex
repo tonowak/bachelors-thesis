@@ -914,16 +914,16 @@ of items that it was triggered by, which is enough to construct many of the witn
 For example, after parsing the output of the \texttt{enum\_variant\_missing} lint,
 we got the importable path of the enum and the name of its variant that was removed.
 Thanks to that, we were able to write a Rust code with a function that deconstructs the enum
-to the given variant. This source code compiles in the baseline, but does not compile
-in the current (because the Rust compiler cannot find the variant), thus it is a valid witness.
+to the given variant. This source code compiles in the \say{baseline}, but does not compile
+in the \say{current} (because the Rust compiler cannot find the variant), thus it is a valid witness.
 
 Using this logic, we wrote a Python script that parses the output of cargo-semver-checks,
 generates the witnesses and tries to compile them.
 There are three possible outcomes:
 \begin{itemize}
-	\item the baseline compiles and the current does not compile, which means the witness has confirmed that there is a semver violation (a true-positive),
-	\item both the baseline and current compile, which indicates a false-positive or a bug in one of the dependencies used by cargo-semver-checks,
-	\item the baseline does not compile, which means that the witness was constructed incorrectly.
+	\item the \say{baseline} compiles and the \say{current} does not compile, which means the witness has confirmed that there is a semver violation (a true-positive),
+	\item both the \say{baseline} and \say{current} compile, which indicates a false-positive or a bug in one of the dependencies used by cargo-semver-checks,
+	\item the \say{baseline} does not compile, which means that the witness was constructed incorrectly.
 \end{itemize}
 
 We stumbled upon some complications while creating the witnesses for some of the lints.
