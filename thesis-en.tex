@@ -894,7 +894,7 @@ With that, we have high confidence that the found items are indeed true-positive
 
 \section{Generating witnesses}\label{r:section_generating_witnesses}
 
-The fact that a release broke semver can be proven by a \say{witness},
+The fact that a non-major release broke semver can be proven by a \say{witness},
 which consists of two small crates:
 \begin{itemize}
 	\item a \say{baseline} -- a crate which uses the old release as a dependency
@@ -906,7 +906,7 @@ Both crates must have exactly the same code (same \texttt{src/lib.rs} file),
 but slightly different manifests.
 Thus, a witness is made of just three short files -- a source code that uses the item that
 broke semver and two manifests that only differ in the \texttt{[dependency]} section
-(they have the same crate name as a dependency, but two different releases of it).
+where they have the same crate name as a dependency, but two different releases of it.
 
 The output of each lint in cargo-semver-checks contains a list of importable paths
 of items that it was triggered by, which is enough to construct many of the witnesses automatically.
