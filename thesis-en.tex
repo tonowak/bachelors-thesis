@@ -847,8 +847,8 @@ analogously to \texttt{crater} which is used by the Rust team to check
 new compiler versions on a large number of crates.
 
 It fetches a list of one thousand crates available on crates.io sorted by the number of
-all-time downloads (thus, they are often the biggest crates and libraries
-that strictly adhere to semantic versioning). For each crate,
+all-time downloads, which often are the biggest crates and Rust libraries
+that strictly adhere to semantic versioning. For each crate,
 it then retrieves the available releases which were not yanked
 and compares every two adjacent, non-yanked releases and parses the output.
 The results (which take several days to generate) are saved to a CSV file.
