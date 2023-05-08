@@ -1007,28 +1007,104 @@ and immediate contact with him through chat).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Conclusion}\label{r:chapter_conclusion}
 
-\section{The significance of our contributions}\label{r:section_significance_of_contributions}
+After several months of constant development, the tool has found recognition among the developers
+as it became faster, easier to add to one's project and gained additional lints preventing
+even more semver breaks. Numerous new features together with stability and performance improvements
+have been introduced frequently as well to further increase its popularity.
 
-TODO:
+During the research that we conducted in chapter \ref{r:chapter_results_popular_crates},
+we have exposed that semver in Rust is hard to adhere to. Even among the top 1000 most downloaded
+crates more than 1 in 6 of them has violated semver and approximately 1 in 30 releases contained at
+least one semver violation. Those top crates were built and are maintained by highly experienced
+Rust developers, but this is not the case for less popular ones -- with their developers having
+less expertise and poorer semver knowledge, they are even more vulnerable to cause breaks.
+
+So far, cargo-semver-checks has earned the trust of many projects' maintainers. Among them are some
+of the largest and most iconic Rust crates, such as tokio (library for concurrent programming)
+and libp2p (modular library for peer-to-peer networking). There are also numerous projects from
+companies widely known outside the Rust community that adopted the tool as well, including Amazon,
+Microsoft, Adobe and Mozilla. Developers have even built third party integrations to bring
+cargo-semver-checks into other systems -- the tool is available in nixOS and has been introduced
+into release managers like release-plz. With those and many more usage scenarios,
+cargo-semver-checks has proven its versatility in the vast, diverse world of semantic versioning.
+
+% However, cargo-semver-checks is not only used by the large, popular and complex projects.
+% The entire Rust community has shown great interest in using the tool as well -- as of May 2023,
+% cargo-semver-checks has over 63 000 downloads from the crates.io registry \cite{downloads-total}.
+% This number can be split down into three components:
+% \begin{itemize}
+% 	\item over 22 900 downloads before we started contributing to the project (period of 5 months),
+% 	\item over 32 700 downloads during our contributions, before the release of pre-built executable
+% 		binaries (period of 3 months),
+% 	\item over 7 400 downloads during our contributions, after the release of pre-built executable
+% 		binaries (period of 3 months).
+% \end{itemize}
+% \begin{figure}[h]
+% 	\centering
+% 	\includegraphics[width=\linewidth]{crates-io-downloads-total.png}
+% 	\caption{cargo-semver-checks on crates.io, May 2023}
+% \end{figure}
+% The release of pre-built binaries was a big change for how the tool is accessed and had its effect on
+% the project's downloads. Originally a repository using cargo-semver-checks would most often
+% download the same version multiple times. For example, every time a CI run took place the tool
+% would be downloaded from crates.io and built locally from scratch. This resulted in a big variation
+% of downloads per release, depending on factors such as how long it has been since the most
+% recent one. However, with pre-built binaries now available, more and more projects
+% decide to get them directly from the GitHub repository for CI usage
+% rather than download the tool from crates.io.
+% This has lowered
+% the average downloads of cargo-semver-checks, but by no means decreased the tool's popularity.
+
+% Another measure of cargo-semver-checks' recognition among the community are GitHub stars.
+% Every user can star any repositories they like, no matter whether they want to show
+% their appreciation of one's project or just bookmark it for easier finding in the future.
+% When we started working on the tool in October 2022, it had just over 200 stars.
+% 7 months have passed and after our contributions the star count has almost doubled,
+% reaching above 400.
+% \begin{figure}[h]
+% 	\centering
+% 	\includegraphics[width=0.75\linewidth]{github-star-history-graph.png}
+% 	\caption{cargo-semver-checks star history as of May 2023}
+% \end{figure}
+
+There are multiple reasons behind cargo-semver-checks great popularity. While it
+is impossible to point out a single, main factor, those are the several (with no specific order) that
+resulted in the tool's undoubtful success:
 \begin{itemize}
-	\item write a conclusion
+	\item regular implementation of new lints that increased the tool's effectiveness,
+	\item introduction of the pre-built executable binaries with their ease of use,
+	\item long-term stability thanks to its unique and innovative concept of using Trustfall
+		to parse rustdoc,
+	\item release and improvements of the GitHub action for continuous integration,
+	\item numerous optimizations of the tool's performance (done both by us in
+		cargo-semver-checks and by our mentor in the Trustfall engine),
+	\item staying in touch with the tool's users and addressing their requests and suggestions,
+	\item regular tweets and blog posts by our mentor, giving the community insight into our work
+		as well as announcements of upcoming features before new releases.
 \end{itemize}
 
-\section{Rust community's positive response to the tool}\label{r:section_community_response}
+Sometimes the feedback we received from the tool's users was not just limited to a single comment
+-- there were cases where after our response they would share some useful
+knowledge or even help with implementing the features they initially asked for. A great example
+comes from a user who was just wondering whether we could do something to make the tool run faster
+in continuous integration \cite{make-ci-runs-faster}. Shortly after learning more about our active
+goals regarding performance at that time, he decided to do some useful research himself
+and provided us with its helpful results. What is more, he was so excited about the possible
+improvements that he decided to contribute and implemented them \cite{user-contribution-1}.
 
-TODO:
-\begin{itemize}
-	\item show how the number of downloads has changed
-	\item show how the number of stars on GitHub has changed
-	\item describe how our work might have impacted those results
-	\item show the comments of users on GitHub.
-		As one of the examples, give the maintainer of a big
-		library that created an issue \say{Make continuous integration runs faster}
-		and after learning about one of our PRs to make the continuous integration faster,
-		he was so excited that he wrote a comment with a tip in our PR.
-		Search also for other such examples in the PRs and issues.
-	\item list the maintainers of big libraries that started using the tool during our development
-\end{itemize}
+The final impact of our work has been an order of magnitude greater than we expected.
+Since the early days of our contributions, we could see the constant increase
+in cargo-semver-checks usage as it was growing to its current, well-estabilished position in
+the Rust ecosystem. Given its wide and enthusiastic adoption by both corporate and hobbyist
+projects, and the high frequency of accidental semantic versioning violations when it is not
+in use, the tool's ultimate goal of becoming a built-in feature of cargo seems closer than it has
+ever been before.
+
+Moreover, it is not only the packages' maintainers, but also all of the dependents who benefit
+from the tool's presence. Thus its actual impact and the group of beneficiaries are even greater
+than the numbers may suggest. With that, we firmly believe that its future is bright and are happy
+to already see it making such an impact, hoping to soon allow everyone to be fearless about running
+\texttt{cargo update} on their projects.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %            Bibliography             %
@@ -1187,6 +1263,21 @@ TODO:
 \bibitem{responsibilities-bartosz} GitHub,
 	\textit{Contributions authored by Bartosz} (2023) \\
 	\url{https://github.com/search?o=desc&q=org%3Aobi1kenobi+author%3ASmolSir&s=updated&type=Issues}
+
+
+%%% section 8.2 links
+
+% \bibitem{downloads-total} crates.io,
+% 	\textit{cargo-semver-checks on crates.io} (2023) \\
+% 	\url{https://crates.io/crates/cargo-semver-checks}
+
+\bibitem{make-ci-runs-faster} GitHub,
+	\textit{Make CI runs faster} (2023) \\
+	\url{https://github.com/obi1kenobi/cargo-semver-checks/issues/214}
+
+\bibitem{user-contribution-1} GitHub,
+	\textit{Cache generated rustdoc for registry baselines} \\
+	\url{https://github.com/obi1kenobi/cargo-semver-checks/pull/339}
 
 \end{thebibliography}
 
