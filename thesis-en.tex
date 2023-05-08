@@ -754,7 +754,7 @@ Throughout our contributions to the project, we managed to fix the following bug
 		a path to the manifest,
 	\item trustfall-rustdoc-adapter incompatibility with the new version of rustdoc v23
 		which stopped exporting inlined items of external crates,
-	\item running the tool resulting in unwanted changes in the Cargo.lock file,
+	\item rustdoc generation of \say{current} with dependency versions taken from \texttt{Cargo.lock} instead of the more intuitive choice of taking them from \texttt{Cargo.toml}, which made users confused,
 	\item CI job wrongly checking the exit code in one of
 		the integration tests,
 	\item broken links appearing in the tool's output,
