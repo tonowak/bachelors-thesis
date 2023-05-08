@@ -746,33 +746,306 @@ The differences between the V1 and V2 of the action are further discussed in sec
 
 \section{The lint set expansion}\label{r:section_new_lints}
 
-<Here write a list about the new lints we've written>
+The continuously expanding list of lints is the heart of the project.
+Before our contributions, there were 18 existing lints.
+We have managed to implement many new ones:
+\begin{itemize}
+    \item {\ttfamily enum\_marked\_non\_exhaustive}
+        -- detects marking an {\ttfamily Enum} as {\ttfamily \#[non\_exhaustive]}, removing the ability to match on them;
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/155
+    \item {\ttfamily enum\_struct\_variant\_field\_missing}
+        -- detects missing fields in a struct variant of an {\ttfamily Enum},
+        which changes how the variant must be initialized;
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/156
+    \item {\ttfamily function\_parameter\_count\_changed}
+        -- detects functions with changed parameter count,
+        changing the way the function must be called;
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/170
+    \item {\ttfamily tuple\_struct\_to\_plain\_struct}
+        -- detects changing struct kind from tuple to plain,
+        changing the way the struct must be initialized;
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/249
+    \item {\ttfamily trait\_unsafe\_added}
+        -- detects marking a {\ttfamily Trait} as {\ttfamily unsafe},
+        removing the ability to do a safe {\ttfamily impl};
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/252
+    \item {\ttfamily trait\_unsafe\_removed}
+        -- detects removing {\ttfamily unsafe} marker from a {\ttfamily Trait},
+        removing the ability to do an unsafe {\ttfamily impl};
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/252
+    \item {\ttfamily enum\_must\_use\_added}
+        -- detects marking an {\ttfamily Enum} with the {\ttfamily \#[must\_use]} attribute,
+        removing the ability to ignore the enum when returned from a function;
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/278
+    \item {\ttfamily struct\_must\_use\_added}
+        -- detects marking a struct with the {\ttfamily \#[must\_use]} attribute,
+        removing the ability to ignore the struct when returned from a function;
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/279
+    \item {\ttfamily trait\_must\_use\_added}
+        -- detects marking a {\ttfamily Trait} with the {\ttfamily \#[must\_use]} attribute,
+        removing the ability to ignore a function's result, when it is returning an object
+        with dynamic type that implements this trait;
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/280
+    \item {\ttfamily function\_must\_use\_added}
+        -- detects marking a function with the {\ttfamily \#[must\_use]} attribute,
+        removing the ability to ignore the function's result;
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/281
+    \item {\ttfamily inherent\_method\_must\_use\_added}
+        -- detects marking a method with the {\ttfamily \#[must\_use]} attribute,
+        removing the ability to ignore the method's result.
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/283
+\end{itemize}
+To enable the new lints, we had to do some development of the Trustfall rustdoc adapter. 
+It mainly resolved around extending its schema and implementing the changes.
+The challenge was to design the new interface in a way that would
+still make it possible to extend it without problems in the future.
+
+One of the notable changes in the schema involved attributes.
+It originally exported its value as a string, which made traversing
+its inner tags in lints not possible. 
+The solution was to refactor it into a proper tree structure.
+This meant that we had to introduce a breaking change there
+and do minor adjustments in the existing lints, 
+making it more future-proof at the same time.
+% https://github.com/obi1kenobi/cargo-semver-checks/pull/171
 
 \section{Command-line interface improvements}\label{r:section_cli}
 
-<Here write a list about changes that made the command line interface better>
+The main change which we implemented was adding the ability to specify 
+features that a crate should be built with for the checks. It is also
+possible to use different configuration for the current and baseline version.
+This is important because some functionalities may change between features. What is more,
+crates often have a feature that breaks semver by design, which
+we discovered when working on the semver-crater \ref{r:section_results_semver_crater}.
+Now the users can adjust the set of features for their specific use cases.
+
+The new default behaviour is to include all the features,
+filtering out heuristically the ones that break semver by looking at
+the feature's name. For example, a feature named {\ttfamily unstable} would not be
+included. The list of banned names was created by looking
+at different features in popular crates.
+
+It was not easy to correctly handle all edge cases,
+thus we wrote a heavy test suite for this change.
+For example, one of the optimizations written in cargo-semver-checks
+is caching the generated rustdoc and we had to make sure that 
+the caching mechanism is not used when a user changes the enabled features
+(which might change the rustdoc).
+
+We also improved the user experience by spotting and fixing a couple bugs
+in the command-line interface -- both in the tool's behaviour
+in combination with specific flags and in its output messages.
+For details, see section \ref{r:section_bugfixes}.
 
 \section{Brand new GitHub Action}\label{r:section_github_action}
 
-<Here write a list about the V2 of the continuous integration>
+The V1 version of cargo-semver-checks-action was created when
+cargo-semver-checks lacked a built-in logic of choosing the correct baseline version and was not
+generating the rustdoc output automatically. Both of these tasks were therefore handled by the action.
+When our work on the project started, the tool had already gained these features making the
+action obsolete. Its only advantage over the manual configuration was that it
+installed both the Rust toolchain and the tool itself. However, it downloaded the baseline version from
+the repository instead of using the latest release published on crates.io and did not handle the edge cases
+properly. The other problem was that the action did not allow passing any parameters to the tool, which
+was pointed out by the users who often decided to setup the tool manually for this reason.
+Finally, the action was implemented as a bash script, which made it both difficult to maintain
+and runnable only on Linux hosts.
 
-\section{Test suite}\label{r:section_test_suite}
+The need for a redesign was therefore clear. After reviewing the available options,
+we decided to use the fact that a GitHub action might
+be run using Node.js and implement the V2 version in TypeScript. It is a standard way
+of creating complex actions, as it has multiple advantages:
+\begin{itemize}
+	\item TypeScript action is platform-independent and can be run on all runners supported by GitHub Actions.
+	\item Using Node.js makes it possible to depend on a variety of \texttt{npm} packages, in particular the GitHub Actions
+		Toolkit \cite{github_actions_toolkit}, instead of building the components from scratch.
+	\item TypeScript code is more readable and easier to organize than a bash script or a GitHub workflow file.
+\end{itemize}
+The new version of the action not only fixes the problems of the previous V1, but also
+adds numerous features:
+\begin{itemize}
+	\item input \texttt{rust-toolchain}, which allows the user to specify the Rust toolchain to use instead
+		of the default \texttt{stable},
+	\item inputs \texttt{package} and \texttt{exclude}, both accepting lists of package names,
+		allowing to define the exact set of packages to be checked,
+	\item input \texttt{manifest-path}, which allows to specify the path to the \texttt{Cargo.toml} file
+		of the crate or workspaces to be processed if it is not located in the directory where
+		the action is run,
+	\item input \texttt{verbose}, which might be used to enable extended output of the tool,
+		providing details about every executed lint,
+	\item input \texttt{release-type}, with possible values \texttt{major}, \texttt{minor} and \texttt{patch},
+		allowing to specify the type of the release instead of deducing it from the crate's version change.
+\end{itemize}
+Moreover, the action now includes several optimizations of the running time:
+\begin{itemize}
+	\item The cargo-semver-checks tool is downloaded as a precompiled binary instead of being built from source.
+	\item The rustdoc of the baseline version is cached between the action's runs, so that it is generated
+		only once. The caching strategy might be adjusted by the user using inputs \texttt{shared-key}
+		and \texttt{prefix-key} (e.g. to share the cache between different GitHub jobs).
+	\item When possible, downloads from crates.io are made using recently developed \say{sparse} protocol
+		\cite{crates_io_sparse_protocol}.
+\end{itemize}
 
-<Here write a list about the improvements in the testing suite>
+Along with the new version of the action, we also developed an extensive suite of action tests
+(not to be confused with the test suite of cargo-semver-checks). The current CI workflow
+of the project consists of over 30 checks, which are responsible for:
+\begin{itemize}
+	\item making sure the action's code is properly formatted and builds without errors and warnings,
+	\item running the unit tests,
+	\item verifying whether the action works on Linux, Windows and macOS with different versions of
+		Rust installed,
+	\item testing all of the action's inputs by running it on a test repository,
+	\item comparing the cache created by the action with the expected one.
+\end{itemize}
+Such a comprehensive collection of tests helped us to find and fix several bugs not only in the action,
+but also in cargo-semver-checks itself, and will make it easier to maintain the project in the future.
+
+\section{Better test suite with integration tests}\label{r:section_test_suite}
+
+Before our contributions, each lint had its own, dedicated testcase consisting of:
+\begin{itemize}
+\item the Rust sourcecode that could be compiled in two different ways (producing
+\say{current} and \say{baseline} codes),
+\item a file with the results of executing its Trustfall query over this sourcecode.
+\end{itemize}
+We have replaced this system with a new one that contains numerous \say{crate pairs}
+(two separate directories called \say{current} and \say{baseline} with their own
+manifests and source codes) and Trustfall query results for each lint over all
+available crate pairs. This has brought numerous benefits:
+\begin{itemize}
+	\item testing each lint on all crate pairs found multiple false-positives by running
+		on codes originally meant to test other lints
+		(e.g. we found that a lint has erroneously claimed that a trait
+		has been deleted, when in fact it was still present but its definition 
+		was changed, which could cause user confusion and frustration at the
+		misleading information)
+	\item the manifests of the baseline and current crates can be different,
+		which allows to write tests for lints checking the manifests
+		(such lints are not yet implemented, but it is one of the future goals
+		of the project),
+	\item because we replaced the heavy use of conditional compilation with separate crates with regular source code,
+	    it's now easier to triage issues like false-positives and to add new test cases
+\end{itemize}
+In the process of making the test suite more thorough,
+we discovered a variety of edge cases in the underlying rustdoc tool,
+which is part of the Rust toolchain and is also under active development.
+Since our work made our tests quite extensive,
+the rustdoc team is working on ways to integrate our test suite into rustdoc's own,
+by re-running our tests on new rustdoc versions \cite{issue-rustdoc-our-tests}.
+
+We also wrote a new kind of test to ensure that some bugs found by us or reported by the users have been fixed.
+Such tests were made by writing GitHub workflow jobs (which are triggered by every
+commit and Pull Request) that downloads the tool and the user's git repository,
+runs the tool just like the user did to detect the bug
+and checks that it is no longer present.
+Thanks to this, we can be sure that the user who reported the bug
+will not experience it ever again.
+Just the writing of such tests helped us find other bugs
+-- we tried to write tests that run the tool in different ways
+with various command-line arguments and they detected that it wrongly handled some arguments.
+
+The integration tests were more appropriate to be written as a GitHub workflow job
+-- cloning the user's git repo takes time and memory, requires internet connection
+and often the projects are platform-specific,
+thus the tests are not suited to be run locally.
+But we also had some tests which were better suited to local runs alongside the crate pair tests
+-- they provide feedback immediately and it's easier to debug when such tests fail.
+For example, there was a bug which caused the tool to not check any lints at all
+because they accidentally weren't being included in the produced binary
+(which fortunately was noticed before going to production).
+To be sure that this will not happen again, we wrote an integration test that
+locally executes the produced binary and verifies its output.
 
 \section{Healthier codebase}\label{r:section_healthier_codebase}
 
-TODO:
+Our contributions to the tool were not just limited to developing new code. We are aware of
+how important it is to maintain high quality of the project's codebase, thus we introduced
+several changes and refactors that not only made it easier to navigate and expand, but also
+prepared the tool to be even more successful in the future.
+
+With lints being the core of cargo-semver-checks, our first major refactoring targeted both their
+general file structure and development process. Imagine a user who is eager to contribute
+and decides to develop a new lint:
 \begin{itemize}
-	\item describe refactors and other changes that made the codebase better
-	\item describe other overall changes that prepares the tool to be more successful in the future
-	\item describe how the code changed to be more welcoming for next contributors
+	\item \textbf{Previously} they had to go through a tedious process of modifying single lines
+	of code in several different files. What is more, tests for the new lint had to be written
+	in a single file where all the baseline and current code fragments had to be preceded by
+	a differentiation macro. Although there were instructions available, they lacked
+	a general introduction of the project's approach and design goals.
+
+	\item \textbf{Currently} the user only has to choose an appropriate name for their lint
+	and implement it together with suitable tests -- all the minor file changes are handled
+	by a dedicated script that we developed. The tests have been split into two separate
+	directories and allow the user to provide the baseline and current test versions just
+	as if they were developing a crate (with the difference being that instead of avoiding semver violations
+	they are supposed to make ones that trigger their lint). The instructions received an overhaul
+	as well to be more welcoming and informative, greatly improving the user experience
+	and encouraging them to make new contributions.
+\end{itemize}
+Shortly after we additionally changed how those new tests are run
+(for more details on the tests rework, see section \ref{r:section_test_suite}).
+
+% Another significant improvement was the introduction of pre-compiled, executable binaries
+% of the tool, available for different operating systems. This not only helps the users by saving
+% their time normally spent on downloading and compiling the tool, but also makes it more accessible
+% since the newest binaries are included with every release. They bring an additional benefit
+% of stability, too -- as they undergo numerous tests before being added to the newest version,
+% they are the safest way of using the tool on one's project.
+
+Later on we also refactored the \texttt{baseline.rs} file to make future additions easier. With this
+we were able to change how the tool generates rustdoc for the baseline version of a crate
+by introducing a placeholder project with a direct dependency to it, imitating how one would
+naturally access it.
+
+Besides there were numerous minor changes, such as:
+\begin{itemize}
+	\item renaming the project's file and function names so that they became more descript,
+	\item adjusting the clippy (cargo's built-in formatter) lints,
+	\item multiple, smaller refactors and optimizations in various parts of the codebase.
 \end{itemize}
 
 \section{Bugfixes}\label{r:section_bugfixes}
 
-<Here write a list about found and fixed bugs>
-
+Another important part of our work was diagnosing the issues present in the tool.
+Throughout our contributions to the project, we managed to fix the following bugs:
+\begin{itemize}
+	\item current and baseline's rustdoc being generated with different features, which
+		resulted in false-positives,
+	\item tests failing on Rust 1.67.0,
+	\item incorrect baseline version printed when the baseline was specified through
+		a path to the manifest,
+	\item trustfall-rustdoc-adapter incompatibility with the new version of rustdoc v23
+		which stopped exporting inlined items of external crates,
+	\item running the tool resulting in unwanted changes in the Cargo.lock file,
+	\item CI job wrongly checking the exit code in one of
+		the integration tests,
+	\item broken links appearing in the tool's output,
+	\item false-positives from target-specific optional features,
+	\item rustdoc command's output showing up without colors,
+	\item compilation error which happened because of semver-incompliant changes
+		in one of the tool's dependencies,
+	\item the rustdoc of the current and the baseline crates overwriting each other,
+	\item CLI choosing the latest release from the registry as a baseline version
+		even when it had been yanked,
+	\item CLI ignoring the \texttt{-{}-release-type} option.
+\end{itemize}
+Apart from that, we reported a few bugs that were or are to be fixed by other contributors:
+\begin{itemize}
+	\item incorrect path to the generated rustdoc when passing a
+		manifest path in the CLI,
+	\item output of the tool on the bevy-audio crate seeming
+		like it was producing a false positive,
+	\item duplicated lint's output on the bevy-render crate,
+	\item the tool failing to work when generating rustdoc of a crate
+		that has only yanked releases,
+	\item the tool printing some internal data while checking the clap
+		crate,
+	\item a false-positive related to re-exporting types, values and
+		macros with the same names,
+	\item CLI of v0.18.2 not looking for the baseline in the registry
+		as it was supposed to do,
+	\item the precompiled tool crashing on Windows machines.
+\end{itemize}
 
 % chapter semver-crater
 \chapter{Tool's findings in popular crates}\label{r:chapter_results_popular_crates}
@@ -1514,11 +1787,31 @@ to already see it making such an impact, hoping to soon allow everyone to be fea
 % 	\textit{cargo-semver-checks} (2023) \\
 % 	\url{https://github.com/obi1kenobi/cargo-semver-checks}
 
+
+%%% section 5.2 links
+
+\bibitem{issue-rustdoc-our-tests} GitHub,
+	\textit{Rust -- Issue \#110815} (2023) \\
+	\url{https://github.com/rust-lang/rust/issues/110815}
+
+
+%%% section 5.3 links
+
+\bibitem{github_actions_toolkit} GitHub,
+	\textit{GitHub Actions Toolkit} (2023) \\
+	\url{https://github.com/actions/toolkit}
+
+\bibitem{crates_io_sparse_protocol} Inside Rust Blog,
+	\textit{Help test Cargo's new index protocol} (2023) \\
+	\url{https://blog.rust-lang.org/inside-rust/2023/01/30/cargo-sparse-protocol.html}
+
+
 %%% section 6.1 links
 
 \bibitem{github-csv-results} GitHub,
 	\textit{GitHub repository containing the semver-crater results} (2023) \\
 	\url{https://github.com/tonowak/bachelors-thesis/}
+
 
 %%% section 7.2 links
 
