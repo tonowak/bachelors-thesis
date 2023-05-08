@@ -2,6 +2,12 @@
 \usepackage{dirtytalk}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{cellspace}
+\setlength\cellspacetoplimit{5pt}
+\setlength\cellspacebottomlimit{5pt}
+\newcommand\Tspace{\rule{0pt}{2.6ex}}         % = top table row spacing
+\newcommand\Bspace{\rule[-0.9ex]{0pt}{0pt}}   % = bottom table row spacing
 \graphicspath{ {./images/} }
 
 \autor{Tomasz Nowak}{429575}
@@ -771,12 +777,279 @@ TODO:
 % chapter semver-crater
 \chapter{Tool's findings in popular crates}\label{r:chapter_results_popular_crates}
 
-\section{Statistics on true-positives and bugs}\label{r:section_results_statistics}
+\section{Statistics on real-world violations of semver}\label{r:section_results_statistics}
+
+Thanks to cargo-semver-checks, we were able to find numerous semver violations
+amongst the one thousand most downloaded Rust crates.
+This section is a presentation of all the results we got. To learn more about
+our methodology, see section \ref{r:section_generating_witnesses}.
+
+We considered only non-yanked releases of those crates which were published
+after 2017-01-01 and are not major version updates compared to the prior release. From those releases,
+919 did not compile on our machines with the current version of Rust.
+Thus, we considered 14 389 releases in total (which is also the number of times
+cargo-semver-checks has been run).
+
+From those non-yanked, non-major releases which we were able to compile, we found that
+on average \textbf{every 1 in 30 releases had at least one semver violation}
+-- we found one or more violations in 470 of them.
+All in all, we found semver violations in slightly more than \textbf{1 in 6 crates}
+-- that is, in 173 crates of the 1000 crates we scanned.
+
+In total, we discovered 3305 different instances of semver violations across all releases.
+We found that the same release frequently contained more than one instance of the same kind of semver violation:
+for example, a release could have removed multiple functions from the public API. Ignoring multiple instances
+of the same semver violation in the same release, the semver lints were triggered 655 times across all releases.
+
+We verified each reported semver violation by constructing a \texttt{witness} -- a short Rust code
+proving that a particular non-major release indeed violates semver.
+Each witness can be compiled using the earlier release of a crate,
+but results in a compilation error for the next crate's release.
+Moreover, for each result we have examined its source code to confirm
+that it is part of the public API accessible by the user and not marked \texttt{\#[doc(hidden)]}. Thus, we are confident that each
+result is a true-positive report pointing out a real semver violation.
+
+The following table shows for each lint how often it was triggered:
+
+\begin{center}
+	\begin{longtable}{| p{7.75cm} | p{1.975cm} | p{1.975cm} | p{1.975cm} |}
+		\hline
+			&
+			\multicolumn{3}{c|}{no.\:of detected violations, counted per} \\
+		\cline{2-4}
+			\multicolumn{1}{|c|}{\textbf{lint}} &
+			\multicolumn{1}{c|}{\textbf{individual}} &
+			\multicolumn{1}{c|}{\textbf{different}} &
+			\multicolumn{1}{c|}{\textbf{affected}} \Tspace \\
+			&
+			\multicolumn{1}{c|}{\textbf{items}} &
+			\multicolumn{1}{c|}{\textbf{releases}} &
+			\multicolumn{1}{c|}{\textbf{crates}} \\
+		\hline
+			\texttt{inherent\_method\_missing} & $791$ & $41$ & $27$ \Tspace \\
+			\texttt{enum\_variant\_added} & $387$ & $140$ & $60$ \\
+			\texttt{constructible\_struct\_adds\_field} & $343$ & $123$ & $34$ \\
+			\texttt{auto\_trait\_impl\_removed} & $318$ & $57$ & $45$ \\
+			\texttt{struct\_missing} & $291$ & $66$ & $40$ \\
+			\texttt{function\_missing} & $265$ & $50$ & $33$ \\
+			\texttt{inherent\_method\_must\_use\_added} & $239$ & $4$ & $4$ \\
+			\texttt{inherent\_method\_const\_removed} & $139$ & $5$ & $3$ \\
+			\texttt{derive\_trait\_impl\_removed} & $115$ & $11$ & $11$ \\
+			\texttt{enum\_variant\_missing} & $112$ & $27$ & $18$ \\
+			\texttt{struct\_pub\_field\_missing} & $79$ & $32$ & $16$ \\
+			\texttt{enum\_missing} & $78$ & $26$ & $20$ \\
+			\texttt{trait\_missing} & $45$ & $24$ & $19$ \\
+			\texttt{method\_parameter\_count\_changed} & $22$ & $14$ & $12$ \\
+			\texttt{enum\_marked\_non\_exhaustive} & $17$ & $4$ & $4$ \\
+			\texttt{struct\_repr\_c\_removed} & $12$ & $3$ & $3$ \\
+			\texttt{constructible\_struct\_adds\_private\_field} & $9$ & $7$ & $6$ \\
+			\texttt{inherent\_method\_unsafe\_added} & $9$ & $3$ & $3$ \\
+			\texttt{function\_parameter\_count\_changed} & $8$ & $4$ & $4$ \\
+			\texttt{function\_unsafe\_added} & $8$ & $2$ & $2$ \\
+			\texttt{unit\_struct\_changed\_kind} & $5$ & $3$ & $2$ \\
+			\texttt{enum\_tuple\_variant\_field\_missing} & $4$ & $2$ & $2$ \\
+			\texttt{tuple\_struct\_to\_plain\_struct} & $4$ & $2$ & $2$ \\
+			\texttt{enum\_tuple\_variant\_field\_added} & $3$ & $3$ & $3$ \\
+			\texttt{enum\_repr\_int\_removed} & $1$ & $1$ & $1$ \\
+			\texttt{enum\_struct\_variant\_field\_added} & $1$ & $1$ & $1$ \Bspace \\
+		\hline
+	\end{longtable}
+\end{center}
+
+All of the detected semver violations, together with their witnesses, can be found in our GitHub repository \cite{github-csv-results}.
+They are provided in both human-readable and machine-readable form.
+The remaining results (`cargo-semver-checks` false-positive reports and bugs) are provided only in human-readable form.
 
 \section{The process of gathering results (semver-crater)}\label{r:section_results_semver_crater}
 
+Because cargo-semver-checks is able to create a rustdoc JSON file
+of a particular crate and release from the registry,
+we thought of running the tool on a large number of existing crates
+to find semver violations and bugs such as false-positives or crashes.
+We developed a tool for this purpose and called it \texttt{semver-crater},
+analogously to \texttt{crater} which is used by the Rust team to check
+new compiler versions on a large number of crates.
+
+It fetches a list of one thousand crates available on crates.io sorted by the number of
+all-time downloads, which often are the biggest crates and Rust libraries
+that strictly adhere to semantic versioning. For each crate,
+it then retrieves the available releases which were not yanked
+and compares every two adjacent, non-yanked releases and parses the output.
+The results are saved to a CSV file.
+Because of the sheer number of releases that needs to be checked, the results take several days to generate.
+
+Unfortunately, cargo-semver-checks is not yet perfect and sometimes produces false-positives
+that are to be fixed. However, most of them were caused by one of the two cases:
+\begin{itemize}
+	\item an item was marked with the \texttt{\#[doc(hidden)]} attribute,
+		which hides it from the documentation and thus is not part
+		of the public API accessible by the user
+		(\texttt{\#[doc(hidden)]} is most often used for code called from inside macro implementations
+		as it is not meant to be used directly by the user),
+	\item an item was moved to another crate and re-exported
+		(thus the item is still accessible with the old path,
+		but its definition is in another rustdoc JSON file making it not visible to cargo-semver-checks).
+\end{itemize}
+Other false-positives also happened, but they showed up rarely and primarily
+were just caused by a bug in the lint query.
+
+Because fixing the two main false-positives turned out to be difficult, we instead shifted our focus
+to finding ways for detecting when one of them happened.
+We came up with two solutions:
+\begin{itemize}
+	\item To detect most of the \say{doc-hidden} false-positives
+		(though not all), we managed to get a list of items that are definitely
+		\say{doc-hidden} and then ignored such items in the results.
+		We were able to create the list by running cargo-semver-checks on one rustdoc JSON file
+		containing the hidden items and another one without the hidden items,
+		parsing the output to know which items were removed.
+	\item As a way to know whether a reported item is a false-positive or a true-positive,
+		we created a witness (more on that in section \ref{r:witness_generation})
+		and ignored all items whose witnesses compile on both baseline and current releases.
+\end{itemize}
+
+Those two techniques greatly reduced the number of reports.
+To be sure that the remaining items were true-positives,
+we manually checked the code by first generating links to the line of code where each item was defined
+and then reading the file.
+Mostly we verified whether an item was indeed a part of the public API
+(not \say{doc-hidden} and not a part of a test module).
+With that, we have high confidence that the found items are indeed true-positives.
+
 \section{Generating witnesses}\label{r:section_generating_witnesses}
 
+The fact that a non-major release broke semver can be proven by a \say{witness},
+which consists of two small crates:
+\begin{itemize}
+	\item a \say{baseline} -- a crate which uses the old release as a dependency
+		and compiles fine,
+	\item a \say{current} -- a crate which uses the new release as a dependency
+		and does not compile.
+\end{itemize}
+Both crates must have exactly the same code (same \texttt{src/lib.rs} file),
+but slightly different manifests.
+Thus, a witness is made of just three short files -- a source code that uses the item that
+broke semver and two manifests that only differ in the \texttt{[dependency]} section
+where they have the same crate name as a dependency, but two different releases of it.
+
+The output of each lint in cargo-semver-checks contains a list of importable paths
+of items that it was triggered by, which is enough to construct many of the witnesses automatically.
+
+For example, after parsing the output of the \texttt{enum\_variant\_missing} lint,
+we got the importable path of the enum and the name of its variant that was removed.
+Thanks to that, we were able to write a Rust code with a function that deconstructs the enum
+to the given variant. This source code compiles in the \say{baseline}, but does not compile
+in the \say{current} (because the Rust compiler cannot find the variant), thus it is a valid witness.
+
+Using this logic, we wrote a Python script that parses the output of cargo-semver-checks,
+generates the witnesses and tries to compile them.
+There are three possible outcomes:
+\begin{itemize}
+	\item the \say{baseline} compiles and the \say{current} does not compile, which means the witness has confirmed that there is a semver violation (a true-positive),
+	\item both the \say{baseline} and \say{current} compile, which indicates a false-positive or a bug in one of the dependencies used by cargo-semver-checks,
+	\item the \say{baseline} does not compile, which means that the witness was constructed incorrectly.
+\end{itemize}
+
+We stumbled upon some complications while creating the witnesses for some of the lints.
+We had the importable path of an item, but we were missing the information
+about generics or traits, which the Rust compiler requires to be in the source code
+(e.g. a function could take a generic argument which type needs to be declared when calling the function).
+Most cases were solved by writing a script that iterates over the number of generic arguments
+and checks whether a witness with some number of generic argument successfully compiles.
+The other cases mainly required the generic types to satisfy some traits,
+which is much harder to automate or even write manually.
+Thus we decided that we would skip checking some of the reports that required using generic types.
+Because of that, there are 151 witnesses that we did not write
+and the releases without the witnesses are \textit{not} included in the statistics in section \ref{section_results_semver_crater}
+-- we could have found more semver violations, but it was too time-consuming for us.
+
+For some lints we could choose between simply importing the given item
+(e.g. by \texttt{use importable\_path;}) or creating a source code that uses it.
+Just importing the item can be seen as not convincing and not visually appealing (it does not use any item properties,
+e.g. it uses the function name but does not call the function itself).
+Thus, we decided to generate witnesses with the more convincing technique of writing the more realistic Rust code whenever possible
+and used the pure imports as a fallback when it failed to compile.
+
+We had one last difficulty when we tried to create witnesses for the e.g. \texttt{enum\_variant\_added} lint.
+To construct a witness for it, one has to exhaustively pattern-match
+on all of the given enum's variants. However, the output only contained the name
+of the variant that was added rather than a list of all the variants' names.
+To retrieve the full list, we wrote a separate
+Rust project that uses \texttt{trustfall\_rustdoc} -- given the generated rustdoc of the dependency,
+it runs a Trustfall query that finds the enum with matching importable path and returns
+all of its variants. Having passed the newly-acquired data to the Python script,
+we could then automatically construct its witness.
+
+Some lints were triggered only a couple of times, so instead of expanding the Python script's functionality, it was faster to manually write witnesses for them.
+There was also the \texttt{struct\_repr\_c\_removed} lint that reported a breaking change.
+However, the issue was based on creating an undefined behavior rather than a compilation error,
+making it difficult to create a witness.
+Thus we decided to make an exception and manually verify whether it was indeed a semver-break.
+
+In the end, our Python script is able to create the following witnesses:
+\begin{center}
+	\begin{longtable}{| p{6.35cm} | p{8.2cm} |}
+		\hline
+			\multicolumn{1}{|Sc|}{\textbf{lint name}} &
+			\multicolumn{1}{Sc|}{\textbf{witness description}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{enum\_missing} \\
+				\texttt{struct\_missing}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{8.2cm}{
+				a function (possibly a generic one) that takes the missing item as an argument
+			}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{trait\_missing}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{8.2cm}{
+				a generic function (with one or more generic arguments) that takes
+				a generic argument satisfying the missing trait
+			}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{function\_missing} \\
+				\texttt{method\_missing} \\
+				\texttt{function\_parameter\_count\_changed} \\
+				\texttt{method\_parameter\_count\_changed}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{8.2cm}{
+				a missing function/method call with an adequate number of \texttt{todo!()} arguments.
+				This technique creates valid witnesses, even though it generates warnings that
+				such statements are unreachable (it is still possible to replace
+				the \texttt{todo!()} arguments with manually constructed ones, but it is not needed
+				to prove a semver break)
+			}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{auto\_trait\_impl\_removed} \\
+				\texttt{derive\_trait\_impl\_removed}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{8.2cm}{
+				a function (possibly a generic one) that takes the item causing a break
+				and another function to which this item is passed by the first function.
+			}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{enum\_variant\_missing}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{8.2cm}{
+				a deconstruction of the enum with an \texttt{if} that requires the missing variant
+			}} \\
+		\hline
+			\begin{tabular}[c]{@{}l@{}}
+				\texttt{enum\_variant\_added} \\
+				\texttt{enum\_marked\_non\_exhaustive} \\
+				\texttt{struct\_field\_added}
+			\end{tabular} &
+			\multicolumn{1}{Sl|}{\parbox{8.2cm}{
+				pattern-matching on all of the item's variants or fields
+			}} \\
+		\hline
+	\end{longtable}
+\end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                Team                 %
@@ -1241,6 +1514,11 @@ to already see it making such an impact, hoping to soon allow everyone to be fea
 % 	\textit{cargo-semver-checks} (2023) \\
 % 	\url{https://github.com/obi1kenobi/cargo-semver-checks}
 
+%%% section 6.1 links
+
+\bibitem{github-csv-results} GitHub,
+	\textit{GitHub repository containing the semver-crater results} (2023) \\
+	\url{https://github.com/tonowak/bachelors-thesis/}
 
 %%% section 7.2 links
 
