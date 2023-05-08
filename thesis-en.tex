@@ -572,15 +572,17 @@ there are four repositories that we have been actively contributing to for the l
 To learn more about the project's individual components present in the diagram, see:
 \begin{itemize}
 	\item cargo-semver-checks -- chapters \ref{r:chapter_vision} and \ref{r:chapter_implementation},
-	\item lints -- section \ref{},
-	\item command-line interface -- section \ref{},
-	\item cargo-semver-checks-action -- section \ref{},
-	\item cargo -- section \ref{},
-	\item crates.io -- section \ref{},
-	\item rustdoc -- section \ref{},
-	\item trustfall -- section \ref{},
-	\item trustfall-rustdoc-adapter -- section \ref{},
-	\item trustfall-rustdoc -- section \ref{}.
+		section \ref{r:section_cargo_semver_checks}
+	\item lints -- sections \ref{r:section_cargo_semver_checks} and \ref{r:section_new_lints},
+	\item command-line interface -- section \ref{r:section_cli},
+	\item cargo-semver-checks-action -- sections \ref{r:section_cargo_semver_checks_action}
+		and \ref{r:section_github_action},
+	\item cargo -- section \ref{r:section_cargo},
+	\item crates.io -- section \ref{r:section_cargo},
+	\item rustdoc -- section \ref{r:section_project_structure},
+	\item trustfall -- section \ref{r:section_project_structure},
+	\item trustfall-rustdoc-adapter -- section \ref{r:section_trustfall_rustdoc_adapter},
+	\item trustfall-rustdoc -- section \ref{r:section_trustfall_rustdoc}.
 \end{itemize}
 
 \section{cargo-semver-checks}\label{r:section_cargo_semver_checks}
@@ -655,12 +657,12 @@ a crate. They contain elements such as:
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\linewidth]{lint-query-example.png}
+	\includegraphics[width=0.975\linewidth]{lint-query-example.png}
 	\caption{The \texttt{enum\_missing} lint's query}
 	\label{fig:enum_missing_lint_query}
 \end{figure}
 
-The query above is part of the lint seen in figure \ref{fig:enum_missing_lint}.
+The presented query is part of the lint seen in figure \ref{fig:enum_missing_lint}.
 During its execution, Trustfall successively:
 \begin{itemize}
 	\item collects all of the baseline crate's public Enums, tagging their paths,
@@ -728,7 +730,7 @@ to maintain solution, which allowed the action to be run only on Linux hosts. Th
 we implemented the V2 version of the action in a platform-independent way using TypeScript
 and Node.js, allowing it to be used on all runners supported by GitHub Actions.
 The differences between the V1 and V2 of the action are further discussed in section
-\ref{r:section_continuous_integration_improvements}.
+\ref{r:section_github_action}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %           Implementation            %
