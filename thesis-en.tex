@@ -795,23 +795,23 @@ We have managed to implement many new ones:
         removing the ability to ignore the method's result.
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/283
 \end{itemize}
-To enable the new lints, we had to do some development of the Trustfall rustdoc adapter. 
+To enable the new lints, we had to do some development of the Trustfall rustdoc adapter.
 It mainly resolved around extending its schema and implementing the changes.
 The challenge was to design the new interface in a way that would
 still make it possible to extend it without problems in the future.
 
 One of the notable changes in the schema involved attributes.
 It originally exported its value as a string, which made traversing
-its inner tags in lints not possible. 
+its inner tags in lints not possible.
 The solution was to refactor it into a proper tree structure.
 This meant that we had to introduce a breaking change there
-and do minor adjustments in the existing lints, 
+and do minor adjustments in the existing lints,
 making it more future-proof at the same time.
 % https://github.com/obi1kenobi/cargo-semver-checks/pull/171
 
 \section{Command-line interface improvements}\label{r:section_cli}
 
-The main change which we implemented was adding the ability to specify 
+The main change which we implemented was adding the ability to specify
 features that a crate should be built with for the checks. It is also
 possible to use different configuration for the current and baseline version.
 This is important because some functionalities may change between features. What is more,
@@ -828,7 +828,7 @@ at different features in popular crates.
 It was not easy to correctly handle all edge cases,
 thus we wrote a heavy test suite for this change.
 For example, one of the optimizations written in cargo-semver-checks
-is caching the generated rustdoc and we had to make sure that 
+is caching the generated rustdoc and we had to make sure that
 the caching mechanism is not used when a user changes the enabled features
 (which might change the rustdoc).
 
@@ -916,7 +916,7 @@ available crate pairs. This has brought numerous benefits:
 	\item testing each lint on all crate pairs found multiple false-positives by running
 		on codes originally meant to test other lints
 		(e.g. we found that a lint has erroneously claimed that a trait
-		has been deleted, when in fact it was still present but its definition 
+		has been deleted, when in fact it was still present but its definition
 		was changed, which could cause user confusion and frustration at the
 		misleading information)
 	\item the manifests of the baseline and current crates can be different,
@@ -1177,7 +1177,7 @@ We came up with two solutions:
 		containing the hidden items and another one without the hidden items,
 		parsing the output to know which items were removed.
 	\item As a way to know whether a reported item is a false-positive or a true-positive,
-		we created a witness (more on that in section \ref{r:witness_generation})
+		we created a witness (more on that in section \ref{r:section_generating_witnesses})
 		and ignored all items whose witnesses compile on both baseline and current releases.
 \end{itemize}
 
@@ -1233,7 +1233,7 @@ The other cases mainly required the generic types to satisfy some traits,
 which is much harder to automate or even write manually.
 Thus we decided that we would skip checking some of the reports that required using generic types.
 Because of that, there are 151 witnesses that we did not write
-and the releases without the witnesses are \textit{not} included in the statistics in section \ref{section_results_semver_crater}
+and the releases without the witnesses are \textit{not} included in the statistics in section \ref{r:section_results_semver_crater}
 -- we could have found more semver violations, but it was too time-consuming for us.
 
 For some lints we could choose between simply importing the given item
