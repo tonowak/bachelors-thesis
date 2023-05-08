@@ -749,7 +749,7 @@ Throughout our contributions to the project, we managed to fix the following bug
 \begin{itemize}
 	\item current and baseline's rustdoc being generated with different features, which
 		resulted in false-positives,
-	\item tests failing on Rust 1.67.0,
+	\item tests failing on Rust 1.67.0 due to the addition of a public \texttt{rustc} internal trait \texttt{StructuralEq} which is not relevant for the users,
 	\item incorrect baseline version printed when the baseline was specified through
 		a path to the manifest,
 	\item trustfall-rustdoc-adapter incompatibility with the new version of rustdoc v23
