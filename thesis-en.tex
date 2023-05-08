@@ -791,7 +791,7 @@ result is a true-positive report pointing out a real semver violation.
 The following table shows for each lint how often it was triggered:
 
 \begin{center}
-	\begin{longtable}{| p{7.75cm} | p{1.9cm} | p{1.9cm} | p{1.9cm} |}
+	\begin{longtable}{| p{7.75cm} | p{1.975cm} | p{1.975cm} | p{1.975cm} |}
 		\hline
 			&
 			\multicolumn{3}{c|}{no.\:of detected violations, counted per} \\
@@ -966,10 +966,8 @@ making it difficult to create a witness.
 Thus we decided to make an exception and manually verify whether it was indeed a semver-break.
 
 In the end, our Python script is able to create the following witnesses:
-\begin{table}[h]
-	\centering
-	% adjust the fractions here so that it looks nice (MUST sum up to 1)
-	\begin{tabular}{| p{.5\linewidth} | p{.5\linewidth} |}
+\begin{center}
+	\begin{longtable}{| p{6.35cm} | p{8.2cm} |}
 		\hline
 			\multicolumn{1}{|Sc|}{\textbf{lint name}} &
 			\multicolumn{1}{Sc|}{\textbf{witness description}} \\
@@ -978,14 +976,14 @@ In the end, our Python script is able to create the following witnesses:
 				\texttt{enum\_missing} \\
 				\texttt{struct\_missing}
 			\end{tabular} &
-			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+			\multicolumn{1}{Sl|}{\parbox{8.2cm}{
 				a function (possibly a generic one) that takes the missing item as an argument
 			}} \\
 		\hline
 			\begin{tabular}[c]{@{}l@{}}
 				\texttt{trait\_missing}
 			\end{tabular} &
-			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+			\multicolumn{1}{Sl|}{\parbox{8.2cm}{
 				a generic function (with one or more generic arguments) that takes
 				a generic argument satisfying the missing trait
 			}} \\
@@ -996,7 +994,7 @@ In the end, our Python script is able to create the following witnesses:
 				\texttt{function\_parameter\_count\_changed} \\
 				\texttt{method\_parameter\_count\_changed}
 			\end{tabular} &
-			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+			\multicolumn{1}{Sl|}{\parbox{8.2cm}{
 				a missing function/method call with an adequate number of \texttt{todo!()} arguments.
 				This technique creates valid witnesses, even though it generates warnings that
 				such statements are unreachable (it is still possible to replace
@@ -1008,7 +1006,7 @@ In the end, our Python script is able to create the following witnesses:
 				\texttt{auto\_trait\_impl\_removed} \\
 				\texttt{derive\_trait\_impl\_removed}
 			\end{tabular} &
-			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+			\multicolumn{1}{Sl|}{\parbox{8.2cm}{
 				a function (possibly a generic one) that takes the item causing a break
 				and another function to which this item is passed by the first function.
 			}} \\
@@ -1016,7 +1014,7 @@ In the end, our Python script is able to create the following witnesses:
 			\begin{tabular}[c]{@{}l@{}}
 				\texttt{enum\_variant\_missing}
 			\end{tabular} &
-			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+			\multicolumn{1}{Sl|}{\parbox{8.2cm}{
 				a deconstruction of the enum with an \texttt{if} that requires the missing variant
 			}} \\
 		\hline
@@ -1025,12 +1023,12 @@ In the end, our Python script is able to create the following witnesses:
 				\texttt{enum\_marked\_non\_exhaustive} \\
 				\texttt{struct\_field\_added}
 			\end{tabular} &
-			\multicolumn{1}{Sl|}{\parbox{.5\linewidth}{
+			\multicolumn{1}{Sl|}{\parbox{8.2cm}{
 				pattern-matching on all of the item's variants or fields
 			}} \\
 		\hline
-	\end{tabular}
-\end{table}
+	\end{longtable}
+\end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                Team                 %
