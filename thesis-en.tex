@@ -1000,51 +1000,53 @@ cargo-semver-checks into other systems -- the tool is available in nixOS and has
 into release managers like release-plz. With those and many more usage scenarios,
 cargo-semver-checks has proven its versatility in the vast, diverse world of semantic versioning.
 
-However, cargo-semver-checks is not only used by the large, popular and complex projects.
-The entire Rust community has shown great interest in using the tool as well -- as of May 2023,
-cargo-semver-checks has over 63 000 downloads from the crates.io registry \cite{downloads-total}.
-This number can be split down into three components:
-\begin{itemize}
-	\item over 22 900 downloads before we started contributing to the project (period of 5 months),
-	\item over 32 700 downloads during our contributions, before the release of pre-built executable
-		binaries (period of 3 months),
-	\item over 7 400 downloads during our contributions, after the release of pre-built executable
-		binaries (period of 3 months).
-\end{itemize}
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\linewidth]{crates-io-downloads-total.png}
-	\caption{cargo-semver-checks on crates.io, May 2023}
-\end{figure}
-The release of pre-built binaries was a big change for how the tool is accessed and had its effect on
-the project's downloads. Originally a repository using cargo-semver-checks would most often
-download the same version multiple times. For example, every time a CI run took place the tool
-would be downloaded from crates.io and built locally from scratch. This resulted in a big variation
-of downloads per release, depending on factors such as how long it has been since the most
-recent one. However, with pre-built binaries now available, more and more projects
-decide to get them directly from the GitHub repository for CI usage
-rather than download the tool from crates.io.
-This has lowered
-the average downloads of cargo-semver-checks, but by no means decreased the tool's popularity.
+% However, cargo-semver-checks is not only used by the large, popular and complex projects.
+% The entire Rust community has shown great interest in using the tool as well -- as of May 2023,
+% cargo-semver-checks has over 63 000 downloads from the crates.io registry \cite{downloads-total}.
+% This number can be split down into three components:
+% \begin{itemize}
+% 	\item over 22 900 downloads before we started contributing to the project (period of 5 months),
+% 	\item over 32 700 downloads during our contributions, before the release of pre-built executable
+% 		binaries (period of 3 months),
+% 	\item over 7 400 downloads during our contributions, after the release of pre-built executable
+% 		binaries (period of 3 months).
+% \end{itemize}
+% \begin{figure}[h]
+% 	\centering
+% 	\includegraphics[width=\linewidth]{crates-io-downloads-total.png}
+% 	\caption{cargo-semver-checks on crates.io, May 2023}
+% \end{figure}
+% The release of pre-built binaries was a big change for how the tool is accessed and had its effect on
+% the project's downloads. Originally a repository using cargo-semver-checks would most often
+% download the same version multiple times. For example, every time a CI run took place the tool
+% would be downloaded from crates.io and built locally from scratch. This resulted in a big variation
+% of downloads per release, depending on factors such as how long it has been since the most
+% recent one. However, with pre-built binaries now available, more and more projects
+% decide to get them directly from the GitHub repository for CI usage
+% rather than download the tool from crates.io.
+% This has lowered
+% the average downloads of cargo-semver-checks, but by no means decreased the tool's popularity.
 
-Another measure of cargo-semver-checks' recognition among the community are GitHub stars.
-Every user can star any repositories they like, no matter whether they want to show
-their appreciation of one's project or just bookmark it for easier finding in the future.
-When we started working on the tool in October 2022, it had just over 200 stars.
-7 months have passed and after our contributions the star count has almost doubled,
-reaching above 400.
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.75\linewidth]{github-star-history-graph.png}
-	\caption{cargo-semver-checks star history as of May 2023}
-\end{figure}
+% Another measure of cargo-semver-checks' recognition among the community are GitHub stars.
+% Every user can star any repositories they like, no matter whether they want to show
+% their appreciation of one's project or just bookmark it for easier finding in the future.
+% When we started working on the tool in October 2022, it had just over 200 stars.
+% 7 months have passed and after our contributions the star count has almost doubled,
+% reaching above 400.
+% \begin{figure}[h]
+% 	\centering
+% 	\includegraphics[width=0.75\linewidth]{github-star-history-graph.png}
+% 	\caption{cargo-semver-checks star history as of May 2023}
+% \end{figure}
 
-There are multiple reasons behind this great increase in cargo-semver-checks popularity. While it
+There are multiple reasons behind cargo-semver-checks great popularity. While it
 is impossible to point out a single, main factor, those are the several (with no specific order) that
 resulted in the tool's undoubtful success:
 \begin{itemize}
 	\item regular implementation of new lints that increased the tool's effectiveness,
 	\item introduction of the pre-built executable binaries with their ease of use,
+	\item long-term stability thanks to its unique and innovative concept of using Trustfall
+		to parse rustdoc,
 	\item release and improvements of the GitHub action for continuous integration,
 	\item numerous optimizations of the tool's performance (done both by us in
 		cargo-semver-checks and by our mentor in the Trustfall engine),
@@ -1237,9 +1239,9 @@ to already see it making such an impact, hoping to soon allow everyone to be fea
 
 %%% section 8.2 links
 
-\bibitem{downloads-total} crates.io,
-	\textit{cargo-semver-checks on crates.io} (2023) \\
-	\url{https://crates.io/crates/cargo-semver-checks}
+% \bibitem{downloads-total} crates.io,
+% 	\textit{cargo-semver-checks on crates.io} (2023) \\
+% 	\url{https://crates.io/crates/cargo-semver-checks}
 
 \bibitem{make-ci-runs-faster} GitHub,
 	\textit{Make CI runs faster} (2023) \\
