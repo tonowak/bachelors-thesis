@@ -2,10 +2,12 @@
 \usepackage{dirtytalk}
 \usepackage{hyperref}
 \usepackage{graphicx}
-\usepackage{array}
+\usepackage{longtable}
 \usepackage{cellspace}
 \setlength\cellspacetoplimit{5pt}
 \setlength\cellspacebottomlimit{5pt}
+\newcommand\Tspace{\rule{0pt}{2.6ex}}         % = top table row spacing
+\newcommand\Bspace{\rule[-0.9ex]{0pt}{0pt}}   % = bottom table row spacing
 \graphicspath{ {./images/} }
 
 \autor{Tomasz Nowak}{429575}
@@ -788,49 +790,50 @@ result is a true-positive report pointing out a real semver violation.
 
 The following table shows for each lint how often it was triggered:
 
-\begin{table}[h]
-	\centering
-	\begin{tabular}{|
-		>{\centering\arraybackslash}m{.55\linewidth} |
-		>{\centering\arraybackslash}m{.15\linewidth} |
-		>{\centering\arraybackslash}m{.15\linewidth} |
-		>{\centering\arraybackslash}m{.15\linewidth} |
-		}
+\begin{center}
+	\begin{longtable}{| p{7.75cm} | p{1.9cm} | p{1.9cm} | p{1.9cm} |}
 		\hline
-			{\textbf{name of the lint in cargo-semver-checks}} &
-			{\textbf{number of individual instances where the lint found a violation}} &
-			{\textbf{number of releases where the lint found a violation}} &
-			{\textbf{number of crates where the lint found a violation}} \\
+			&
+			\multicolumn{3}{c|}{no.\:of detected violations, counted per} \\
+		\cline{2-4}
+			\multicolumn{1}{|c|}{\textbf{lint}} &
+			\multicolumn{1}{c|}{\textbf{individual}} &
+			\multicolumn{1}{c|}{\textbf{different}} &
+			\multicolumn{1}{c|}{\textbf{affected}} \Tspace \\
+			&
+			\multicolumn{1}{c|}{\textbf{items}} &
+			\multicolumn{1}{c|}{\textbf{releases}} &
+			\multicolumn{1}{c|}{\textbf{crates}} \\
 		\hline
-		inherent\_method\_missing & $791$ & $41$ & $27$ \\
-		enum\_variant\_added & $387$ & $140$ & $60$ \\
-		constructible\_struct\_adds\_field & $343$ & $123$ & $34$ \\
-		auto\_trait\_impl\_removed & $318$ & $57$ & $45$ \\
-		struct\_missing & $291$ & $66$ & $40$ \\
-		function\_missing & $265$ & $50$ & $33$ \\
-		inherent\_method\_must\_use\_added & $239$ & $4$ & $4$ \\
-		inherent\_method\_const\_removed & $139$ & $5$ & $3$ \\
-		derive\_trait\_impl\_removed & $115$ & $11$ & $11$ \\
-		enum\_variant\_missing & $112$ & $27$ & $18$ \\
-		struct\_pub\_field\_missing & $79$ & $32$ & $16$ \\
-		enum\_missing & $78$ & $26$ & $20$ \\
-		trait\_missing & $45$ & $24$ & $19$ \\
-		method\_parameter\_count\_changed & $22$ & $14$ & $12$ \\
-		enum\_marked\_non\_exhaustive & $17$ & $4$ & $4$ \\
-		struct\_repr\_c\_removed & $12$ & $3$ & $3$ \\
-		constructible\_struct\_adds\_private\_field & $9$ & $7$ & $6$ \\
-		inherent\_method\_unsafe\_added & $9$ & $3$ & $3$ \\
-		function\_parameter\_count\_changed & $8$ & $4$ & $4$ \\
-		function\_unsafe\_added & $8$ & $2$ & $2$ \\
-		unit\_struct\_changed\_kind & $5$ & $3$ & $2$ \\
-		enum\_tuple\_variant\_field\_missing & $4$ & $2$ & $2$ \\
-		tuple\_struct\_to\_plain\_struct & $4$ & $2$ & $2$ \\
-		enum\_tuple\_variant\_field\_added & $3$ & $3$ & $3$ \\
-		enum\_repr\_int\_removed & $1$ & $1$ & $1$ \\
-		enum\_struct\_variant\_field\_added & $1$ & $1$ & $1$ \\
+			\texttt{inherent\_method\_missing} & $791$ & $41$ & $27$ \Tspace \\
+			\texttt{enum\_variant\_added} & $387$ & $140$ & $60$ \\
+			\texttt{constructible\_struct\_adds\_field} & $343$ & $123$ & $34$ \\
+			\texttt{auto\_trait\_impl\_removed} & $318$ & $57$ & $45$ \\
+			\texttt{struct\_missing} & $291$ & $66$ & $40$ \\
+			\texttt{function\_missing} & $265$ & $50$ & $33$ \\
+			\texttt{inherent\_method\_must\_use\_added} & $239$ & $4$ & $4$ \\
+			\texttt{inherent\_method\_const\_removed} & $139$ & $5$ & $3$ \\
+			\texttt{derive\_trait\_impl\_removed} & $115$ & $11$ & $11$ \\
+			\texttt{enum\_variant\_missing} & $112$ & $27$ & $18$ \\
+			\texttt{struct\_pub\_field\_missing} & $79$ & $32$ & $16$ \\
+			\texttt{enum\_missing} & $78$ & $26$ & $20$ \\
+			\texttt{trait\_missing} & $45$ & $24$ & $19$ \\
+			\texttt{method\_parameter\_count\_changed} & $22$ & $14$ & $12$ \\
+			\texttt{enum\_marked\_non\_exhaustive} & $17$ & $4$ & $4$ \\
+			\texttt{struct\_repr\_c\_removed} & $12$ & $3$ & $3$ \\
+			\texttt{constructible\_struct\_adds\_private\_field} & $9$ & $7$ & $6$ \\
+			\texttt{inherent\_method\_unsafe\_added} & $9$ & $3$ & $3$ \\
+			\texttt{function\_parameter\_count\_changed} & $8$ & $4$ & $4$ \\
+			\texttt{function\_unsafe\_added} & $8$ & $2$ & $2$ \\
+			\texttt{unit\_struct\_changed\_kind} & $5$ & $3$ & $2$ \\
+			\texttt{enum\_tuple\_variant\_field\_missing} & $4$ & $2$ & $2$ \\
+			\texttt{tuple\_struct\_to\_plain\_struct} & $4$ & $2$ & $2$ \\
+			\texttt{enum\_tuple\_variant\_field\_added} & $3$ & $3$ & $3$ \\
+			\texttt{enum\_repr\_int\_removed} & $1$ & $1$ & $1$ \\
+			\texttt{enum\_struct\_variant\_field\_added} & $1$ & $1$ & $1$ \Bspace \\
 		\hline
-	\end{tabular}
-\end{table}
+	\end{longtable}
+\end{center}
 
 All of the detected semver violations, together with their witnesses, can be found in our GitHub repository \cite{github-csv-results}.
 They are provided in both human-readable and machine-readable form.
