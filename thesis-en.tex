@@ -719,11 +719,96 @@ The differences between the V1 and V2 of the action are further discussed in sec
 
 \section{The lint set expansion}\label{r:section_new_lints}
 
-<Here write a list about the new lints we've written>
+The continuously expanding list of lints is the heart of the project.
+Before our contributions, there were 18 existing lints.
+We have managed to implement many new ones:
+\begin{itemize}
+    \item {\ttfamily enum\_marked\_non\_exhaustive}
+        -- detects marking an {\ttfamily Enum} as {\ttfamily \#[non\_exhaustive]}, removing the ability to match on them;
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/155
+    \item {\ttfamily enum\_struct\_variant\_field\_missing}
+        -- detects missing fields in a struct variant of an {\ttfamily Enum},
+        which changes how the variant must be initialized;
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/156
+    \item {\ttfamily function\_parameter\_count\_changed}
+        -- detects functions with changed parameter count,
+        changing the way the function must be called;
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/170
+    \item {\ttfamily tuple\_struct\_to\_plain\_struct}
+        -- detects changing struct kind from tuple to plain,
+        changing the way the struct must be initialized;
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/249
+    \item {\ttfamily trait\_unsafe\_added}
+        -- detects marking a {\ttfamily Trait} as {\ttfamily unsafe},
+        removing the ability to do a safe {\ttfamily impl};
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/252
+    \item {\ttfamily trait\_unsafe\_removed}
+        -- detects removing {\ttfamily unsafe} marker from a {\ttfamily Trait},
+        removing the ability to do an unsafe {\ttfamily impl};
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/252
+    \item {\ttfamily enum\_must\_use\_added}
+        -- detects marking an {\ttfamily Enum} with the {\ttfamily \#[must\_use]} attribute,
+        removing the ability to ignore the enum when returned from a function;
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/278
+    \item {\ttfamily struct\_must\_use\_added}
+        -- detects marking a struct with the {\ttfamily \#[must\_use]} attribute,
+        removing the ability to ignore the struct when returned from a function;
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/279
+    \item {\ttfamily trait\_must\_use\_added}
+        -- detects marking a {\ttfamily Trait} with the {\ttfamily \#[must\_use]} attribute,
+        removing the ability to ignore a function's result, when it is returning an object
+        with dynamic type that implements this trait;
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/280
+    \item {\ttfamily function\_must\_use\_added}
+        -- detects marking a function with the {\ttfamily \#[must\_use]} attribute,
+        removing the ability to ignore the function's result;
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/281
+    \item {\ttfamily inherent\_method\_must\_use\_added}
+        -- detects marking a method with the {\ttfamily \#[must\_use]} attribute,
+        removing the ability to ignore the method's result.
+        % https://github.com/obi1kenobi/cargo-semver-checks/pull/283
+\end{itemize}
+To enable the new lints, we had to do some development of the Trustfall rustdoc adapter. 
+It mainly resolved around extending its schema and implementing the changes.
+The challenge was to design the new interface in a way that would
+still make it possible to extend it without problems in the future.
+
+One of the notable changes in the schema involved attributes.
+It originally exported its value as a string, which made traversing
+its inner tags in lints not possible. 
+The solution was to refactor it into a proper tree structure.
+This meant that we had to introduce a breaking change there
+and do minor adjustments in the existing lints, 
+making it more future-proof at the same time.
+% https://github.com/obi1kenobi/cargo-semver-checks/pull/171
 
 \section{Command-line interface improvements}\label{r:section_cli}
 
-<Here write a list about changes that made the command line interface better>
+The main change which we implemented was adding the ability to specify 
+features that a crate should be built with for the checks. It is also
+possible to use different configuration for the current and baseline version.
+This is important because some functionalities may change between features. What is more,
+crates often have a feature that breaks semver by design, which
+we discovered when working on the semver-crater \ref{r:section_results_semver_crater}.
+Now the users can adjust the set of features for their specific use cases.
+
+The new default behaviour is to include all the features,
+filtering out heuristically the ones that break semver by looking at
+the feature's name. For example, a feature named {\ttfamily unstable} would not be
+included. The list of banned names was created by looking
+at different features in popular crates.
+
+It was not easy to correctly handle all edge cases,
+thus we wrote a heavy test suite for this change.
+For example, one of the optimizations written in cargo-semver-checks
+is caching the generated rustdoc and we had to make sure that 
+the caching mechanism is not used when a user changes the enabled features
+(which might change the rustdoc).
+
+We also improved the user experience by spotting and fixing a couple bugs
+in the command-line interface -- both in the tool's behaviour
+in combination with specific flags and in its output messages.
+For details, see section \ref{r:section_bugfixes}.
 
 \section{Brand new GitHub Action}\label{r:section_github_action}
 
