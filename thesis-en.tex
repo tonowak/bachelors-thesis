@@ -890,6 +890,18 @@ and immediate contact with him through chat).
 			\item Diagnosed a user-encountered compilation error which happened because of changes
 				in one of the tool's dependencies.
 			\item Took part in the development of the library based on the existing tool's code.
+			\item Developed \texttt{semver-crater} that runs cargo-semver-checks on the most popular crates
+				(see section \ref{section_results_semver_crater})
+				and wrote numerous scripts for analyzing the results, designated for:
+				\begin{itemize}
+					\item parsing the output of cargo-semver-checks to get the list of affected items,
+					\item filtering releases which were affected by the \say{doc-hidden} false-positives,
+					\item creating witnesses for all kinds of triggered lints,
+					\item verifying whether the witnesses found true-positives,
+					\item getting a list of items for construction of witnesses 
+						for lints that check the exhaustiveness of pattern matching. 
+				\end{itemize}
+				Manually verified the results with the rest of the team.
 		\end{itemize}
 
 	\item Michał \cite{responsibilities-michal}:
