@@ -1472,6 +1472,19 @@ and immediate contact with him through chat).
 				to \texttt{Trait} in the schema and the adapter.
 			\item Added a \texttt{fields} edge to the \texttt{Variant} interface in the schema
 				and the adapter.
+                        \item Changed the way cargo-semver-checks handles features:
+                        \begin{itemize}
+                            \item Added CLI flags to specify features a crate is built with for the checks. 
+                            \item Reworked the code that handles crate configuration and adjusted
+                                    the default feature configuration. 
+                                    Previously, the crates were always built with all the features enabled.
+                                    Currently, the default behaviour is to enable a heuristically-choosen
+                                    subset of features, as described in \ref{r:section_cli}
+                            \item Implemented all the logic for calculating and building the crate
+                                    with the final feature set.
+                            \item Developed a test suite for the feature configurations.
+                        \end{itemize}
+                                
 		\end{itemize}
 
 	\item Tomasz and Michał:
