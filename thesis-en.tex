@@ -873,9 +873,61 @@ of the project consists of over 30 checks, which are responsible for:
 Such a comprehensive collection of tests helped us to find and fix several bugs not only in the action,
 but also in cargo-semver-checks itself, and will make it easier to maintain the project in the future.
 
-\section{Test suite}\label{r:section_test_suite}
+\section{Better test suite with integration tests}\label{r:section_test_suite}
 
-<Here write a list about the improvements in the testing suite>
+Before our contributions, each lint had its own, dedicated testcase consisting of:
+\begin{itemize}
+\item the Rust sourcecode that could be compiled in two different ways (producing
+\say{current} and \say{baseline} codes),
+\item a file with the results of executing its Trustfall query over this sourcecode.
+\end{itemize}
+We have replaced this system with a new one that contains numerous \say{crate pairs}
+(two separate directories called \say{current} and \say{baseline} with their own
+manifests and source codes) and Trustfall query results for each lint over all
+available crate pairs. This has brought numerous benefits:
+\begin{itemize}
+	\item testing each lint on all crate pairs found multiple false-positives by running
+		on codes originally meant to test other lints
+		(e.g. we found that a lint has erroneously claimed that a trait
+		has been deleted, when in fact it was still present but its definition 
+		was changed, which could cause user confusion and frustration at the
+		misleading information)
+	\item the manifests of the baseline and current crates can be different,
+		which allows to write tests for lints checking the manifests
+		(such lints are not yet implemented, but it is one of the future goals
+		of the project),
+	\item because we replaced the heavy use of conditional compilation with separate crates with regular source code,
+	    it's now easier to triage issues like false-positives and to add new test cases
+\end{itemize}
+In the process of making the test suite more thorough,
+we discovered a variety of edge cases in the underlying rustdoc tool,
+which is part of the Rust toolchain and is also under active development.
+Since our work made our tests quite extensive,
+the rustdoc team is working on ways to integrate our test suite into rustdoc's own,
+by re-running our tests on new rustdoc versions \cite{issue-rustdoc-our-tests}.
+
+We also wrote a new kind of test to ensure that some bugs found by us or reported by the users have been fixed.
+Such tests were made by writing GitHub workflow jobs (which are triggered by every
+commit and Pull Request) that downloads the tool and the user's git repository,
+runs the tool just like the user did to detect the bug
+and checks that it is no longer present.
+Thanks to this, we can be sure that the user who reported the bug
+will not experience it ever again.
+Just the writing of such tests helped us find other bugs
+-- we tried to write tests that run the tool in different ways
+with various command-line arguments and they detected that it wrongly handled some arguments.
+
+The integration tests were more appropriate to be written as a GitHub workflow job
+-- cloning the user's git repo takes time and memory, requires internet connection
+and often the projects are platform-specific,
+thus the tests are not suited to be run locally.
+But we also had some tests which were better suited to local runs alongside the crate pair tests
+-- they provide feedback immediately and it's easier to debug when such tests fail.
+For example, there was a bug which caused the tool to not check any lints at all
+because they accidentally weren't being included in the produced binary
+(which fortunately was noticed before going to production).
+To be sure that this will not happen again, we wrote an integration test that
+locally executes the produced binary and verifies its output.
 
 \section{Healthier codebase}\label{r:section_healthier_codebase}
 
@@ -1360,6 +1412,12 @@ TODO:
 % \bibitem{cargo-semver-checks} GitHub,
 % 	\textit{cargo-semver-checks} (2023) \\
 % 	\url{https://github.com/obi1kenobi/cargo-semver-checks}
+
+%%% section 5.2 links
+
+\bibitem{issue-rustdoc-our-tests} GitHub,
+	\textit{Rust -- Issue \#110815} (2023) \\
+	\url{https://github.com/rust-lang/rust/issues/110815}
 
 
 %%% section 5.3 links
