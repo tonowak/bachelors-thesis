@@ -82,7 +82,7 @@ TODO:
 	\item write the executive summary (around one page long)
 	\item describe in short what is the goal of the project and what it solves
 	\item describe that the project is indeed needed
-	\item mention what we've done and how it moved the project towards the vision
+	\item mention what we have done and how it moved the project towards the vision
 	\item mention the results and the impact on the community
 \end{itemize}
 
@@ -442,7 +442,7 @@ is perceived as a bug in the tool. There are two advantages with this approach:
 	\item the tool is suited to be used in continuous integration for finding semver issues in
 		commits or Pull Requests -- it reports semver breaks only when its output should not be
 		ignored and requires manual inspection,
-	\item we're avoiding a scenario in which a user encounters false-positives, they become
+	\item we are avoiding a scenario in which a user encounters false-positives, they become
 		frustated and their trust in the tool is reduced, making them less likely to use the
 		tool again.
 \end{itemize}
@@ -486,7 +486,7 @@ satisfies semver.
 
 The tool can be used on a local copy of the project (for example, just before releasing its new
 version to the registry through \texttt{cargo publish}) by passing the path to its manifest.
-The baseline crate can be passed in a similar manner, but alternatively it's possible to either
+The baseline crate can be passed in a similar manner, but alternatively it is possible to either
 specify a version of the crate in the registry with which the current crate should be compared
 with, or (assuming that the current directory is a git repository) by passing a git revision where
 the baseline project is located.
@@ -498,7 +498,7 @@ one by one by passing the path to the manifest that defines the workspace.
 
 Seeing that GitHub is the most popular internet hosting service for version control amongst the
 Rust libraries developers, one of the goals of the project is to implement a GitHub Action that
-checks whether a given git branch hasn't violated semver with recent changes.
+checks whether a given git branch has not violated semver with recent changes.
 
 There are two reasons as to why this continuous integration job is beneficial for the developers:
 \begin{itemize}
@@ -517,9 +517,9 @@ There are two reasons as to why this continuous integration job is beneficial fo
 Before our contributions, the project was already partially functional, but it had numerous issues
 which often prevented the community from adopting the tool into their workflow:
 \begin{itemize}
-	\item the project didn't have many lints,
+	\item the project did not have many lints,
 	\item the code was bugged in multiple ways and lacked some functionality,
-	\item the community wasn't satisfied with the implemented GitHub Action to the point where some
+	\item the community was not satisfied with the implemented GitHub Action to the point where some
 		developers coded their own continuous integration job using just the command-line interface
 		of the tool,
 	\item some existing lints had false-positives,
@@ -919,7 +919,7 @@ available crate pairs. This has brought numerous benefits:
 		(such lints are not yet implemented, but it is one of the future goals
 		of the project),
 	\item because we replaced the heavy use of conditional compilation with separate crates with regular source code,
-	    it's now easier to triage issues like false-positives and to add new test cases
+	    it is now easier to triage issues like false-positives and to add new test cases
 \end{itemize}
 In the process of making the test suite more thorough,
 we discovered a variety of edge cases in the underlying rustdoc tool,
@@ -944,9 +944,9 @@ The integration tests were more appropriate to be written as a GitHub workflow j
 and often the projects are platform-specific,
 thus the tests are not suited to be run locally.
 But we also had some tests which were better suited to local runs alongside the crate pair tests
--- they provide feedback immediately and it's easier to debug when such tests fail.
+-- they provide feedback immediately and it is easier to debug when such tests fail.
 For example, there was a bug which caused the tool to not check any lints at all
-because they accidentally weren't being included in the produced binary
+because they accidentally were not being included in the produced binary
 (which fortunately was noticed before going to production).
 To be sure that this will not happen again, we wrote an integration test that
 locally executes the produced binary and verifies its output.
@@ -1388,7 +1388,7 @@ and immediate contact with him through chat).
 					\item made it so that the tool runs each lint on all testing crates
 						(which has detected multiple new false-positives),
 					\item massively improved the readability and ease of adding new tests and lints,
-					\item improved the error messages when the test output didn't match.
+					\item improved the error messages when the test output did not match.
 				\end{itemize}
 			\item Made a change in the tests that runs the tool on crates that did not change
 				to detect possible false-positives.
@@ -1432,7 +1432,7 @@ and immediate contact with him through chat).
 				and macros with the same names.
 			\item Fixed a user-encountered bug where implicit features due to target-specific
 				optional dependencies were not added in the current version.
-			\item Fixed a user-reported bug where the rustdoc command's output wasn't showing up
+			\item Fixed a user-reported bug where the rustdoc command's output was not showing up
 				with colors.
 			\item Diagnosed a user-encountered compilation error which happened because of changes
 				in one of the tool's dependencies.
