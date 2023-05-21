@@ -818,11 +818,50 @@ but also in cargo-semver-checks itself, and will make it easier to maintain the 
 
 \section{Healthier codebase}\label{r:section_healthier_codebase}
 
-TODO:
+Our contributions to the tool were not just limited to developing new code. We are aware of
+how important it is to maintain high quality of the project's codebase, thus we introduced
+several changes and refactors that not only made it easier to navigate and expand, but also
+prepared the tool to be even more successful in the future.
+
+With lints being the core of cargo-semver-checks, our first major refactoring targeted both their
+general file structure and development process. Imagine a user who is eager to contribute
+and decides to develop a new lint:
 \begin{itemize}
-	\item describe refactors and other changes that made the codebase better
-	\item describe other overall changes that prepares the tool to be more successful in the future
-	\item describe how the code changed to be more welcoming for next contributors
+	\item \textbf{Previously} they had to go through a tedious process of modifying single lines
+	of code in several different files. What is more, tests for the new lint had to be written
+	in a single file where all the baseline and current code fragments had to be preceded by
+	a differentiation macro. Although there were instructions available, they lacked
+	a general introduction of the project's approach and design goals.
+
+	\item \textbf{Currently} the user only has to choose an appropriate name for their lint
+	and implement it together with suitable tests -- all the minor file changes are handled
+	by a dedicated script that we developed. The tests have been split into two separate
+	directories and allow the user to provide the baseline and current test versions just
+	as if they were developing a crate (with the difference being that instead of avoiding semver violations
+	they are supposed to make ones that trigger their lint). The instructions received an overhaul
+	as well to be more welcoming and informative, greatly improving the user experience
+	and encouraging them to make new contributions.
+\end{itemize}
+Shortly after we additionally changed how those new tests are run
+(for more details on the tests rework, see section \ref{r:section_test_suite}).
+
+% Another significant improvement was the introduction of pre-compiled, executable binaries
+% of the tool, available for different operating systems. This not only helps the users by saving
+% their time normally spent on downloading and compiling the tool, but also makes it more accessible
+% since the newest binaries are included with every release. They bring an additional benefit
+% of stability, too -- as they undergo numerous tests before being added to the newest version,
+% they are the safest way of using the tool on one's project.
+
+Later on we also refactored the \texttt{baseline.rs} file to make future additions easier. With this
+we were able to change how the tool generates rustdoc for the baseline version of a crate
+by introducing a placeholder project with a direct dependency to it, imitating how one would
+naturally access it.
+
+Besides there were numerous minor changes, such as:
+\begin{itemize}
+	\item renaming the project's file and function names so that they became more descript,
+	\item adjusting the clippy (cargo's built-in formatter) lints,
+	\item multiple, smaller refactors and optimizations in various parts of the codebase.
 \end{itemize}
 
 \section{Bugfixes}\label{r:section_bugfixes}
