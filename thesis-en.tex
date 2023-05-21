@@ -398,7 +398,7 @@ reason for yanking, with a shocking 43\% rate. It also mentions that 3.7\% of al
 
 There are not many great tools for semver checking in existence. The main reason for that is that
 the semantics of popular languages make complete and automatic verification practically impossible.
-There are some initiatives to combat this. For example, the Elm languge\cite{elm-lang} by design
+There are some initiatives to combat this. For example, the Elm languge \cite{elm-lang} by design
 enforces semantic versioning. Its type system enables automatic detection of all API changes.
 Outside of that, it does not appear that tools for checking semver in estabilished languages like
 Python or C++ are commonly used in the industry.
@@ -795,23 +795,23 @@ We have managed to implement many new ones:
         removing the ability to ignore the method's result.
         % https://github.com/obi1kenobi/cargo-semver-checks/pull/283
 \end{itemize}
-To enable the new lints, we had to do some development of the Trustfall rustdoc adapter. 
+To enable the new lints, we had to do some development of the Trustfall rustdoc adapter.
 It mainly resolved around extending its schema and implementing the changes.
 The challenge was to design the new interface in a way that would
 still make it possible to extend it without problems in the future.
 
 One of the notable changes in the schema involved attributes.
 It originally exported its value as a string, which made traversing
-its inner tags in lints not possible. 
+its inner tags in lints not possible.
 The solution was to refactor it into a proper tree structure.
 This meant that we had to introduce a breaking change there
-and do minor adjustments in the existing lints, 
+and do minor adjustments in the existing lints,
 making it more future-proof at the same time.
 % https://github.com/obi1kenobi/cargo-semver-checks/pull/171
 
 \section{Command-line interface improvements}\label{r:section_cli}
 
-The main change which we implemented was adding the ability to specify 
+The main change which we implemented was adding the ability to specify
 features that a crate should be built with for the checks. It is also
 possible to use different configuration for the current and baseline version.
 This is important because some functionalities may change between features. What is more,
@@ -828,7 +828,7 @@ at different features in popular crates.
 It was not easy to correctly handle all edge cases,
 thus we wrote a heavy test suite for this change.
 For example, one of the optimizations written in cargo-semver-checks
-is caching the generated rustdoc and we had to make sure that 
+is caching the generated rustdoc and we had to make sure that
 the caching mechanism is not used when a user changes the enabled features
 (which might change the rustdoc).
 
@@ -916,7 +916,7 @@ available crate pairs. This has brought numerous benefits:
 	\item testing each lint on all crate pairs found multiple false-positives by running
 		on codes originally meant to test other lints
 		(e.g. we found that a lint has erroneously claimed that a trait
-		has been deleted, when in fact it was still present but its definition 
+		has been deleted, when in fact it was still present but its definition
 		was changed, which could cause user confusion and frustration at the
 		misleading information)
 	\item the manifests of the baseline and current crates can be different,
@@ -1050,8 +1050,11 @@ Apart from that, we reported a few bugs that were or are to be fixed by other co
 		crate.
 \end{itemize}
 
-% chapter semver-crater
-\chapter{Tool's findings in popular crates}\label{r:chapter_results_popular_crates}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%            semver-crater            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Tool's findings in popular crates}\label{r:chapter_semver_crater}
 
 \section{Statistics on real-world violations of semver}\label{r:section_results_statistics}
 
@@ -1180,7 +1183,7 @@ We came up with two solutions:
 		containing the hidden items and another one without the hidden items,
 		parsing the output to know which items were removed.
 	\item As a way to know whether a reported item is a false-positive or a true-positive,
-		we created a witness (more on that in section \ref{r:witness_generation})
+		we created a witness (more on that in section \ref{r:section_generating_witnesses})
 		and ignored all items whose witnesses compile on both baseline and current releases.
 \end{itemize}
 
@@ -1236,7 +1239,7 @@ The other cases mainly required the generic types to satisfy some traits,
 which is much harder to automate or even write manually.
 Thus we decided that we would skip checking some of the reports that required using generic types.
 Because of that, there are 151 witnesses that we did not write
-and the releases without the witnesses are \textit{not} included in the statistics in section \ref{section_results_semver_crater}
+and the releases without the witnesses are \textit{not} included in the statistics in section \ref{r:section_results_statistics}
 -- we could have found more semver violations, but it was too time-consuming for us.
 
 For some lints we could choose between simply importing the given item
@@ -1440,15 +1443,15 @@ and immediate contact with him through chat).
 				in one of the tool's dependencies.
 			\item Took part in the development of the library based on the existing tool's code.
 			\item Developed \texttt{semver-crater} that runs cargo-semver-checks on the most popular crates
-				(see section \ref{section_results_semver_crater})
+				(see chapter \ref{r:chapter_semver_crater})
 				and wrote numerous scripts for analyzing the results, designated for:
 				\begin{itemize}
 					\item parsing the output of cargo-semver-checks to get the list of affected items,
 					\item filtering releases which were affected by the \say{doc-hidden} false-positives,
 					\item creating witnesses for all kinds of triggered lints,
 					\item verifying whether the witnesses found true-positives,
-					\item getting a list of items for construction of witnesses 
-						for lints that check the exhaustiveness of pattern matching. 
+					\item getting a list of items for construction of witnesses
+						for lints that check the exhaustiveness of pattern matching.
 				\end{itemize}
 				Manually verified the results with the rest of the team.
 		\end{itemize}
@@ -1474,9 +1477,9 @@ and immediate contact with him through chat).
 				and the adapter.
                         \item Changed the way cargo-semver-checks handles features:
                         \begin{itemize}
-                            \item Added CLI flags to specify features a crate is built with for the checks. 
+                            \item Added CLI flags to specify features a crate is built with for the checks.
                             \item Reworked the code that handles crate configuration and adjusted
-                                    the default feature configuration. 
+                                    the default feature configuration.
                                     Previously, the crates were always built with all the features enabled.
                                     Currently, the default behaviour is to enable a heuristically-choosen
                                     subset of features, as described in \ref{r:section_cli}
@@ -1484,7 +1487,7 @@ and immediate contact with him through chat).
                                     with the final feature set.
                             \item Developed a test suite for the feature configurations.
                         \end{itemize}
-                                
+
 		\end{itemize}
 
 	\item Tomasz and Michał:
@@ -1586,7 +1589,7 @@ as it became faster, easier to add to one's project and gained additional lints 
 even more semver breaks. Numerous new features together with stability and performance improvements
 have been introduced frequently as well to further increase its popularity.
 
-During the research that we conducted in chapter \ref{r:chapter_results_popular_crates},
+During the research that we conducted in chapter \ref{r:chapter_semver_crater},
 we have exposed that semver in Rust is hard to adhere to. Even among the top 1000 most downloaded
 crates more than 1 in 6 of them has violated semver and approximately 1 in 30 releases contained at
 least one semver violation. Those top crates were built and are maintained by highly experienced
@@ -1816,34 +1819,23 @@ to already see it making such an impact, hoping to soon allow everyone to be fea
 % 	\url{https://github.com/obi1kenobi/cargo-semver-checks}
 
 
-%%% section 5.2 links
+%%% section 5.3 links
+
+\bibitem{github_actions_toolkit} GitHub,
+	\textit{GitHub Actions Toolkit} (2023) \\
+	\url{https://github.com/actions/toolkit}
+
+\bibitem{crates_io_sparse_protocol} Inside Rust Blog,
+\textit{Help test Cargo's new index protocol} (2023) \\
+	\url{https://blog.rust-lang.org/inside-rust/2023/01/30/cargo-sparse-protocol.html}
+
+
+%%% section 5.4 links
 
 \bibitem{issue-rustdoc-our-tests} GitHub,
 	\textit{Rust -- Issue \#110815} (2023) \\
 	\url{https://github.com/rust-lang/rust/issues/110815}
 
-
-%%% section 5.3 links
-
-\bibitem{github_actions_toolkit} GitHub,
-	\textit{GitHub Actions Toolkit} (2023) \\
-	\url{https://github.com/actions/toolkit}
-
-\bibitem{crates_io_sparse_protocol} Inside Rust Blog,
-	\textit{Help test Cargo's new index protocol} (2023) \\
-	\url{https://blog.rust-lang.org/inside-rust/2023/01/30/cargo-sparse-protocol.html}
-
-
-%%% section 5.3 links
-
-\bibitem{github_actions_toolkit} GitHub,
-	\textit{GitHub Actions Toolkit} (2023) \\
-	\url{https://github.com/actions/toolkit}
-
-\bibitem{crates_io_sparse_protocol} Inside Rust Blog,
-	\textit{Help test Cargo's new index protocol} (2023) \\
-	\url{https://blog.rust-lang.org/inside-rust/2023/01/30/cargo-sparse-protocol.html}
-  
 
 %%% section 6.1 links
 
