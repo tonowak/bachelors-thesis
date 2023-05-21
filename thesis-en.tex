@@ -926,14 +926,14 @@ and immediate contact with him through chat).
                         \item Changed the way cargo-semver-checks handles features:
                         \begin{itemize}
                             \item Added CLI flags to specify features a crate is built with for the checks. 
-                            \item Adjusted the default feature configuration. 
+                            \item Reworked the code that handles crate configuration and adjusted
+                                    the default feature configuration. 
                                     Previously, the crates were always built with all the features enabled.
-                                    Now, the default behaviour is to enable a heuristically-choosen
+                                    Currently, the default behaviour is to enable a heuristically-choosen
                                     subset of features, as described in \ref{r:section_cli}
-                            \item These changes required to rework the current code that handles crate 
-                                    configuration, implement all the logic for calculating and 
-                                    building the crate with the final feature set, as well as
-                                    develop a testing suite for the feature configurations.
+                            \item Implemented all the logic for calculating and building the crate
+                                    with the final feature set.
+                            \item Developed a test suite for the feature configurations.
                         \end{itemize}
                                 
 		\end{itemize}
