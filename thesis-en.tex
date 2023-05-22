@@ -148,7 +148,7 @@ like to continue programming in it.
 
 Because of the high level of safety it provides, Rust has also become the secondary
 language for writing the Linux kernel (with the primary being C). While there have been
-attempts to add other languages (f.e. C++ in 1997), Rust is the first one to successfully
+attempts to add other languages (e.g. C++ in 1997), Rust is the first one to successfully
 make it since the kernel's first release in 1991.
 
 \section{Rust's package manager and build system -- cargo}\label{r:section_cargo}
@@ -484,7 +484,7 @@ satisfies semver.
 
 \subsection{Running locally}\label{r:subsection_running_locally}
 
-The tool can be used on a local copy of the project (for example, just before releasing its new
+The tool can be used on a local copy of the project (e.g. just before releasing its new
 version to the registry through \texttt{cargo publish}) by passing the path to its manifest.
 The baseline crate can be passed in a similar manner, but alternatively it is possible to either
 specify a version of the crate in the registry with which the current crate should be compared
@@ -1071,8 +1071,8 @@ All in all, we found semver violations in slightly more than \textbf{1 in 6 crat
 -- that is, in 173 crates of the 1000 crates we scanned.
 
 In total, we discovered 3305 different instances of semver violations across all releases.
-We found that the same release frequently contained more than one instance of the same kind of semver violation:
-for example, a release could have removed multiple functions from the public API. Ignoring multiple instances
+We found that the same release frequently contained more than one instance of the same kind of semver violation --
+e.g. a release could have removed multiple functions from the public API. Ignoring multiple instances
 of the same semver violation in the same release, the semver lints were triggered 655 times across all releases.
 
 We verified each reported semver violation by constructing a \texttt{witness} -- a short Rust code
