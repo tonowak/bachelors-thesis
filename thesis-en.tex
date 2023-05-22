@@ -378,13 +378,13 @@ move away from the faulty release.
 
 Some of popular Rust crates with millions of downloads happened to break semver:
 \begin{itemize}
-    \item {\ttfamily pyo3 v0.5.1} accidentally changed a function signature \cite{pyo3-issue}
+    \item {\ttfamily pyo3 v0.5.1} accidentally changed a function signature \cite{pyo3-issue},
     \item {\ttfamily clap v3.2.0} accidentally had a type stop implementing an auto-trait
-		\cite{clap-issue}
+		\cite{clap-issue},
     \item multiple {\ttfamily block-buffer} versions accidentally broke their MSRV contract
-		\cite{block-buffer-issue}
+		\cite{block-buffer-issue},
     \item and many more. We have developed a script that scans all releases for semver breaks we
-		can detect. The results are covered in section \ref{r:section_results_statistics}
+		can detect. The results are covered in section \ref{r:section_results_statistics}.
 \end{itemize}
 
 Those were examples of popular crates with experienced maintainers, but the problem is even more
@@ -851,9 +851,9 @@ we decided to use the fact that a GitHub action might
 be run using Node.js and implement the V2 version in TypeScript. It is a standard way
 of creating complex actions, as it has multiple advantages:
 \begin{itemize}
-	\item TypeScript action is platform-independent and can be run on all runners supported by GitHub Actions.
-	\item Using Node.js makes it possible to depend on a variety of \texttt{npm} packages, in particular the GitHub Actions
-		Toolkit \cite{github_actions_toolkit}, instead of building the components from scratch.
+	\item TypeScript action is platform-independent and can be run on all runners supported by GitHub Actions,
+	\item using Node.js makes it possible to depend on a variety of \texttt{npm} packages, in particular the GitHub Actions
+		Toolkit \cite{github_actions_toolkit}, instead of building the components from scratch,
 	\item TypeScript code is more readable and easier to organize than a bash script or a GitHub workflow file.
 \end{itemize}
 The new version of the action not only fixes the problems of the previous V1, but also
@@ -873,11 +873,11 @@ adds numerous features:
 \end{itemize}
 Moreover, the action now includes several optimizations of the running time:
 \begin{itemize}
-	\item The cargo-semver-checks tool is downloaded as a precompiled binary instead of being built from source.
-	\item The rustdoc of the baseline version is cached between the action's runs, so that it is generated
+	\item cargo-semver-checks tool is downloaded as a precompiled binary instead of being built from source,
+	\item the rustdoc of the baseline version is cached between the action's runs, so that it is generated
 		only once. The caching strategy might be adjusted by the user using inputs \texttt{shared-key}
-		and \texttt{prefix-key} (e.g. to share the cache between different GitHub jobs).
-	\item When possible, downloads from crates.io are made using recently developed \say{sparse} protocol
+		and \texttt{prefix-key} (e.g. to share the cache between different GitHub jobs),
+	\item when possible, downloads from crates.io are made using recently developed \say{sparse} protocol
 		\cite{crates_io_sparse_protocol}.
 \end{itemize}
 
@@ -913,13 +913,13 @@ available crate pairs. This has brought numerous benefits:
 		(e.g. we found that a lint has erroneously claimed that a trait
 		has been deleted, when in fact it was still present but its definition
 		was changed, which could cause user confusion and frustration at the
-		misleading information)
+		misleading information),
 	\item the manifests of the baseline and current crates can be different,
 		which allows to write tests for lints checking the manifests
 		(such lints are not yet implemented, but it is one of the future goals
 		of the project),
 	\item because we replaced the heavy use of conditional compilation with separate crates with regular source code,
-	    it is now easier to triage issues like false-positives and to add new test cases
+	    it is now easier to triage issues like false-positives and to add new test cases.
 \end{itemize}
 In the process of making the test suite more thorough,
 we discovered a variety of edge cases in the underlying rustdoc tool,
