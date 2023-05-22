@@ -1058,16 +1058,16 @@ amongst the one thousand most downloaded Rust crates.
 This section is a~presentation of all the results we got. To learn more about
 our methodology, see section \ref{r:section_generating_witnesses}.
 
-We considered only non-yanked releases of those crates which were published
-after 2017-01-01 and are not major version updates compared to the prior release. From those releases,
-919 did not compile on our machines with the current version of Rust.
-Thus, we considered 14 389 releases in total (which is also the number of times
+We considered only non-yanked releases of crates which were published
+after 01/01/2017 and are not major version updates compared to the prior release. From those releases,
+\mbox{919 did not} compile on our machines with the current version of Rust.
+Thus, we considered \mbox{14 389} releases in total (which is also the number of times
 cargo-semver-checks has been run).
 
 From those non-yanked, non-major releases which we were able to compile, we found that
 on average \textbf{every 1 in 30 releases had at least one semver violation}
 -- we found one or more violations in 470 of them.
-All in all, we found semver violations in slightly more than \textbf{1 in 6 crates}
+All in all, we found semver violations in slightly more than \mbox{\textbf{1 in 6 crates}}
 -- that is, in 173 crates of the 1000 crates we scanned.
 
 In total, we discovered 3305 different instances of semver violations across all releases.
@@ -1586,7 +1586,7 @@ have been introduced frequently as well to further increase its popularity.
 
 During the research that we conducted in chapter \ref{r:chapter_semver_crater},
 we have exposed that semver in Rust is hard to adhere to. Even among the top 1000 most downloaded
-crates more than 1 in 6 of them has violated semver and approximately 1 in 30 releases contained at
+crates more than \mbox{1 in 6 of them} has violated semver and approximately \mbox{1 in 30 releases} contained at
 least one semver violation. Those top crates were built and are maintained by highly experienced
 Rust developers, but this is not the case for less popular ones -- with their developers having
 less expertise and poorer semver knowledge, they are even more vulnerable to cause breaks.
