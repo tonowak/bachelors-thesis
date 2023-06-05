@@ -74,17 +74,57 @@ by a~dependency change.
 %\listoffigures
 %\listoftables
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%          Executive summary          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \chapter*{Executive summary}
 \addcontentsline{toc}{chapter}{Executive summary}
 
-TODO:
-\begin{itemize}
-	\item write the executive summary (around one page long)
-	\item describe in short what is the goal of the project and what it solves
-	\item describe that the project is indeed needed
-	\item mention what we have done and how it moved the project towards the vision
-	\item mention the results and the impact on the community
-\end{itemize}
+We have discovered that more than 1~in~6 of the largest Rust libraries have broken a~multitude
+of projects by publishing new releases, causing their users' code to suddenly stop compiling.
+In such cases, the packages' maintainers have to delete the faulty releases or create patches
+to fix them and the users have to temporarily downgrade the library's version. This is a~serious
+concern as the problem is alarmingly common but has never been satisfactorily resolved so far.
+
+The following document describes the development of \texttt{cargo-semver-checks}, an~open-source
+tool called that solves this problem. It detects changes that are
+not backwards-compatible in Rust libraries' codes before releasing a~new version.
+
+Instead of directly looking at the source code, the tool compares the automatically generated
+documentation of two versions of the library's public API. To parse this data, it uses
+a~query engine called \texttt{Trustfall} that is capable of reading from any organized database,
+allowing for the checks run by the tool to be written in form of short queries. Thanks to
+this approach, the project is much more sustainable than other attempts of this kind among Rust
+and other languages, which are not maintained anymore.
+
+We worked in a~team of four as part of our bachelor's thesis on improving the tool to make it
+convenient and accessible for the Rust community. We extended the command-line interface
+according to the users' requests and needs, developed a~brand new version of
+the tool's GitHub Action and implemented various new lints to prevent even more breaking changes.
+Additionally we greatly expanded the test suite, fixed multiple bugs that previously
+made it difficult for the community to use the tool and further improved the codebase to attract
+new contributors.
+
+Furthermore we present the results of running \texttt{cargo-semver-checks} on a~large number
+of popular crates. This research proved that the problem is far more common than expected.
+Moreover, gathering statistics on occurrences of different semantic versioning breaks
+revealed the most frequent ones which the developers should pay closer attention to
+in their projects.
+
+The tool has shown a~constant increase in its usage rates, growing up to its
+well-established position in the Rust ecosystem. The tool is actively used by some of
+the largest Rust libraries such as tokio, libp2p, data-encoding and pest (which have
+over 150 million downloads). It also has earned itself the trust of numerous worldwide
+known companies including Amazon, Microsoft, Adobe and Mozilla. Their developers
+use \texttt{cargo-semver-checks} on a~daily basis to prevent semantic versioning breaks in their
+publicly available libraries.
+
+The tool is to become part of the official package manager and build system for the Rust language.
+This further reassures us that its future is bright and makes us proud to see it making
+such an~impact on the entire world of Rust.
+
 
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
