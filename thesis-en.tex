@@ -245,7 +245,7 @@ first declare a~clear and precise public API, changes of which refer to specific
 the package version number. The number is most often denoted as X.Y.Z (Major.Minor.Patch), where:
 \begin{itemize}
 	\item \textbf{Major} number is incremented when backwards-incompatible API changes were made,
-	\item \textbf{Minor} number is incremented when a~functionality was added in
+	\item \textbf{Minor} number is incremented when a~new functionality was added in
 		a~backwards-compatible manner,
 	\item \textbf{Patch} number is incremented when backwards-compatible bugfixes were made.
 \end{itemize}
@@ -1007,7 +1007,7 @@ Throughout our contributions to the project, we managed to fix the following bug
 	\item current and baseline's rustdoc being generated with different features, which
 		resulted in false-positives,
 	\item tests failing on Rust 1.67.0 due to the addition of a~public \texttt{rustc}
-		internal trait \texttt{StructuralEq} which is not relevant for the users,
+		internal trait named \texttt{StructuralEq} which is not relevant for the users,
 	\item trustfall-rustdoc-adapter incompatibility with the new version of rustdoc v23
 		which stopped exporting inlined items of external crates,
 	\item rustdoc generation of \say{current} with dependency versions taken from
@@ -1152,7 +1152,7 @@ and compares every two adjacent, non-yanked releases and parses the output.
 The results are saved to a~CSV file.
 Because of the sheer number of releases that needs to be checked, the results take several days to generate.
 
-Unfortunately, cargo-semver-checks is not yet perfect and sometimes produces false-positives
+Unfortunately, cargo-semver-checks is not yet perfect and sometimes still produces false-positives
 that are to be fixed. However, most of them were caused by one of the two cases:
 \begin{itemize}
 	\item an~item was marked with the \texttt{\#[doc(hidden)]} attribute,
@@ -1244,7 +1244,7 @@ e.g. it uses the function name but does not call the function itself).
 Thus, we decided to generate witnesses with the more convincing technique of writing the more realistic Rust code whenever possible
 and used the pure imports as a~fallback when it failed to compile.
 
-We had one last difficulty when we tried to create witnesses for the e.g. \texttt{enum\_variant\_added} lint.
+We had one last difficulty when we tried to create witnesses for the \texttt{enum\_variant\_added} lint.
 To construct a~witness for it, one has to exhaustively pattern-match
 on all of the given enum's variants. However, the output only contained the name
 of the variant that was added rather than a~list of all the variants' names.
@@ -1514,11 +1514,11 @@ and immediate contact with him through chat).
 					the new version,
 				\item making use of \texttt{cargo-semver-checks} built-in baseline choosing logic,
 				\item adding support for running the action on Windows- and MacOs-based runners,
-				\item introducing inputs \texttt{package}, \texttt{exclude}, \texttt{manifest-path},
+				\item introducing several new inputs \texttt{package}, \texttt{exclude}, \texttt{manifest-path},
 					\texttt{verbose}, \texttt{release-type} and \texttt{rust-toolchain},
 					which are parsed and passed to the CLI,
 				\item using pre-built binaries to speed up the action,
-				\item adding baseline rustdoc caching between action runs along with
+				\item adding baseline rustdoc caching between action runs along with new
 					inputs \texttt{shared-key} and \texttt{prefix-key}, which allow the user
 					to adjust the caching strategy,
 				\item setting up environmental variables for best performance of cargo (disabling
