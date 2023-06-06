@@ -90,7 +90,7 @@ concern as the problem is alarmingly common but has never been satisfactorily re
 
 The following document describes the development of \texttt{cargo-semver-checks}, an~open-source
 tool called that solves this problem. It detects changes that are
-not backwards-compatible in Rust libraries' codes before releasing a~new version.
+not backwards-compatible in Rust libraries' code before releasing a~new version.
 
 Instead of directly looking at the source code, the tool compares the automatically generated
 documentation of two versions of the library's public API. To parse this data, it uses
@@ -940,16 +940,16 @@ but also in cargo-semver-checks itself, and will make it easier to maintain the 
 Before our contributions, each lint had its own, dedicated testcase consisting of:
 \begin{itemize}
 \item the Rust sourcecode that could be compiled in two different ways (producing
-\say{current} and \say{baseline} codes),
+\say{current} and \say{baseline} code),
 \item a~file with the results of executing its Trustfall query over this sourcecode.
 \end{itemize}
 We have replaced this system with a~new one that contains numerous \say{crate pairs}
 (two separate directories called \say{current} and \say{baseline} with their own
-manifests and source codes) and Trustfall query results for each lint over all
+manifests and source code) and Trustfall query results for each lint over all
 available crate pairs. This has brought numerous benefits:
 \begin{itemize}
 	\item testing each lint on all crate pairs found multiple false-positives by running
-		on codes originally meant to test other lints
+		on code originally meant to test other lints
 		(e.g. we found that a~lint has erroneously claimed that a~trait
 		has been deleted, when in fact it was still present but its definition
 		was changed, which could cause user confusion and frustration at the
