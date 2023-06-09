@@ -66,22 +66,23 @@ by a~dependency change.
 \chapter*{Executive summary}
 \addcontentsline{toc}{chapter}{Executive summary}
 
-We have discovered that more than 1~in~6 of the largest Rust libraries have broken a~multitude
-of projects by publishing new releases, causing their users' code to suddenly stop compiling.
-In such cases, the packages' maintainers have to delete the faulty releases or create patches
-to fix them and the users have to temporarily downgrade the library's version. This is a~serious
-concern as the problem is alarmingly common but has never been satisfactorily resolved so far.
+When new releases of Rust libraries are published, it may happen that unintended public API changes
+are made and cause their users' code to suddenly stop compiling. In such cases, the packages'
+maintainers have to remove the faulty releases or create patches to fix them and the users
+have to temporarily downgrade the library's version. We have discovered that more than 1~in~6
+of the most commonly used Rust libraries had this issue. This is a~serious concern as the problem
+is alarmingly common but has never been satisfactorily resolved so far.
 
 The following document describes the development of \texttt{cargo-semver-checks}, an~open-source
-tool called that solves this problem. It detects changes that are
-not backwards-compatible in Rust libraries' codes before releasing a~new version.
+tool that solves this problem. It detects changes that are
+not backwards-compatible in Rust library's code before a~new version is released by its maintainers.
 
 Instead of directly looking at the source code, the tool compares the automatically generated
 documentation of two versions of the library's public API. To parse this data, it uses
 a~query engine called \texttt{Trustfall} that is capable of reading from any organized database,
 allowing for the checks run by the tool to be written in form of short queries. Thanks to
-this approach, the project is much more sustainable than other attempts of this kind among Rust
-and other languages, which are not maintained anymore.
+this approach, the project is much more sustainable than other attempts of this kind,
+which are not maintained anymore.
 
 We worked in a~team of four as part of our bachelor's thesis on improving the tool to make it
 convenient and accessible for the Rust community. We extended the command-line interface
@@ -108,7 +109,6 @@ publicly available libraries.
 The tool is to become part of the official package manager and build system for the Rust language.
 This further reassures us that its future is bright and makes us proud to see it making
 such an~impact on the entire world of Rust.
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -904,16 +904,16 @@ the project in the future.
 Before our contributions, each lint had its own, dedicated test case consisting of:
 \begin{itemize}
 \item the Rust source code that could be compiled in two different ways (producing
-\say{current} and \say{baseline} codes),
+\say{current} and \say{baseline} code),
 \item a~file with the results of executing its Trustfall query over this source code.
 \end{itemize}
 We have replaced this system with a~new one that contains numerous \say{crate pairs}
 (two separate directories called \say{current} and \say{baseline} with their own
-manifests and source codes) and Trustfall query results for each lint over all
+manifests and source code) and Trustfall query results for each lint over all
 available crate pairs. This has brought numerous benefits:
 \begin{itemize}
 	\item testing each lint on all crate pairs found multiple false-positives by running
-		on codes originally meant to test other lints
+		on code originally meant to test other lints
 		(e.g. we found that a~lint has erroneously claimed that a~trait
 		has been deleted, when in fact it was still present but its definition
 		was changed, which could cause user confusion and frustration at the
