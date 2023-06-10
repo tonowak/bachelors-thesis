@@ -1149,9 +1149,13 @@ new compiler versions on a~large number of crates.
 It fetches a~list of one thousand crates available on crates.io sorted by the number of
 all-time downloads, which often are the biggest crates and Rust libraries
 that strictly adhere to semantic versioning. For each crate
-it then retrieves the available releases which were not yanked,
-runs the default configuration of cargo-semver-checks to compare every two adjacent,
-non-yanked releases and parses the output.
+it then retrieves the available releases which were not yanked
+and compares every two adjacent, non-yanked releases and parses the 
+output of those releases compiled with the crate's default features.
+We considered compiling a crate's releases with all features,
+but then often the crates stopped compiling altogether
+(the option to run cargo-semver-checks with a heuristically generated list of features
+was added after we analyzed the semver-crater results).
 The results are saved to a~CSV file.
 Because of the sheer number of releases that needs to be checked, the results take several days
 to generate.
