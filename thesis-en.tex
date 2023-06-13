@@ -1148,9 +1148,12 @@ new compiler versions on a~large number of crates.
 
 It fetches a~list of one thousand crates available on crates.io sorted by the number of
 all-time downloads, which often are the biggest crates and Rust libraries
-that strictly adhere to semantic versioning. For each crate,
+that strictly adhere to semantic versioning. For each crate
 it then retrieves the available releases which were not yanked
-and compares every two adjacent, non-yanked releases and parses the output.
+and compares every adjacent pair. Lastly it parses the
+output of those pairs. The crates were documented only with their
+default features, as it avoids instability and better represents the crates'
+API which most users would use.
 The results are saved to a~CSV file.
 Because of the sheer number of releases that needs to be checked, the results take several days
 to generate.
