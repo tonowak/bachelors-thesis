@@ -1085,10 +1085,10 @@ Thus, we are confident that each result is a~true-positive report pointing out a
 semver violation.
 
 Interestingly, sometimes the majority of Rust community decides that a certain change is not
-considered as breaking. This can happen e.g. after a change is introduced in the official language
-standards when the developers are used to the previous, well-settled rules, and prefer to adhere to
-them. Such breaks are just reported by the tool as it uses the formal documentation and ignores all
-unofficial, changing conventions.
+considered as breaking. This can happen e.g. after a new feature is introduced to the official
+language standard. The developers may decide to use it in their crates without an appropriate change
+of the version number. Such breaks are just reported by the tool as it uses the generated
+documentation and ignores all unofficial conventions.
 
 The following table shows for each lint how often it was triggered:
 
