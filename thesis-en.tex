@@ -1084,11 +1084,11 @@ that it is part of the public API accessible by the user and not marked \texttt{
 Thus, we are confident that each result is a~true-positive report pointing out a~real
 semver violation.
 
-Interestingly, sometimes the majority of Rust community states that a certain change is not
+Interestingly, sometimes the majority of Rust community decides that a certain change is not
 considered as breaking. This can happen e.g. after a change is introduced in the official language
-standards when the developers are used to the previous, well-settled rules and prefer to adhere to
-them. Such breaks are just reported by the tool as it uses the automatically generated output,
-sometimes affecting the frequency at which they are reported.
+standards when the developers are used to the previous, well-settled rules, and prefer to adhere to
+them. Such breaks are just reported by the tool as it uses the formal documentation and ignores all
+unofficial, changing conventions.
 
 The following table shows for each lint how often it was triggered:
 
