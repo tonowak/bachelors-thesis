@@ -1084,11 +1084,12 @@ that it is part of the public API accessible by the user and not marked \texttt{
 Thus, we are confident that each result is a~true-positive report pointing out a~real
 semver violation.
 
-Interestingly, some changes that are breaking according to today's conventions are still
-commonly accepted as non-breaking by the majority of Rust community. This is because some language
-features were already in use by the developers prior to their official introduction (such as the
-\texttt{\#[non\_exhaustive]} attribute). Because of this, checking older releases with current Rust
-standards can occasionally produce unintuitive results.
+Interestingly, some changes that are breaking according to today's conventions are
+commonly accepted as non-breaking by the majority of Rust community. This is because close
+imitations of some language features were used by the developers prior to their official
+introduction. To use the novelties, they had to purposely make breaking changes in their crates.
+Because of this, checking older releases with current Rust standards can occasionally produce
+unintuitive results.
 
 However, this is the case with only a minority of semver violations. The general difficulty
 of semver remains unchanged regardless of the ever-changing Rust versions and conventions.
