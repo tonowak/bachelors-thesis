@@ -1084,6 +1084,16 @@ that it is part of the public API accessible by the user and not marked \texttt{
 Thus, we are confident that each result is a~true-positive report pointing out a~real
 semver violation.
 
+Interestingly, some changes that are theoretically breaking in the Rust language are commonly
+accepted by the majority of the community. The tool seeks to be up-to-date with the current
+conventions, but as they change over time, running cargo-semver-checks on older releases can
+occasionally produce unintuitive results. For example, the developers used close imitations of the
+\texttt{\#[non\_exhaustive]} attribute prior to its official introduction. But in order to use the
+newly added attribute instead, they had to purposely make breaking changes in their crates.
+However, this is the case with only a~minority of semver violations. The general difficulty of
+semver remains unchanged regardless of the ever-changing Rust versions and conventions. This makes
+automated tools like cargo-semver-checks an~even more valuable assistance for the developers.
+
 The following table shows for each lint how often it was triggered:
 
 \begin{center}
